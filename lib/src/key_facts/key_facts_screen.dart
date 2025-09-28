@@ -97,7 +97,8 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                                     children: [
                                       Icon(
                                         Icons.info_outline,
-                                        color: AppColors.getPrimaryColor(context),
+                                        color:
+                                            AppColors.getPrimaryColor(context),
                                         size: 28,
                                       ),
                                       const SizedBox(width: 12),
@@ -106,7 +107,8 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
-                                          color: AppColors.getPrimaryTextColor(context),
+                                          color: AppColors.getPrimaryTextColor(
+                                              context),
                                         ),
                                       ),
                                     ],
@@ -116,7 +118,8 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                                     'The President\'s Emergency Plan for AIDS Relief (PEPFAR) Monitoring, Evaluation, and Reporting (MER) indicators provide essential data on HIV prevention, care, and treatment services globally.',
                                     style: TextStyle(
                                       fontSize: 16,
-                                      color: AppColors.getSecondaryTextColor(context),
+                                      color: AppColors.getSecondaryTextColor(
+                                          context),
                                       height: 1.5,
                                     ),
                                   ),
@@ -158,7 +161,10 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                                     children: [
                                       Icon(
                                         Icons.timeline,
-                                        color: AppColors.getProgramColor('tx', isDark: Theme.of(context).brightness == Brightness.dark),
+                                        color: AppColors.getProgramColor('tx',
+                                            isDark:
+                                                Theme.of(context).brightness ==
+                                                    Brightness.dark),
                                         size: 24,
                                       ),
                                       const SizedBox(width: 12),
@@ -167,7 +173,8 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
-                                          color: AppColors.getPrimaryTextColor(context),
+                                          color: AppColors.getPrimaryTextColor(
+                                              context),
                                         ),
                                       ),
                                     ],
@@ -281,7 +288,8 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
             height: 8,
             margin: const EdgeInsets.only(top: 6),
             decoration: BoxDecoration(
-              color: AppColors.getProgramColor('tx', isDark: Theme.of(context).brightness == Brightness.dark),
+              color: AppColors.getProgramColor('tx',
+                  isDark: Theme.of(context).brightness == Brightness.dark),
               shape: BoxShape.circle,
             ),
           ),

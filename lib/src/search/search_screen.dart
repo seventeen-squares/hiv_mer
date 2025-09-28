@@ -138,7 +138,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 onPressed: _clearSearch,
                                 icon: Icon(
                                   Icons.clear,
-                                  color: AppColors.getTertiaryTextColor(context),
+                                  color:
+                                      AppColors.getTertiaryTextColor(context),
                                 ),
                               )
                             : null,

@@ -154,7 +154,8 @@ class IndicatorDetailScreen extends StatelessWidget {
                                     color: AppColors.getChipTextColor(context),
                                   ),
                                 ),
-                                backgroundColor: AppColors.getChipBackgroundColor(context),
+                                backgroundColor:
+                                    AppColors.getChipBackgroundColor(context),
                               ),
                             )
                             .toList(),
@@ -176,8 +177,8 @@ class IndicatorDetailScreen extends StatelessWidget {
                             _buildDetailRow(context, 'Program Area',
                                 indicator.programArea, Icons.medical_services),
                             const Divider(),
-                            _buildDetailRow(
-                                context, 'Source', indicator.source, Icons.source),
+                            _buildDetailRow(context, 'Source', indicator.source,
+                                Icons.source),
                           ],
                         ),
                       ),
@@ -298,7 +299,8 @@ class IndicatorDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(BuildContext context, String label, String value, IconData icon) {
+  Widget _buildDetailRow(
+      BuildContext context, String label, String value, IconData icon) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(

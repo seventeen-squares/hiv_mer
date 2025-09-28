@@ -112,8 +112,10 @@ class MyApp extends StatelessWidget {
             textTheme: const TextTheme(
               bodyLarge: TextStyle(color: Colors.white),
               bodyMedium: TextStyle(color: Colors.white70),
-              titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              titleMedium: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+              titleLarge:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              titleMedium:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
               titleSmall: TextStyle(color: Colors.white70),
             ),
             bottomNavigationBarTheme: const BottomNavigationBarThemeData(
