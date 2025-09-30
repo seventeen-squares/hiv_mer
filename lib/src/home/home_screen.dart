@@ -8,233 +8,391 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Custom App Bar
-            Container(
-              padding: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withOpacity(0.8),
-                  ],
-                ),
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.health_and_safety_outlined,
-                    size: 32,
-                    color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header Section
+              Container(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(32),
+                    bottomRight: Radius.circular(32),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Top Bar
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'PEPFAR MER',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF3B82F6).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: const Icon(
+                            Icons.health_and_safety_outlined,
+                            color: Color(0xFF3B82F6),
+                            size: 24,
                           ),
                         ),
-                        Text(
-                          'Quick Reference Guide',
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.9),
-                            fontSize: 14,
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Icon(
+                            Icons.menu,
+                            color: Colors.grey.shade600,
+                            size: 24,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // TODO: Navigate to settings
-                    },
-                    icon: const Icon(
-                      Icons.menu,
-                      color: Colors.white,
+                    
+                    const SizedBox(height: 32),
+                    
+                    // Welcome Text
+                    const Text(
+                      'Good morning! 👋',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    const Text(
+                      'PEPFAR MER\nReference',
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1F2937),
+                        height: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Quick access to indicators, definitions, and reporting guidelines',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey.shade600,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-
-            // Main Content
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 1.2,
+              
+              const SizedBox(height: 32),
+              
+              // Quick Actions Section
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildMenuTile(
-                      context,
-                      title: 'KEY FACTS',
-                      subtitle: 'MER Guidelines Overview',
-                      icon: Icons.fact_check_outlined,
-                      gradient: [Colors.blue.shade600, Colors.blue.shade400],
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/key-facts');
-                      },
+                    const Text(
+                      'Quick Actions',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1F2937),
+                      ),
                     ),
-                    _buildMenuTile(
+                    const SizedBox(height: 16),
+                    
+                    // Main Action Cards
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildActionCard(
+                            context,
+                            title: 'Search\nIndicators',
+                            subtitle: 'Find any MER indicator',
+                            icon: Icons.search,
+                            iconColor: const Color(0xFF3B82F6),
+                            backgroundColor: const Color(0xFF3B82F6).withOpacity(0.1),
+                            onTap: () => Navigator.of(context).pushNamed('/search'),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: _buildActionCard(
+                            context,
+                            title: 'Key\nFacts',
+                            subtitle: 'Overview & stats',
+                            icon: Icons.insights,
+                            iconColor: const Color(0xFF10B981),
+                            backgroundColor: const Color(0xFF10B981).withOpacity(0.1),
+                            onTap: () => Navigator.of(context).pushNamed('/key-facts'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 32),
+              
+              // Browse Categories Section
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Browse Categories',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1F2937),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    
+                    // Category Grid
+                    _buildCategoryCard(
                       context,
-                      title: 'TARGETS & PROGRESS',
-                      subtitle: 'PEPFAR Goals & Progress',
+                      title: 'Program Indicators',
+                      subtitle: 'Browse by program area (TX, HTS, PMTCT, etc.)',
+                      icon: Icons.analytics_outlined,
+                      iconColor: const Color(0xFF8B5CF6),
+                      onTap: () => Navigator.of(context).pushNamed('/indicators'),
+                    ),
+                    
+                    const SizedBox(height: 12),
+                    
+                    _buildCategoryCard(
+                      context,
+                      title: 'Targets & Progress',
+                      subtitle: 'PEPFAR goals and achievement metrics',
                       icon: Icons.trending_up,
-                      gradient: [Colors.green.shade600, Colors.green.shade400],
+                      iconColor: const Color(0xFFF59E0B),
                       onTap: () {
                         // TODO: Navigate to Targets & Progress
                       },
                     ),
-                    _buildMenuTile(
+                    
+                    const SizedBox(height: 12),
+                    
+                    _buildCategoryCard(
                       context,
-                      title: 'INDICATORS',
-                      subtitle: 'Browse by Program Area',
-                      icon: Icons.analytics_outlined,
-                      gradient: [
-                        Colors.purple.shade600,
-                        Colors.purple.shade400
-                      ],
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/indicators');
-                      },
-                    ),
-                    _buildMenuTile(
-                      context,
-                      title: 'REGIONS',
-                      subtitle: 'Country Profiles',
+                      title: 'Regional Data',
+                      subtitle: 'Country and regional profiles',
                       icon: Icons.public,
-                      gradient: [
-                        Colors.orange.shade600,
-                        Colors.orange.shade400
-                      ],
+                      iconColor: const Color(0xFFEF4444),
                       onTap: () {
                         // TODO: Navigate to Regions
                       },
                     ),
-                    _buildMenuTile(
+                    
+                    const SizedBox(height: 12),
+                    
+                    _buildCategoryCard(
                       context,
-                      title: 'COMPARE',
-                      subtitle: 'Compare Indicators',
+                      title: 'Compare Indicators',
+                      subtitle: 'Side-by-side indicator comparison',
                       icon: Icons.compare_arrows,
-                      gradient: [Colors.teal.shade600, Colors.teal.shade400],
+                      iconColor: const Color(0xFF06B6D4),
                       onTap: () {
                         // TODO: Navigate to Compare
-                      },
-                    ),
-                    _buildMenuTile(
-                      context,
-                      title: 'QUICK SEARCH',
-                      subtitle: 'Find Indicators Fast',
-                      icon: Icons.search,
-                      gradient: [
-                        Colors.indigo.shade600,
-                        Colors.indigo.shade400
-                      ],
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/search');
                       },
                     ),
                   ],
                 ),
               ),
+              
+              const SizedBox(height: 100), // Extra space for bottom navigation
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 20,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          selectedItemColor: const Color(0xFF3B82F6),
+          unselectedItemColor: Colors.grey.shade400,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          currentIndex: 0,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_rounded),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_rounded),
+              label: 'Favorites',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search_rounded),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.more_horiz_rounded),
+              label: 'More',
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
-        currentIndex: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'More',
-          ),
-        ],
-      ),
     );
   }
 
-  Widget _buildMenuTile(
+  Widget _buildActionCard(
     BuildContext context, {
     required String title,
     required String subtitle,
     required IconData icon,
-    required List<Color> gradient,
+    required Color iconColor,
+    required Color backgroundColor,
     required VoidCallback onTap,
   }) {
     return Material(
-      elevation: 4,
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(20),
+      elevation: 0,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: Colors.grey.shade100,
+              width: 1,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  color: iconColor,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF1F2937),
+                  height: 1.2,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryCard(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Color iconColor,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: Colors.white,
       borderRadius: BorderRadius.circular(16),
+      elevation: 0,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Container(
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: gradient,
+            border: Border.all(
+              color: Colors.grey.shade100,
+              width: 1,
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: iconColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
                   icon,
-                  size: 28,
-                  color: Colors.white,
+                  color: iconColor,
+                  size: 24,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF1F2937),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
-                    fontSize: 11,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.grey.shade400,
+                size: 16,
+              ),
+            ],
           ),
         ),
       ),
