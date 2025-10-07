@@ -264,8 +264,8 @@ class MyApp extends StatelessWidget {
           themeMode: settingsController.themeMode,
 
           // Set initial route based on onboarding status
-          initialRoute: hasCompletedOnboarding 
-              ? HomeScreen.routeName 
+          initialRoute: hasCompletedOnboarding
+              ? HomeScreen.routeName
               : RoleSelectionScreen.routeName,
 
           // Define a function to handle named routes in order to support
@@ -293,8 +293,8 @@ class MyApp extends StatelessWidget {
                     return const HomeScreen();
                   case SampleItemListView.routeName:
                   default:
-                    return hasCompletedOnboarding 
-                        ? const HomeScreen() 
+                    return hasCompletedOnboarding
+                        ? const HomeScreen()
                         : const RoleSelectionScreen();
                 }
               },

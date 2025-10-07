@@ -51,7 +51,8 @@ class _SettingsViewState extends State<SettingsView> {
       return 'Not set';
     }
 
-    if (_userProfile!.role == UserRole.other && _userProfile!.customRoleText != null) {
+    if (_userProfile!.role == UserRole.other &&
+        _userProfile!.customRoleText != null) {
       return _userProfile!.customRoleText!;
     }
 
@@ -95,7 +96,8 @@ class _SettingsViewState extends State<SettingsView> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Role Updated'),
-        content: Text('Your role has been updated to ${_getRoleDisplayText()}.'),
+        content:
+            Text('Your role has been updated to ${_getRoleDisplayText()}.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -176,7 +178,8 @@ class _SettingsViewState extends State<SettingsView> {
                     ),
                   ),
                   title: const Text('Theme'),
-                  subtitle: Text(_getThemeModeText(widget.controller.themeMode)),
+                  subtitle:
+                      Text(_getThemeModeText(widget.controller.themeMode)),
                   trailing: DropdownButton<ThemeMode>(
                     value: widget.controller.themeMode,
                     onChanged: widget.controller.updateThemeMode,

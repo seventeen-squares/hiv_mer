@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
 
 /// Individual role selection card widget
-/// 
+///
 /// Displays a role option with icon and label
 /// Shows selected state with green highlight
 class RoleOptionCard extends StatelessWidget {
@@ -42,7 +42,7 @@ class RoleOptionCard extends StatelessWidget {
     if (customLabel != null && role == UserRole.other) {
       return customLabel!;
     }
-    
+
     switch (role) {
       case UserRole.nurse:
         return 'Nurse';
@@ -66,14 +66,10 @@ class RoleOptionCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: isSelected 
-            ? saGovernmentGreen.withOpacity(0.1)
-            : Colors.white,
+        color: isSelected ? saGovernmentGreen.withOpacity(0.1) : Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected 
-              ? saGovernmentGreen 
-              : Colors.grey.shade300,
+          color: isSelected ? saGovernmentGreen : Colors.grey.shade300,
           width: isSelected ? 2 : 1,
         ),
       ),
@@ -88,9 +84,7 @@ class RoleOptionCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: isSelected 
-                      ? saGovernmentGreen 
-                      : Colors.grey.shade100,
+                  color: isSelected ? saGovernmentGreen : Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -106,8 +100,8 @@ class RoleOptionCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                    color: isSelected 
-                        ? saGovernmentGreen 
+                    color: isSelected
+                        ? saGovernmentGreen
                         : const Color(0xFF1F2937),
                   ),
                 ),

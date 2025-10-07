@@ -6,7 +6,7 @@ import '../home/home_screen.dart';
 import 'widgets/role_option_card.dart';
 
 /// Role selection screen shown on first launch or when updating role
-/// 
+///
 /// Allows user to select their professional role from predefined options
 /// or enter a custom role if "Other" is selected
 class RoleSelectionScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class RoleSelectionScreen extends StatefulWidget {
 class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
   final _userProfileService = UserProfileService.instance;
   final _customRoleController = TextEditingController();
-  
+
   UserRole? _selectedRole;
   bool _showCustomRoleField = false;
   bool _isSaving = false;
@@ -53,7 +53,8 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
   bool get _canConfirm {
     if (_selectedRole == null) return false;
-    if (_selectedRole == UserRole.other && _customRoleController.text.trim().isEmpty) {
+    if (_selectedRole == UserRole.other &&
+        _customRoleController.text.trim().isEmpty) {
       return false;
     }
     return true;
@@ -69,8 +70,8 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
     try {
       final profile = UserProfile(
         role: _selectedRole!,
-        customRoleText: _selectedRole == UserRole.other 
-            ? _customRoleController.text.trim() 
+        customRoleText: _selectedRole == UserRole.other
+            ? _customRoleController.text.trim()
             : null,
         selectionDate: DateTime.now(),
       );
@@ -164,23 +165,26 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              
+
               // Role options
-              ...UserRole.values.map((role) => RoleOptionCard(
-                role: role,
-                customLabel: _selectedRole == role && role == UserRole.other
-                    ? _customRoleController.text.trim().isEmpty 
-                        ? null 
-                        : _customRoleController.text.trim()
-                    : null,
-                isSelected: _selectedRole == role,
-                onTap: () {
-                  setState(() {
-                    _selectedRole = role;
-                    _showCustomRoleField = role == UserRole.other;
-                  });
-                },
-              )).toList(),
+              ...UserRole.values
+                  .map((role) => RoleOptionCard(
+                        role: role,
+                        customLabel:
+                            _selectedRole == role && role == UserRole.other
+                                ? _customRoleController.text.trim().isEmpty
+                                    ? null
+                                    : _customRoleController.text.trim()
+                                : null,
+                        isSelected: _selectedRole == role,
+                        onTap: () {
+                          setState(() {
+                            _selectedRole = role;
+                            _showCustomRoleField = role == UserRole.other;
+                          });
+                        },
+                      ))
+                  .toList(),
 
               // Custom role text field
               if (_showCustomRoleField) ...[
@@ -222,7 +226,8 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: saGovernmentGreen, width: 2),
+                            borderSide:
+                                BorderSide(color: saGovernmentGreen, width: 2),
                           ),
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 12,
@@ -230,7 +235,8 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                           ),
                         ),
                         onChanged: (value) {
-                          setState(() {}); // Rebuild to update confirm button state
+                          setState(
+                              () {}); // Rebuild to update confirm button state
                         },
                       ),
                     ],
@@ -262,7 +268,8 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                           height: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
                           ),
                         )
                       : Text(

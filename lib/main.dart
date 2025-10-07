@@ -27,7 +27,8 @@ void main() async {
   }
 
   // Check if user has completed onboarding
-  final hasCompletedOnboarding = await UserProfileService.instance.hasCompletedOnboarding();
+  final hasCompletedOnboarding =
+      await UserProfileService.instance.hasCompletedOnboarding();
 
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the

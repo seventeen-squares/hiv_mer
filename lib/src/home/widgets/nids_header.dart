@@ -39,7 +39,8 @@ class NIDSHeader extends StatelessWidget {
                 // Fallback to placeholder if image fails to load
                 return Container(
                   height: 80,
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
                     color: saGovernmentGreen.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
