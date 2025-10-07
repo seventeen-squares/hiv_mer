@@ -1,0 +1,80 @@
+[
+  {
+    "id": "routine_facility",
+    "name": "Routine Facility Health Services",
+    "displayOrder": 1,
+    "subGroups": [
+      "HIV Testing Services",
+      "ART Services",
+      "PMTCT Services",
+      "Prevention Services"
+    ],
+    "indicatorCount": 4
+  },
+  {
+    "id": "routine_art",
+    "name": "Routine ART Quarterly",
+    "displayOrder": 2,
+    "subGroups": [
+      "Viral Load Monitoring",
+      "Retention and Adherence",
+      "Treatment Outcomes"
+    ],
+    "indicatorCount": 2
+  },
+  {
+    "id": "tb_quarterly",
+    "name": "TB Quarterly",
+    "displayOrder": 3,
+    "subGroups": [
+      "TB Case Detection",
+      "TB Treatment Outcomes",
+      "TB-HIV Co-infection"
+    ],
+    "indicatorCount": 2
+  },
+  {
+    "id": "ems",
+    "name": "Emergency Medical Services (EMS)",
+    "displayOrder": 4,
+    "subGroups": [
+      "Response Times",
+      "Service Quality",
+      "Resource Utilization"
+    ],
+    "indicatorCount": 1
+  },
+  {
+    "id": "non_facility",
+    "name": "Non-Facility Services",
+    "displayOrder": 5,
+    "subGroups": [
+      "Community Testing",
+      "Outreach Programs",
+      "Mobile Clinics"
+    ],
+    "indicatorCount": 1
+  },
+  {
+    "id": "periodic_campaigns",
+    "name": "Periodic Campaigns",
+    "displayOrder": 6,
+    "subGroups": [
+      "Immunization Campaigns",
+      "Health Awareness",
+      "Screening Programs"
+    ],
+    "indicatorCount": 0
+  },
+  {
+    "id": "selected_sites",
+    "name": "Selected Sites",
+    "displayOrder": 7,
+    "subGroups": [
+      "Sentinel Surveillance",
+      "Special Studies",
+      "Pilot Programs"
+    ],
+    "indicatorCount": 0
+  }
+]

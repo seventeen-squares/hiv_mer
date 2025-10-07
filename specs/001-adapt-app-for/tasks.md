@@ -23,11 +23,11 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Add `shared_preferences` dependency to `pubspec.yaml` for user role storage
-- [ ] T002 [P] Create `lib/src/utils/constants.dart` for app constants (roles enum, colors, version format)
-- [ ] T003 [P] Create assets directory structure: `assets/data/` and update `assets/images/` for SA branding
-- [ ] T004 [P] Add SA coat of arms image files to `assets/images/sa_coat_of_arms.png` (1x, 2x, 3x variants)
-- [ ] T005 Update `pubspec.yaml` to include new asset paths for data files and SA images
+- [X] T001 Add `shared_preferences` dependency to `pubspec.yaml` for user role storage
+- [X] T002 [P] Create `lib/src/utils/constants.dart` for app constants (roles enum, colors, version format)
+- [X] T003 [P] Create assets directory structure: `assets/data/` and update `assets/images/` for SA branding
+- [X] T004 [P] Add SA coat of arms image files to `assets/images/sa_coat_of_arms.png` (1x, 2x, 3x variants)
+- [X] T005 Update `pubspec.yaml` to include new asset paths for data files and SA images
 
 ---
 
@@ -37,14 +37,14 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 [P] Create `lib/src/models/sa_indicator.dart` with SAIndicator model (renoId, groupId, indicatorId, sortOrder, name, shortname, numerator, numeratorFormula, denominator, denominatorFormula, definition, useContext, factorType, frequency, status fields, fromJson/toJson methods)
-- [ ] T007 [P] Create `lib/src/models/indicator_group.dart` with IndicatorGroup model (id, name, displayOrder, subGroups, indicatorCount fields, fromJson/toJson methods)
-- [ ] T008 [P] Create `lib/src/models/user_profile.dart` with UserProfile model (role enum, customRoleText, selectionDate fields, fromJson/toJson methods) and UserRole enum (nurse, doctor, dataClerk, programManager, pharmacist, communityHealthWorker, other)
-- [ ] T009 Create `lib/src/services/sa_indicator_service.dart` with methods: loadIndicators(), getAllGroups(), getIndicatorsByGroup(groupId), searchIndicators(query), getIndicatorById(id), getStatistics() - implement JSON loading from assets/data/sa_indicators.json and assets/data/indicator_groups.json
-- [ ] T010 Create `lib/src/services/user_profile_service.dart` with methods: hasCompletedOnboarding(), saveProfile(profile), getProfile(), updateProfile(profile), clearProfile() - implement SharedPreferences storage
-- [ ] T011 Create sample `assets/data/sa_indicators.json` file with mock SA indicator data (5-10 sample indicators following SA schema for development)
-- [ ] T012 Create `assets/data/indicator_groups.json` file with SA indicator groups (Routine Facility Health Services, Routine ART Quarterly, TB Quarterly, EMS, Non-Facility Services, Periodic Campaigns, Selected Sites)
-- [ ] T013 Update `lib/src/utils/constants.dart` with SA government green color constant (hex value from branding), NIDS version format constant, role labels map
+- [X] T006 [P] Create `lib/src/models/sa_indicator.dart` with SAIndicator model (renoId, groupId, indicatorId, sortOrder, name, shortname, numerator, numeratorFormula, denominator, denominatorFormula, definition, useContext, factorType, frequency, status fields, fromJson/toJson methods)
+- [X] T007 [P] Create `lib/src/models/indicator_group.dart` with IndicatorGroup model (id, name, displayOrder, subGroups, indicatorCount fields, fromJson/toJson methods)
+- [X] T008 [P] Create `lib/src/models/user_profile.dart` with UserProfile model (role enum, customRoleText, selectionDate fields, fromJson/toJson methods) and UserRole enum (nurse, doctor, dataClerk, programManager, pharmacist, communityHealthWorker, other)
+- [X] T009 Create `lib/src/services/sa_indicator_service.dart` with methods: loadIndicators(), getAllGroups(), getIndicatorsByGroup(groupId), searchIndicators(query), getIndicatorById(id), getStatistics() - implement JSON loading from assets/data/sa_indicators.json and assets/data/indicator_groups.json
+- [X] T010 Create `lib/src/services/user_profile_service.dart` with methods: hasCompletedOnboarding(), saveProfile(profile), getProfile(), updateProfile(profile), clearProfile() - implement SharedPreferences storage
+- [X] T011 Create sample `assets/data/sa_indicators.json` file with mock SA indicator data (5-10 sample indicators following SA schema for development)
+- [X] T012 Create `assets/data/indicator_groups.json` file with SA indicator groups (Routine Facility Health Services, Routine ART Quarterly, TB Quarterly, EMS, Non-Facility Services, Periodic Campaigns, Selected Sites)
+- [X] T013 Update `lib/src/utils/constants.dart` with SA government green color constant (hex value from branding), NIDS version format constant, role labels map
 
 **Checkpoint**: Foundation ready - all models and services exist, user story implementation can now begin in parallel
 
