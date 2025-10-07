@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/user_profile_service.dart';
 import '../models/user_profile.dart';
 import '../utils/constants.dart';
-import '../home/home_screen.dart';
+import '../navigation/main_navigation.dart';
 import 'widgets/role_option_card.dart';
 
 /// Role selection screen shown on first launch or when updating role
@@ -84,7 +84,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
       } else {
         await _userProfileService.saveProfile(profile);
         if (mounted) {
-          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+          Navigator.of(context).pushReplacementNamed(MainNavigation.routeName);
         }
       }
     } catch (e) {

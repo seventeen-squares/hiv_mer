@@ -9,6 +9,7 @@ import 'indicators/indicator_detail_screen.dart';
 import 'indicators/indicators_screen.dart';
 import 'indicators/indicator_groups_screen.dart';
 import 'indicators/favorites_screen.dart';
+import 'navigation/main_navigation.dart';
 import 'onboarding/role_selection_screen.dart';
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
@@ -268,7 +269,7 @@ class MyApp extends StatelessWidget {
 
           // Set initial route based on onboarding status
           initialRoute: hasCompletedOnboarding
-              ? HomeScreen.routeName
+              ? MainNavigation.routeName
               : RoleSelectionScreen.routeName,
 
           // Define a function to handle named routes in order to support
@@ -280,6 +281,8 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case RoleSelectionScreen.routeName:
                     return const RoleSelectionScreen();
+                  case MainNavigation.routeName:
+                    return MainNavigation(settingsController: settingsController);
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case KeyFactsScreen.routeName:
@@ -301,7 +304,7 @@ class MyApp extends StatelessWidget {
                   case SampleItemListView.routeName:
                   default:
                     return hasCompletedOnboarding
-                        ? const HomeScreen()
+                        ? MainNavigation(settingsController: settingsController)
                         : const RoleSelectionScreen();
                 }
               },

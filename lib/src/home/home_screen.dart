@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/sa_indicator_service.dart';
-import '../indicators/indicator_groups_screen.dart';
+import '../navigation/main_navigation.dart';
 import 'widgets/nids_header.dart';
 import 'widgets/home_search_bar.dart';
 import 'widgets/navigation_card.dart';
@@ -109,11 +109,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icons.folder_outlined,
                       title: 'Indicators',
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const IndicatorGroupsScreen(),
-                          ),
-                        );
+                        // Switch to indicators tab in bottom nav
+                        MainNavigation.switchToTab(context, MainNavigation.indicatorsTab);
                       },
                     ),
                     NavigationCard(
@@ -148,7 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icons.settings_outlined,
                       title: 'Settings',
                       onTap: () {
-                        Navigator.of(context).pushNamed('/settings');
+                        // Switch to settings tab in bottom nav
+                        MainNavigation.switchToTab(context, MainNavigation.settingsTab);
                       },
                     ),
                   ],
