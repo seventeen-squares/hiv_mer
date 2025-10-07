@@ -1,12 +1,77 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../services/sa_indicator_service.dart';
+import 'widgets/nids_header.dart';
+import 'widgets/home_search_bar.dart';
+import 'widgets/navigation_card.dart';
+import 'widgets/summary_card.dart';
+import 'widgets/recent_updates_section.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
 
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _indicatorService = SAIndicatorService.instance;
+  bool _isLoading = true;
+  Map<String, int>? _statistics;
+  List<Map<String, String>> _recentUpdates = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      // Load indicator data if not already loaded
+      if (!_indicatorService.isLoaded) {
+        await _indicatorService.loadIndicators();
+      }
+
+      // Get statistics
+      final stats = _indicatorService.getStatistics();
+
+      // Load recent updates
+      final updatesJson = await rootBundle.loadString('assets/data/recent_updates.json');
+      final updatesList = jsonDecode(updatesJson) as List<dynamic>;
+      final updates = updatesList
+          .map((json) => Map<String, String>.from(json as Map))
+          .toList();
+
+      setState(() {
+        _statistics = stats;
+        _recentUpdates = updates;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error loading data: $e')),
+        );
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
@@ -14,384 +79,113 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Section
-              Container(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(32),
-                    bottomRight: Radius.circular(32),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              // NIDS Header with SA branding
+              const NIDSHeader(),
+              
+              const SizedBox(height: 24),
+              
+              // Search Bar
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: HomeSearchBar(),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Navigation Cards Grid
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: GridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 1.1,
                   children: [
-                    // Top Bar
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF3B82F6).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: const Icon(
-                            Icons.health_and_safety_outlined,
-                            color: Color(0xFF3B82F6),
-                            size: 24,
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Icon(
-                            Icons.menu,
-                            color: Colors.grey.shade600,
-                            size: 24,
-                          ),
-                        ),
-                      ],
+                    NavigationCard(
+                      icon: Icons.help_outline,
+                      title: 'Help/Support',
+                      onTap: () {
+                        // TODO: Navigate to Help
+                      },
                     ),
-                    
-                    const SizedBox(height: 32),
-                    
-                    // Welcome Text
-                    const Text(
-                      'Good morning! 👋',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w500,
+                    NavigationCard(
+                      icon: Icons.library_books,
+                      title: 'Resource Center',
+                      onTap: () {
+                        // TODO: Navigate to Resources
+                      },
+                    ),
+                    NavigationCard(
+                      icon: Icons.notifications_outlined,
+                      title: 'Notifications',
+                      onTap: () {
+                        // TODO: Navigate to Notifications
+                      },
+                    ),
+                    NavigationCard(
+                      icon: Icons.favorite_outline,
+                      title: 'Favorites',
+                      onTap: () {
+                        // TODO: Navigate to Favorites
+                      },
+                    ),
+                    NavigationCard(
+                      icon: Icons.feedback_outlined,
+                      title: 'Feedback',
+                      onTap: () {
+                        // TODO: Navigate to Feedback
+                      },
+                    ),
+                    NavigationCard(
+                      icon: Icons.info_outline,
+                      title: 'About',
+                      onTap: () {
+                        // TODO: Navigate to About
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Summary Cards
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SummaryCard(
+                        title: 'Total Indicators',
+                        count: _statistics?['indicators'] ?? 0,
+                        backgroundColor: const Color(0xFF8B7355), // Warm brown
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'PEPFAR MER\nReference',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1F2937),
-                        height: 1.2,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Quick access to indicators, definitions, and reporting guidelines',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey.shade600,
-                        height: 1.5,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: SummaryCard(
+                        title: 'Total Data Elements',
+                        count: _statistics?['dataElements'] ?? 0,
+                        backgroundColor: const Color(0xFFF97316), // Orange
                       ),
                     ),
                   ],
                 ),
               ),
               
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
               
-              // Quick Actions Section
+              // Recent Updates Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Quick Actions',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1F2937),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    
-                    // Main Action Cards
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildActionCard(
-                            context,
-                            title: 'Search\nIndicators',
-                            subtitle: 'Find any MER indicator',
-                            icon: Icons.search,
-                            iconColor: const Color(0xFF3B82F6),
-                            backgroundColor: const Color(0xFF3B82F6).withOpacity(0.1),
-                            onTap: () => Navigator.of(context).pushNamed('/search'),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: _buildActionCard(
-                            context,
-                            title: 'Key\nFacts',
-                            subtitle: 'Overview & stats',
-                            icon: Icons.insights,
-                            iconColor: const Color(0xFF10B981),
-                            backgroundColor: const Color(0xFF10B981).withOpacity(0.1),
-                            onTap: () => Navigator.of(context).pushNamed('/key-facts'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              
-              const SizedBox(height: 32),
-              
-              // Browse Categories Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Browse Categories',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1F2937),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    
-                    // Category Grid
-                    _buildCategoryCard(
-                      context,
-                      title: 'Program Indicators',
-                      subtitle: 'Browse by program area (TX, HTS, PMTCT, etc.)',
-                      icon: Icons.analytics_outlined,
-                      iconColor: const Color(0xFF8B5CF6),
-                      onTap: () => Navigator.of(context).pushNamed('/indicators'),
-                    ),
-                    
-                    const SizedBox(height: 12),
-                    
-                    _buildCategoryCard(
-                      context,
-                      title: 'Targets & Progress',
-                      subtitle: 'PEPFAR goals and achievement metrics',
-                      icon: Icons.trending_up,
-                      iconColor: const Color(0xFFF59E0B),
-                      onTap: () {
-                        // TODO: Navigate to Targets & Progress
-                      },
-                    ),
-                    
-                    const SizedBox(height: 12),
-                    
-                    _buildCategoryCard(
-                      context,
-                      title: 'Regional Data',
-                      subtitle: 'Country and regional profiles',
-                      icon: Icons.public,
-                      iconColor: const Color(0xFFEF4444),
-                      onTap: () {
-                        // TODO: Navigate to Regions
-                      },
-                    ),
-                    
-                    const SizedBox(height: 12),
-                    
-                    _buildCategoryCard(
-                      context,
-                      title: 'Compare Indicators',
-                      subtitle: 'Side-by-side indicator comparison',
-                      icon: Icons.compare_arrows,
-                      iconColor: const Color(0xFF06B6D4),
-                      onTap: () {
-                        // TODO: Navigate to Compare
-                      },
-                    ),
-                  ],
+                child: RecentUpdatesSection(
+                  updates: _recentUpdates,
                 ),
               ),
               
               const SizedBox(height: 100), // Extra space for bottom navigation
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          selectedItemColor: const Color(0xFF3B82F6),
-          unselectedItemColor: Colors.grey.shade400,
-          selectedFontSize: 12,
-          unselectedFontSize: 12,
-          currentIndex: 0,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_rounded),
-              label: 'Favorites',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search_rounded),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.more_horiz_rounded),
-              label: 'More',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionCard(
-    BuildContext context, {
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required Color iconColor,
-    required Color backgroundColor,
-    required VoidCallback onTap,
-  }) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20),
-      elevation: 0,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Colors.grey.shade100,
-              width: 1,
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: backgroundColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1F2937),
-                  height: 1.2,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade600,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCategoryCard(
-    BuildContext context, {
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required Color iconColor,
-    required VoidCallback onTap,
-  }) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(16),
-      elevation: 0,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: Colors.grey.shade100,
-              width: 1,
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF1F2937),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.grey.shade400,
-                size: 16,
-              ),
             ],
           ),
         ),

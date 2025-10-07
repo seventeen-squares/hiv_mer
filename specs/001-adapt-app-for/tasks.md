@@ -58,15 +58,15 @@
 
 ### Implementation for User Story 5
 
-- [ ] T014 [P] [US5] Create `lib/src/home/widgets/nids_header.dart` widget displaying SA coat of arms, "health" text, "Department: Health REPUBLIC OF SOUTH AFRICA" branding, app title "National Indicator Data Set (NIDS)", and version number (v.YYYY.MM format)
-- [ ] T015 [P] [US5] Create `lib/src/home/widgets/home_search_bar.dart` widget with green theme, "Search" placeholder, search icon, navigates to search screen on tap
-- [ ] T016 [P] [US5] Create `lib/src/home/widgets/navigation_card.dart` reusable widget for grid navigation cards (icon, title, onTap callback, green accent colors)
-- [ ] T017 [P] [US5] Create `lib/src/home/widgets/summary_card.dart` reusable widget for indicator/data element count cards (title, count, background color - warm brown for indicators, orange for data elements)
-- [ ] T018 [P] [US5] Create `lib/src/home/widgets/recent_updates_section.dart` widget displaying latest updates list with "See all" link
-- [ ] T019 [US5] Update `lib/src/home/home_screen.dart` to use new NIDS widgets: add NIDSHeader at top, HomeSearchBar below header, navigation cards grid (2 columns: Help/Support, Resource Center, Notifications, Favorites, Feedback, About), summary cards for Total Indicators and Total Data Elements (fetch counts from SAIndicatorService.getStatistics()), Recent Updates section
-- [ ] T020 [US5] Update `lib/src/app.dart` theme configuration: set primary color to SA government green, update bottom navigation bar theme (green background, white icons/text), ensure Material Design 3 enabled, verify dark mode contrast with new green theme
-- [ ] T021 [US5] Update `lib/main.dart` to initialize SAIndicatorService on app startup and handle loading state before showing home screen
-- [ ] T022 [P] [US5] Create `assets/data/recent_updates.json` file with sample update entries (version, date, description, type: feature/bugfix/enhancement)
+- [X] T014 [P] [US5] Create `lib/src/home/widgets/nids_header.dart` widget displaying SA coat of arms, "health" text, "Department: Health REPUBLIC OF SOUTH AFRICA" branding, app title "National Indicator Data Set (NIDS)", and version number (v.YYYY.MM format)
+- [X] T015 [P] [US5] Create `lib/src/home/widgets/home_search_bar.dart` widget with green theme, "Search" placeholder, search icon, navigates to search screen on tap
+- [X] T016 [P] [US5] Create `lib/src/home/widgets/navigation_card.dart` reusable widget for grid navigation cards (icon, title, onTap callback, green accent colors)
+- [X] T017 [P] [US5] Create `lib/src/home/widgets/summary_card.dart` reusable widget for indicator/data element count cards (title, count, background color - warm brown for indicators, orange for data elements)
+- [X] T018 [P] [US5] Create `lib/src/home/widgets/recent_updates_section.dart` widget displaying latest updates list with "See all" link
+- [X] T019 [US5] Update `lib/src/home/home_screen.dart` to use new NIDS widgets: add NIDSHeader at top, HomeSearchBar below header, navigation cards grid (2 columns: Help/Support, Resource Center, Notifications, Favorites, Feedback, About), summary cards for Total Indicators and Total Data Elements (fetch counts from SAIndicatorService.getStatistics()), Recent Updates section
+- [X] T020 [US5] Update `lib/src/app.dart` theme configuration: set primary color to SA government green, update bottom navigation bar theme (green background, white icons/text), ensure Material Design 3 enabled, verify dark mode contrast with new green theme
+- [X] T021 [US5] Update `lib/main.dart` to initialize SAIndicatorService on app startup and handle loading state before showing home screen
+- [X] T022 [P] [US5] Create `assets/data/recent_updates.json` file with sample update entries (version, date, description, type: feature/bugfix/enhancement)
 
 **Checkpoint**: Home screen displays with full NIDS branding, navigation cards functional, summary statistics showing, app establishes official government identity
 
@@ -80,12 +80,12 @@
 
 ### Implementation for User Story 1
 
-- [ ] T023 [US1] Update `lib/src/indicators/indicator_list_screen.dart` to display SA indicator groups from SAIndicatorService.getAllGroups() sorted by displayOrder, show indicator count per group, handle tap to navigate to group detail showing indicators from getIndicatorsByGroup()
-- [ ] T024 [US1] Update `lib/src/indicators/indicator_detail_screen.dart` to display SAIndicator model fields: show Reno/ID, Group ID, Indicator ID, Sort Order, Name, Shortname, Numerator with optional Numerator Formula, Denominator with optional Denominator Formula (display "Not applicable" if null), Definition, Use and Context, Factor/Type, Frequency - use card-based layout with proper sections and theme-aware colors from AppColors utility
-- [ ] T025 [P] [US1] Add indicator status badge widget to indicator list items showing visual indicator for NEW, AMENDED, RETAINED_WITH_NEW, RETAINED_WITHOUT_NEW status (based on SAIndicator.status field)
-- [ ] T026 [US1] Update bottom navigation in `lib/src/app.dart` to include "Indicator" tab that navigates to indicator_list_screen, ensure green theme applied
-- [ ] T027 [US1] Handle empty indicator groups: if getIndicatorsByGroup() returns empty list, display "No indicators in this group" message with helpful icon
-- [ ] T028 [US1] Add loading indicator during indicator data load in indicator_list_screen and indicator_detail_screen
+- [X] T023 [US1] Update `lib/src/indicators/indicator_list_screen.dart` to display SA indicator groups from SAIndicatorService.getAllGroups() sorted by displayOrder, show indicator count per group, handle tap to navigate to group detail showing indicators from getIndicatorsByGroup()
+- [X] T024 [US1] Update `lib/src/indicators/indicator_detail_screen.dart` to display SAIndicator model fields: show Reno/ID, Group ID, Indicator ID, Sort Order, Name, Shortname, Numerator with optional Numerator Formula, Denominator with optional Denominator Formula (display "Not applicable" if null), Definition, Use and Context, Factor/Type, Frequency - use card-based layout with proper sections and theme-aware colors from AppColors utility
+- [X] T025 [P] [US1] Add indicator status badge widget to indicator list items showing visual indicator for NEW, AMENDED, RETAINED_WITH_NEW, RETAINED_WITHOUT_NEW status (based on SAIndicator.status field)
+- [X] T026 [US1] Update bottom navigation in `lib/src/app.dart` to include "Indicator" tab that navigates to indicator_list_screen, ensure green theme applied
+- [X] T027 [US1] Handle empty indicator groups: if getIndicatorsByGroup() returns empty list, display "No indicators in this group" message with helpful icon
+- [X] T028 [US1] Add loading indicator during indicator data load in indicator_list_screen and indicator_detail_screen
 
 **Checkpoint**: Users can browse all indicator groups, view indicators sorted correctly, see complete indicator details with all SA schema fields, status badges display correctly
 

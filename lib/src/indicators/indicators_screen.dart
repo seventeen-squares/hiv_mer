@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/mer_models.dart';
-import '../services/mer_data_service.dart';
+import '../models/indicator_group.dart';
+import '../models/sa_indicator.dart';
+import '../services/sa_indicator_service.dart';
+import '../utils/constants.dart';
 import 'indicator_detail_screen.dart';
 
 class IndicatorsScreen extends StatefulWidget {
@@ -13,10 +15,11 @@ class IndicatorsScreen extends StatefulWidget {
 }
 
 class _IndicatorsScreenState extends State<IndicatorsScreen> {
-  final MERDataService _dataService = MERDataService();
-  List<ProgramArea> _programAreas = [];
-  Map<String, List<MERIndicator>> _indicatorsByProgram = {};
+  final _indicatorService = SAIndicatorService.instance;
+  List<IndicatorGroup> _groups = [];
+  Map<String, List<SAIndicator>> _indicatorsByGroup = {};
   bool _isLoading = true;
+  String? _error;
 
   @override
   void initState() {
@@ -25,35 +28,45 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
   }
 
   Future<void> _loadData() async {
-    await _dataService.loadData();
-    setState(() {
-      _programAreas = _dataService.programAreas;
-      for (final program in _programAreas) {
-        _indicatorsByProgram[program.id] =
-            _dataService.getIndicatorsByProgramArea(program.id);
+    try {
+      // Ensure indicators are loaded
+      if (!_indicatorService.isLoaded) {
+        await _indicatorService.loadIndicators();
       }
-      _isLoading = false;
-    });
+
+      // Get groups and indicators
+      final groups = _indicatorService.getAllGroups();
+      final indicatorsByGroup = <String, List<SAIndicator>>{};
+      
+      for (final group in groups) {
+        indicatorsByGroup[group.id] = _indicatorService.getIndicatorsByGroup(group.id);
+      }
+
+      setState(() {
+        _groups = groups;
+        _indicatorsByGroup = indicatorsByGroup;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+        _isLoading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
         child: Column(
           children: [
-            // Custom App Bar
+            // Custom App Bar with SA branding
             Container(
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.purple.shade600,
-                    Colors.purple.shade400,
-                  ],
-                ),
+                color: saGovernmentGreen,
               ),
               child: Row(
                 children: [
@@ -67,10 +80,10 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                   const SizedBox(width: 8),
                   const Expanded(
                     child: Text(
-                      'INDICATORS',
+                      'SA INDICATOR GROUPS',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -83,16 +96,50 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      padding: const EdgeInsets.all(16.0),
-                      itemCount: _programAreas.length,
-                      itemBuilder: (context, index) {
-                        final program = _programAreas[index];
-                        final indicators =
-                            _indicatorsByProgram[program.id] ?? [];
-                        return _buildProgramSection(program, indicators);
-                      },
-                    ),
+                  : _error != null
+                      ? Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.error_outline,
+                                  size: 64,
+                                  color: Colors.red,
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  'Error loading indicators',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade800,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  _error!,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          padding: const EdgeInsets.all(16.0),
+                          itemCount: _groups.length,
+                          itemBuilder: (context, index) {
+                            final group = _groups[index];
+                            final indicators =
+                                _indicatorsByGroup[group.id] ?? [];
+                            return _buildGroupSection(group, indicators);
+                          },
+                        ),
             ),
           ],
         ),
@@ -100,61 +147,70 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
     );
   }
 
-  Widget _buildProgramSection(
-      ProgramArea program, List<MERIndicator> indicators) {
-    return Card(
+  Widget _buildGroupSection(
+      IndicatorGroup group, List<SAIndicator> indicators) {
+    return Container(
       margin: const EdgeInsets.only(bottom: 16),
-      elevation: 4,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.grey.shade200,
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Column(
         children: [
-          // Program Header
+          // Group Header
           Container(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  _getProgramColor(program.color),
-                  _getProgramColor(program.color).withOpacity(0.8)
-                ],
-              ),
+              color: saGovernmentGreen,
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
               ),
             ),
             child: Row(
               children: [
-                Icon(
-                  _getProgramIcon(program.icon),
-                  color: Colors.white,
-                  size: 24,
-                ),
-                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        program.name,
+                        group.name,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        program.description,
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.9),
-                          fontSize: 14,
+                      if (group.subGroups.isNotEmpty) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          group.subGroups.join(' • '),
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.9),
+                            fontSize: 13,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),
+                const SizedBox(width: 12),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
@@ -163,7 +219,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                     '${indicators.length}',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -180,43 +236,28 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                 final indicator = entry.value;
                 return Column(
                   children: [
-                    if (index > 0) const Divider(height: 1),
+                    if (index > 0) Divider(height: 1, color: Colors.grey.shade200),
                     ListTile(
                       contentPadding: const EdgeInsets.all(16),
-                      leading: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: _getProgramColor(program.color),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          indicator.code,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      leading: _buildStatusBadge(indicator.status),
                       title: Text(
                         indicator.name,
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
+                          color: Color(0xFF1F2937),
                         ),
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 6),
                           Text(
-                            indicator.definition,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                            indicator.shortname,
                             style: TextStyle(
+                              fontSize: 13,
                               color: Colors.grey.shade700,
-                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -227,6 +268,17 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                               const SizedBox(width: 4),
                               Text(
                                 indicator.frequency,
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Icon(Icons.label,
+                                  size: 14, color: Colors.grey.shade500),
+                              const SizedBox(width: 4),
+                              Text(
+                                indicator.indicatorId,
                                 style: TextStyle(
                                   color: Colors.grey.shade600,
                                   fontSize: 12,
@@ -249,14 +301,21 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
               }).toList(),
             )
           else
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'No indicators available',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontStyle: FontStyle.italic,
-                ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                children: [
+                  Icon(Icons.info_outline, color: Colors.grey.shade400),
+                  const SizedBox(width: 12),
+                  Text(
+                    'No indicators in this group',
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
               ),
             ),
         ],
@@ -264,41 +323,43 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
     );
   }
 
-  Color _getProgramColor(String color) {
-    switch (color.toLowerCase()) {
-      case 'blue':
-        return Colors.blue.shade600;
-      case 'green':
-        return Colors.green.shade600;
-      case 'pink':
-        return Colors.pink.shade600;
-      case 'orange':
-        return Colors.orange.shade600;
-      case 'purple':
-        return Colors.purple.shade600;
-      case 'teal':
-        return Colors.teal.shade600;
-      default:
-        return Colors.grey.shade600;
+  Widget _buildStatusBadge(IndicatorStatus status) {
+    Color color;
+    String label;
+    
+    switch (status) {
+      case IndicatorStatus.newIndicator:
+        color = const Color(0xFF10B981);
+        label = 'NEW';
+        break;
+      case IndicatorStatus.amended:
+        color = const Color(0xFF3B82F6);
+        label = 'AMD';
+        break;
+      case IndicatorStatus.retainedWithNew:
+        color = const Color(0xFFF59E0B);
+        label = 'RET+';
+        break;
+      case IndicatorStatus.retainedWithoutNew:
+        color = const Color(0xFF6B7280);
+        label = 'RET';
+        break;
     }
-  }
 
-  IconData _getProgramIcon(String icon) {
-    switch (icon.toLowerCase()) {
-      case 'medical_services':
-        return Icons.medical_services;
-      case 'medication':
-        return Icons.medication;
-      case 'pregnant_woman':
-        return Icons.pregnant_woman;
-      case 'air':
-        return Icons.air;
-      case 'group':
-        return Icons.group;
-      case 'child_care':
-        return Icons.child_care;
-      default:
-        return Icons.info;
-    }
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 }

@@ -11,6 +11,7 @@ import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
+import 'utils/constants.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -64,14 +65,21 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             useMaterial3: true,
             fontFamily: 'SF Pro Display',
-            primarySwatch: Colors.blue,
-            primaryColor: const Color(0xFF3B82F6),
+            primarySwatch: saGovernmentGreenSwatch,
+            primaryColor: saGovernmentGreen,
             scaffoldBackgroundColor: const Color(0xFFF8FAFC),
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Color(0xFF3B82F6),
+            appBarTheme: AppBarTheme(
+              backgroundColor: saGovernmentGreen,
               foregroundColor: Colors.white,
               elevation: 0,
               centerTitle: false,
+            ),
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              backgroundColor: saGovernmentGreen,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.white.withOpacity(0.6),
+              type: BottomNavigationBarType.fixed,
+              elevation: 8,
             ),
             cardTheme: CardTheme(
               elevation: 0,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/mer_models.dart';
+import '../models/sa_indicator.dart';
 import '../utils/app_colors.dart';
+import '../utils/constants.dart';
 
 class IndicatorDetailScreen extends StatelessWidget {
   static const routeName = '/indicator-detail';
@@ -10,24 +11,18 @@ class IndicatorDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final indicator =
-        ModalRoute.of(context)!.settings.arguments as MERIndicator;
+        ModalRoute.of(context)!.settings.arguments as SAIndicator;
 
     return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
         child: Column(
           children: [
-            // Custom App Bar
+            // Custom App Bar with SA branding
             Container(
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    _getProgramColor(indicator.programArea),
-                    _getProgramColor(indicator.programArea).withOpacity(0.8),
-                  ],
-                ),
+                color: saGovernmentGreen,
               ),
               child: Row(
                 children: [
@@ -44,15 +39,15 @@ class IndicatorDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          indicator.code,
+                          indicator.indicatorId,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          indicator.programArea,
+                          indicator.shortname,
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.9),
                             fontSize: 14,
@@ -91,13 +86,29 @@ class IndicatorDetailScreen extends StatelessWidget {
                     Text(
                       indicator.name,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: AppColors.getPrimaryTextColor(context),
                       ),
                     ),
 
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
+
+                    // IDs Card
+                    _buildInfoCard(
+                      context,
+                      children: [
+                        _buildInfoRow('Reno/ID', indicator.renoId),
+                        const SizedBox(height: 8),
+                        _buildInfoRow('Group ID', indicator.groupId),
+                        const SizedBox(height: 8),
+                        _buildInfoRow('Indicator ID', indicator.indicatorId),
+                        const SizedBox(height: 8),
+                        _buildInfoRow('Sort Order', indicator.sortOrder.toString()),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
 
                     // Definition Section
                     _buildSection(
@@ -107,93 +118,63 @@ class IndicatorDetailScreen extends StatelessWidget {
                       icon: Icons.info_outline,
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
 
-                    // Numerator & Denominator
-                    Row(
+                    // Numerator Card
+                    _buildDetailCard(
+                      context,
+                      title: 'NUMERATOR',
+                      content: indicator.numerator,
+                      formula: indicator.numeratorFormula,
+                      color: const Color(0xFF10B981),
+                      icon: Icons.add_circle_outline,
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Denominator Card (if present)
+                    if (indicator.denominator != null)
+                      _buildDetailCard(
+                        context,
+                        title: 'DENOMINATOR',
+                        content: indicator.denominator!,
+                        formula: indicator.denominatorFormula,
+                        color: const Color(0xFF3B82F6),
+                        icon: Icons.calculate_outlined,
+                      )
+                    else
+                      _buildSection(
+                        context,
+                        title: 'DENOMINATOR',
+                        content: 'Not applicable',
+                        icon: Icons.remove_circle_outline,
+                      ),
+
+                    const SizedBox(height: 16),
+
+                    // Use and Context Section
+                    _buildSection(
+                      context,
+                      title: 'USE AND CONTEXT',
+                      content: indicator.useContext,
+                      icon: Icons.lightbulb_outline,
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Metadata Card
+                    _buildInfoCard(
+                      context,
                       children: [
-                        Expanded(
-                          child: _buildInfoCard(
-                            context,
-                            title: 'NUMERATOR',
-                            content: indicator.numerator,
-                            color: Colors.green.shade600,
-                            icon: Icons.add,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: _buildInfoCard(
-                            context,
-                            title: 'DENOMINATOR',
-                            content: indicator.denominator,
-                            color: Colors.blue.shade600,
-                            icon: Icons.all_inclusive,
-                          ),
-                        ),
+                        _buildInfoRow('Factor/Type', indicator.factorType),
+                        const SizedBox(height: 8),
+                        _buildInfoRow('Frequency', indicator.frequency),
+                        const SizedBox(height: 8),
+                        _buildInfoRow('Status', _getStatusText(indicator.status)),
                       ],
                     ),
 
-                    const SizedBox(height: 20),
-
-                    // Disaggregations
-                    _buildSection(
-                      context,
-                      title: 'DISAGGREGATIONS',
-                      content: null,
-                      icon: Icons.category,
-                      child: Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: indicator.disaggregations
-                            .map(
-                              (disagg) => Chip(
-                                label: Text(
-                                  disagg,
-                                  style: TextStyle(
-                                    color: AppColors.getChipTextColor(context),
-                                  ),
-                                ),
-                                backgroundColor:
-                                    AppColors.getChipBackgroundColor(context),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Reporting Details
-                    Card(
-                      elevation: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            _buildDetailRow(context, 'Reporting Frequency',
-                                indicator.frequency, Icons.schedule),
-                            const Divider(),
-                            _buildDetailRow(context, 'Program Area',
-                                indicator.programArea, Icons.medical_services),
-                            const Divider(),
-                            _buildDetailRow(context, 'Source', indicator.source,
-                                Icons.source),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Notes Section
-                    if (indicator.notes.isNotEmpty)
-                      _buildSection(
-                        context,
-                        title: 'NOTES & CLARIFICATIONS',
-                        content: indicator.notes,
-                        icon: Icons.note_outlined,
-                      ),
+                    const SizedBox(height: 32),
                   ],
                 ),
               ),
@@ -207,122 +188,48 @@ class IndicatorDetailScreen extends StatelessWidget {
   Widget _buildSection(
     BuildContext context, {
     required String title,
-    String? content,
-    required IconData icon,
-    Widget? child,
-  }) {
-    return Card(
-      elevation: 2,
-      color: AppColors.getCardColor(context),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: AppColors.getTertiaryTextColor(context)),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.getPrimaryTextColor(context),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            if (content != null)
-              Text(
-                content,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.getPrimaryTextColor(context),
-                  height: 1.5,
-                ),
-              ),
-            if (child != null) child,
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInfoCard(
-    BuildContext context, {
-    required String title,
     required String content,
-    required Color color,
     required IconData icon,
   }) {
-    return Card(
-      elevation: 2,
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border(
-            left: BorderSide(color: color, width: 4),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: color, size: 20),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: color,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(
-              content,
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.getPrimaryTextColor(context),
-                height: 1.4,
-              ),
-            ),
-          ],
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.grey.shade200,
+          width: 1,
         ),
       ),
-    );
-  }
-
-  Widget _buildDetailRow(
-      BuildContext context, String label, String value, IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.getTertiaryTextColor(context), size: 20),
-          const SizedBox(width: 12),
-          Text(
-            '$label:',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: AppColors.getPrimaryTextColor(context),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              value,
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.getPrimaryTextColor(context),
+          Row(
+            children: [
+              Icon(
+                icon,
+                size: 20,
+                color: saGovernmentGreen,
               ),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade600,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 15,
+              color: AppColors.getPrimaryTextColor(context),
+              height: 1.5,
             ),
           ),
         ],
@@ -330,22 +237,143 @@ class IndicatorDetailScreen extends StatelessWidget {
     );
   }
 
-  Color _getProgramColor(String program) {
-    switch (program.toLowerCase()) {
-      case 'hts':
-        return Colors.blue.shade600;
-      case 'tx':
-        return Colors.green.shade600;
-      case 'pmtct':
-        return Colors.pink.shade600;
-      case 'tb':
-        return Colors.orange.shade600;
-      case 'kp':
-        return Colors.purple.shade600;
-      case 'ovc':
-        return Colors.teal.shade600;
-      default:
-        return Colors.grey.shade600;
+  Widget _buildDetailCard(
+    BuildContext context, {
+    required String title,
+    required String content,
+    String? formula,
+    required Color color,
+    required IconData icon,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: color.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                icon,
+                size: 20,
+                color: color,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            content,
+            style: TextStyle(
+              fontSize: 15,
+              color: AppColors.getPrimaryTextColor(context),
+              height: 1.5,
+            ),
+          ),
+          if (formula != null) ...[
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.functions, size: 16, color: Colors.grey.shade600),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      formula,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey.shade700,
+                        fontFamily: 'Courier',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(BuildContext context, {required List<Widget> children}) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.grey.shade200,
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade700,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF1F2937),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _getStatusText(IndicatorStatus status) {
+    switch (status) {
+      case IndicatorStatus.newIndicator:
+        return 'NEW';
+      case IndicatorStatus.amended:
+        return 'AMENDED';
+      case IndicatorStatus.retainedWithNew:
+        return 'RETAINED WITH NEW';
+      case IndicatorStatus.retainedWithoutNew:
+        return 'RETAINED WITHOUT NEW';
     }
   }
 }
