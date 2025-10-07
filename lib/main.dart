@@ -4,6 +4,7 @@ import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
 import 'src/services/sa_indicator_service.dart';
+import 'src/services/user_profile_service.dart';
 
 void main() async {
   // Ensure Flutter is initialized
@@ -25,8 +26,14 @@ void main() async {
     debugPrint('Failed to preload indicators: $e');
   }
 
+  // Check if user has completed onboarding
+  final hasCompletedOnboarding = await UserProfileService.instance.hasCompletedOnboarding();
+
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(MyApp(settingsController: settingsController));
+  runApp(MyApp(
+    settingsController: settingsController,
+    hasCompletedOnboarding: hasCompletedOnboarding,
+  ));
 }

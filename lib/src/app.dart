@@ -7,6 +7,7 @@ import 'key_facts/key_facts_screen.dart';
 import 'search/search_screen.dart';
 import 'indicators/indicator_detail_screen.dart';
 import 'indicators/indicators_screen.dart';
+import 'onboarding/role_selection_screen.dart';
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
@@ -18,9 +19,11 @@ class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
     required this.settingsController,
+    required this.hasCompletedOnboarding,
   });
 
   final SettingsController settingsController;
+  final bool hasCompletedOnboarding;
 
   @override
   Widget build(BuildContext context) {
@@ -260,6 +263,11 @@ class MyApp extends StatelessWidget {
           ),
           themeMode: settingsController.themeMode,
 
+          // Set initial route based on onboarding status
+          initialRoute: hasCompletedOnboarding 
+              ? HomeScreen.routeName 
+              : RoleSelectionScreen.routeName,
+
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
           onGenerateRoute: (RouteSettings routeSettings) {
@@ -267,6 +275,8 @@ class MyApp extends StatelessWidget {
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
+                  case RoleSelectionScreen.routeName:
+                    return const RoleSelectionScreen();
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
                   case KeyFactsScreen.routeName:
@@ -283,7 +293,9 @@ class MyApp extends StatelessWidget {
                     return const HomeScreen();
                   case SampleItemListView.routeName:
                   default:
-                    return const HomeScreen(); // Changed default to HomeScreen
+                    return hasCompletedOnboarding 
+                        ? const HomeScreen() 
+                        : const RoleSelectionScreen();
                 }
               },
             );

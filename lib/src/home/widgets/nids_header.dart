@@ -27,57 +27,69 @@ class NIDSHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top row: Coat of arms and health text
-          Row(
-            children: [
-              // Placeholder for SA coat of arms
-              // TODO: Replace with actual image when available
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: saGovernmentGreen.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  Icons.account_balance,
-                  color: saGovernmentGreen,
-                  size: 32,
-                ),
-              ),
-              const SizedBox(width: 12),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'health',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1F2937),
-                    ),
+          // Official Department of Health banner
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              'assets/images/South_African_National_Department_of_Health_logo_2023.jpg',
+              height: 80,
+              fit: BoxFit.contain,
+              alignment: Alignment.centerLeft,
+              errorBuilder: (context, error, stackTrace) {
+                // Fallback to placeholder if image fails to load
+                return Container(
+                  height: 80,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: saGovernmentGreen.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  SizedBox(height: 2),
-                  Text(
-                    'Department: Health',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF6B7280),
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.account_balance,
+                        color: saGovernmentGreen,
+                        size: 32,
+                      ),
+                      const SizedBox(width: 12),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'health',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF1F2937),
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            'Department: Health',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF6B7280),
+                            ),
+                          ),
+                          Text(
+                            'REPUBLIC OF SOUTH AFRICA',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF1F2937),
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Text(
-                    'REPUBLIC OF SOUTH AFRICA',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1F2937),
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                );
+              },
+            ),
           ),
 
           const SizedBox(height: 20),

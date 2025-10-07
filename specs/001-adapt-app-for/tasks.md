@@ -99,11 +99,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T029 [P] [US2] Create `lib/src/onboarding/widgets/role_option_card.dart` widget for individual role selection button (displays role name with icon, selected state styling with green highlight, onTap callback)
-- [ ] T030 [US2] Create `lib/src/onboarding/role_selection_screen.dart` with welcome message, list of role options (Nurse, Doctor, Data Clerk, Program Manager, Pharmacist, Community Health Worker, Other) using RoleOptionCard widgets, "Other" selection shows optional text field for custom role, confirm button that calls UserProfileService.saveProfile() and navigates to home screen
-- [ ] T031 [US2] Update `lib/main.dart` to check UserProfileService.hasCompletedOnboarding() on app startup - if false, navigate to role_selection_screen; if true, navigate directly to home screen
-- [ ] T032 [US2] Add validation to role selection screen: confirm button disabled until a role is selected, if "Other" selected without custom text, show validation message or allow empty
-- [ ] T033 [US2] Add error handling for UserProfileService.saveProfile() failure: show error dialog and allow user to retry role selection
+- [X] T029 [P] [US2] Create `lib/src/onboarding/widgets/role_option_card.dart` widget for individual role selection button (displays role name with icon, selected state styling with green highlight, onTap callback)
+- [X] T030 [US2] Create `lib/src/onboarding/role_selection_screen.dart` with welcome message, list of role options (Nurse, Doctor, Data Clerk, Program Manager, Pharmacist, Community Health Worker, Other) using RoleOptionCard widgets, "Other" selection shows optional text field for custom role, confirm button that calls UserProfileService.saveProfile() and navigates to home screen
+- [X] T031 [US2] Update `lib/main.dart` to check UserProfileService.hasCompletedOnboarding() on app startup - if false, navigate to role_selection_screen; if true, navigate directly to home screen
+- [X] T032 [US2] Add validation to role selection screen: confirm button disabled until a role is selected, if "Other" selected without custom text, show validation message or allow empty
+- [X] T033 [US2] Add error handling for UserProfileService.saveProfile() failure: show error dialog and allow user to retry role selection
 
 **Checkpoint**: First-time users see role selection before accessing app, role is saved locally, returning users skip role selection, all role options functional including "Other" with custom text
 
@@ -117,12 +117,12 @@
 
 ### Implementation for User Story 4
 
-- [ ] T034 [US4] Update `lib/src/search/search_screen.dart` to use SAIndicatorService.searchIndicators(query) method, display results in list with indicator name and shortname visible, implement search debouncing (300ms delay after typing stops), prioritize exact matches in indicator ID at top of results, then partial matches in name/shortname/definition order
-- [ ] T035 [US4] Add search result item widget to search screen showing indicator name, shortname, indicator ID, and group name for context, use existing theme-aware colors from AppColors utility
-- [ ] T036 [US4] Implement "No indicators found" empty state in search screen with friendly message and search suggestions (e.g., "Try searching by indicator name, ID, or keywords")
-- [ ] T037 [US4] Connect home screen search bar (HomeSearchBar widget from US5) to navigate to search_screen with focus on search input
-- [ ] T038 [US4] Add loading indicator during search in search_screen to show search is in progress
-- [ ] T039 [US4] Optimize SAIndicatorService.searchIndicators() method to meet < 500ms performance requirement: implement efficient string matching, consider caching search results for repeated queries
+- [X] T034 [US4] Update `lib/src/search/search_screen.dart` to use SAIndicatorService.searchIndicators(query) method, display results in list with indicator name and shortname visible, implement search debouncing (300ms delay after typing stops), prioritize exact matches in indicator ID at top of results, then partial matches in name/shortname/definition order
+- [X] T035 [US4] Add search result item widget to search screen showing indicator name, shortname, indicator ID, and group name for context, use existing theme-aware colors from AppColors utility
+- [X] T036 [US4] Implement "No indicators found" empty state in search screen with friendly message and search suggestions (e.g., "Try searching by indicator name, ID, or keywords")
+- [X] T037 [US4] Connect home screen search bar (HomeSearchBar widget from US5) to navigate to search_screen with focus on search input
+- [X] T038 [US4] Add loading indicator during search in search_screen to show search is in progress
+- [X] T039 [US4] Optimize SAIndicatorService.searchIndicators() method to meet < 500ms performance requirement: implement efficient string matching, consider caching search results for repeated queries
 
 **Checkpoint**: Search functional from home screen and Search tab, results appear quickly (< 500ms), prioritization correct (exact ID matches first), tapping results navigates to details, empty state handles no matches gracefully
 
@@ -136,11 +136,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T040 [US3] Update `lib/src/settings/settings_screen.dart` to add "User Role" list item showing current role from UserProfileService.getProfile(), handle null case (shouldn't happen if onboarding complete), tap navigates to role selection screen
-- [ ] T041 [US3] Update `lib/src/onboarding/role_selection_screen.dart` to accept optional currentRole parameter, if provided, highlight/pre-select current role in the list, update screen title from "Welcome" to "Update Role" when editing
-- [ ] T042 [US3] Update role selection screen to call UserProfileService.updateProfile() when editing existing role (instead of saveProfile() for first-time), show success message and navigate back to Settings after update
-- [ ] T043 [US3] Add navigation from settings role list item to role_selection_screen passing current role, handle back navigation to return to Settings
-- [ ] T044 [US3] Add confirmation dialog when role is updated successfully: "Role updated to [new role]" with OK button
+- [X] T040 [US3] Update `lib/src/settings/settings_screen.dart` to add "User Role" list item showing current role from UserProfileService.getProfile(), handle null case (shouldn't happen if onboarding complete), tap navigates to role selection screen
+- [X] T041 [US3] Update `lib/src/onboarding/role_selection_screen.dart` to accept optional currentRole parameter, if provided, highlight/pre-select current role in the list, update screen title from "Welcome" to "Update Role" when editing
+- [X] T042 [US3] Update role selection screen to call UserProfileService.updateProfile() when editing existing role (instead of saveProfile() for first-time), show success message and navigate back to Settings after update
+- [X] T043 [US3] Add navigation from settings role list item to role_selection_screen passing current role, handle back navigation to return to Settings
+- [X] T044 [US3] Add confirmation dialog when role is updated successfully: "Role updated to [new role]" with OK button
 
 **Checkpoint**: Settings displays current role, tapping opens role selection with current role highlighted, changing role saves and persists, Settings reflects new role after update
 

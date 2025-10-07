@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../models/sa_indicator.dart';
 import '../models/indicator_group.dart';
@@ -23,6 +24,8 @@ class _SearchScreenState extends State<SearchScreen> {
   List<SAIndicator> _searchResults = [];
   bool _isLoading = true;
   bool _hasSearched = false;
+  bool _isSearching = false;
+  Timer? _debounceTimer;
 
   @override
   void initState() {
@@ -37,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   void dispose() {
+    _debounceTimer?.cancel();
     _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
     _searchFocusNode.dispose();
@@ -59,18 +63,31 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _onSearchChanged() {
+    // Cancel any existing timer
+    _debounceTimer?.cancel();
+
     final query = _searchController.text;
     if (query.isEmpty) {
       setState(() {
         _hasSearched = false;
         _searchResults = [];
+        _isSearching = false;
       });
       return;
     }
 
+    // Show searching indicator
     setState(() {
-      _hasSearched = true;
-      _searchResults = _indicatorService.searchIndicators(query);
+      _isSearching = true;
+    });
+
+    // Debounce search by 300ms
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+      setState(() {
+        _hasSearched = true;
+        _searchResults = _indicatorService.searchIndicators(query);
+        _isSearching = false;
+      });
     });
   }
 
@@ -180,7 +197,9 @@ class _SearchScreenState extends State<SearchScreen> {
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
-                  : _buildSearchContent(),
+                  : _isSearching
+                      ? const Center(child: CircularProgressIndicator())
+                      : _buildSearchContent(),
             ),
           ],
         ),
