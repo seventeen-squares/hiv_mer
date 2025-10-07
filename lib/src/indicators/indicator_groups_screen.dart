@@ -61,7 +61,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return Icons.child_care;
     } else if (groupId.contains('immunis') || groupId.contains('epi')) {
       return Icons.vaccines;
-    } else if (groupId.contains('communicable') || groupId.contains('disease')) {
+    } else if (groupId.contains('communicable') ||
+        groupId.contains('disease')) {
       return Icons.people;
     } else if (groupId.contains('chronic') || groupId.contains('medicine')) {
       return Icons.local_pharmacy;
@@ -88,7 +89,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return const Color(0xFF06B6D4);
     } else if (groupId.contains('immunis') || groupId.contains('epi')) {
       return const Color(0xFFEC4899);
-    } else if (groupId.contains('communicable') || groupId.contains('disease')) {
+    } else if (groupId.contains('communicable') ||
+        groupId.contains('disease')) {
       return const Color(0xFF10B981);
     } else if (groupId.contains('chronic') || groupId.contains('medicine')) {
       return const Color(0xFF3B82F6);
@@ -232,7 +234,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                 // Navigate directly to indicator list if no subgroups
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => IndicatorListByGroupScreen(group: group),
+                    builder: (context) =>
+                        IndicatorListByGroupScreen(group: group),
                   ),
                 );
               }
