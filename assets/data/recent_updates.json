@@ -1,20 +1,20 @@
 [
   {
     "version": "v.2025.10",
-    "date": "October 2025",
-    "description": "Initial release: South African National Indicator Data Set (NIDS) app with official branding and 250+ indicators",
+    "date": "2025-10-07",
+    "description": "Initial NIDS release with 237 South African national health indicators across 26 indicator groups including ART, TB, EMS, Child & Nutrition, and more",
     "type": "feature"
   },
   {
     "version": "v.2025.10",
-    "date": "October 2025",
-    "description": "Added role selection for healthcare workers to personalize experience",
+    "date": "2025-10-07",
+    "description": "Official Department of Health branding with SA government green color scheme and coat of arms",
     "type": "feature"
   },
   {
     "version": "v.2025.10",
-    "date": "October 2025",
-    "description": "Implemented offline-first architecture for 100% offline functionality",
-    "type": "enhancement"
+    "date": "2025-10-07",
+    "description": "User role selection for personalized experience (Nurse, Doctor, Data Clerk, Program Manager, Pharmacist, Community Health Worker, Other)",
+    "type": "feature"
   }
 ]

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/sa_indicator_service.dart';
+import '../indicators/indicator_groups_screen.dart';
 import 'widgets/nids_header.dart';
 import 'widgets/home_search_bar.dart';
 import 'widgets/navigation_card.dart';
@@ -105,6 +106,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   childAspectRatio: 1.1,
                   children: [
                     NavigationCard(
+                      icon: Icons.folder_outlined,
+                      title: 'Indicators',
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const IndicatorGroupsScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    NavigationCard(
                       icon: Icons.help_outline,
                       title: 'Help/Support',
                       onTap: () {
@@ -137,13 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Feedback',
                       onTap: () {
                         // TODO: Navigate to Feedback
-                      },
-                    ),
-                    NavigationCard(
-                      icon: Icons.info_outline,
-                      title: 'About',
-                      onTap: () {
-                        // TODO: Navigate to About
                       },
                     ),
                   ],

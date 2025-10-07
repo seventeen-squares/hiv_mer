@@ -4,6 +4,7 @@ import '../models/sa_indicator.dart';
 import '../models/indicator_group.dart';
 import '../services/sa_indicator_service.dart';
 import '../indicators/indicator_detail_screen.dart';
+import '../indicators/indicator_list_by_group_screen.dart';
 import '../utils/app_colors.dart';
 import '../utils/constants.dart';
 
@@ -366,8 +367,11 @@ class _SearchScreenState extends State<SearchScreen> {
         trailing: Icon(Icons.arrow_forward_ios,
             size: 16, color: Colors.grey.shade400),
         onTap: () {
-          _searchController.text = group.name;
-          _searchFocusNode.requestFocus();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => IndicatorListByGroupScreen(group: group),
+            ),
+          );
         },
       ),
     );

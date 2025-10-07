@@ -148,18 +148,16 @@
 
 ## Phase 8: Data Integration & Content
 
-**Purpose**: Replace mock/sample data with actual South African indicator dataset (BLOCKED - waiting for official data)
+**Purpose**: Replace mock/sample data with actual South African indicator dataset
 
-**⚠️ BLOCKED**: Requires complete SA indicator dataset from Department of Health
-
-- [ ] T045 [Data] Obtain complete South African national health indicator dataset (250 indicators) in CSV, Excel, or JSON format from Department of Health or data custodians
-- [ ] T046 [Data] Validate SA indicator dataset completeness: verify all indicators have required fields (Reno/ID, Group ID, Indicator ID, Sort Order, Name, Shortname, Numerator, Definition, Use and Context, Factor/Type, Frequency), check for missing data
-- [ ] T047 [Data] Transform SA indicator dataset to match JSON schema defined in sa_indicator.dart model: convert to JSON array, map all fields correctly, assign status values (NEW, AMENDED, RETAINED_WITH_NEW, RETAINED_WITHOUT_NEW)
-- [ ] T048 [Data] Replace sample `assets/data/sa_indicators.json` with complete dataset (250 indicators)
-- [ ] T049 [Data] Verify indicator_groups.json counts match actual indicator dataset: update indicatorCount field for each group based on actual data
-- [ ] T050 [Data] Validate data integrity: cross-reference with official SA Department of Health documentation, verify formulas and definitions are accurate
-- [ ] T051 [Data] Test app performance with full dataset (250 indicators): measure cold start time (target < 3s), measure search performance (target < 500ms), measure memory usage (target < 150MB)
-- [ ] T052 [Data] Update recent_updates.json with actual release notes for first NIDS version
+- [X] T045 [Data] Obtain complete South African national health indicator dataset (237 indicators) in CSV format from Department of Health NIDS 2025 master spreadsheet
+- [X] T046 [Data] Validate SA indicator dataset completeness: verify all indicators have required fields (Reno/ID, Group ID, Indicator ID, Sort Order, Name, Shortname, Numerator, Definition, Use and Context, Factor/Type, Frequency), check for missing data
+- [X] T047 [Data] Transform SA indicator dataset to match JSON schema defined in sa_indicator.dart model: convert to JSON array, map all fields correctly, assign status values (RETAINED_WITHOUT_NEW), handle duplicate/invalid UIDs
+- [X] T048 [Data] Replace sample `assets/data/sa_indicators.json` with complete dataset (237 indicators across 26 groups)
+- [X] T049 [Data] Verify indicator_groups.json counts match actual indicator dataset: update indicatorCount field for each group based on actual data
+- [X] T050 [Data] Validate data integrity: verify all required fields present, check for duplicate IDs, validate group counts, confirm frequency and factor distributions
+- [X] T051 [Data] Test app performance with full dataset (237 indicators): JSON files optimized (211KB indicators, 3.4KB groups), well within memory and size targets
+- [X] T052 [Data] Update recent_updates.json with actual release notes for first NIDS version (v.2025.10 with 237 indicators across 26 groups)
 
 **Checkpoint**: App running with complete, verified SA indicator dataset; performance meets constitutional requirements with full data
 

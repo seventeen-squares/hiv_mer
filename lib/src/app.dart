@@ -7,6 +7,7 @@ import 'key_facts/key_facts_screen.dart';
 import 'search/search_screen.dart';
 import 'indicators/indicator_detail_screen.dart';
 import 'indicators/indicators_screen.dart';
+import 'indicators/indicator_groups_screen.dart';
 import 'onboarding/role_selection_screen.dart';
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
@@ -261,7 +262,8 @@ class MyApp extends StatelessWidget {
               unselectedItemColor: Color(0xFF94A3B8),
             ),
           ),
-          themeMode: settingsController.themeMode,
+          // Force light theme mode for consistency
+          themeMode: ThemeMode.light,
 
           // Set initial route based on onboarding status
           initialRoute: hasCompletedOnboarding
@@ -285,6 +287,8 @@ class MyApp extends StatelessWidget {
                     return const SearchScreen();
                   case IndicatorsScreen.routeName:
                     return const IndicatorsScreen();
+                  case IndicatorGroupsScreen.routeName:
+                    return const IndicatorGroupsScreen();
                   case IndicatorDetailScreen.routeName:
                     return const IndicatorDetailScreen();
                   case SampleItemDetailsView.routeName:

@@ -1,80 +1,184 @@
 [
   {
-    "id": "routine_facility",
-    "name": "Routine Facility Health Services",
+    "id": "art_baseline",
+    "name": "Art Baseline",
     "displayOrder": 1,
-    "subGroups": [
-      "HIV Testing Services",
-      "ART Services",
-      "PMTCT Services",
-      "Prevention Services"
-    ],
-    "indicatorCount": 4
+    "subGroups": [],
+    "indicatorCount": 27
   },
   {
-    "id": "routine_art",
-    "name": "Routine ART Quarterly",
+    "id": "art_monthly",
+    "name": "Art Monthly",
     "displayOrder": 2,
-    "subGroups": [
-      "Viral Load Monitoring",
-      "Retention and Adherence",
-      "Treatment Outcomes"
-    ],
+    "subGroups": [],
     "indicatorCount": 2
   },
   {
-    "id": "tb_quarterly",
-    "name": "TB Quarterly",
+    "id": "art_outcome",
+    "name": "Art Outcome",
     "displayOrder": 3,
-    "subGroups": [
-      "TB Case Detection",
-      "TB Treatment Outcomes",
-      "TB-HIV Co-infection"
-    ],
+    "subGroups": [],
+    "indicatorCount": 21
+  },
+  {
+    "id": "child_and_nutrition",
+    "name": "Child And Nutrition",
+    "displayOrder": 4,
+    "subGroups": [],
+    "indicatorCount": 19
+  },
+  {
+    "id": "communicable_diseases",
+    "name": "Communicable Diseases",
+    "displayOrder": 5,
+    "subGroups": [],
     "indicatorCount": 2
+  },
+  {
+    "id": "dr-tb_quarterly",
+    "name": "Dr-Tb Quarterly",
+    "displayOrder": 6,
+    "subGroups": [],
+    "indicatorCount": 9
+  },
+  {
+    "id": "ds-tb_quarterly",
+    "name": "Ds-Tb Quarterly",
+    "displayOrder": 7,
+    "subGroups": [],
+    "indicatorCount": 6
   },
   {
     "id": "ems",
-    "name": "Emergency Medical Services (EMS)",
-    "displayOrder": 4,
-    "subGroups": [
-      "Response Times",
-      "Service Quality",
-      "Resource Utilization"
-    ],
-    "indicatorCount": 1
+    "name": "Ems",
+    "displayOrder": 8,
+    "subGroups": [],
+    "indicatorCount": 2
   },
   {
-    "id": "non_facility",
-    "name": "Non-Facility Services",
-    "displayOrder": 5,
-    "subGroups": [
-      "Community Testing",
-      "Outreach Programs",
-      "Mobile Clinics"
-    ],
-    "indicatorCount": 1
+    "id": "environmental_&_port_health",
+    "name": "Environmental & Port Health",
+    "displayOrder": 9,
+    "subGroups": [],
+    "indicatorCount": 12
   },
   {
-    "id": "periodic_campaigns",
-    "name": "Periodic Campaigns",
-    "displayOrder": 6,
-    "subGroups": [
-      "Immunization Campaigns",
-      "Health Awareness",
-      "Screening Programs"
-    ],
-    "indicatorCount": 0
+    "id": "epi",
+    "name": "Epi",
+    "displayOrder": 10,
+    "subGroups": [],
+    "indicatorCount": 19
   },
   {
-    "id": "selected_sites",
-    "name": "Selected Sites",
-    "displayOrder": 7,
-    "subGroups": [
-      "Sentinel Surveillance",
-      "Special Studies",
-      "Pilot Programs"
-    ],
-    "indicatorCount": 0
+    "id": "eye_care",
+    "name": "Eye Care",
+    "displayOrder": 11,
+    "subGroups": [],
+    "indicatorCount": 3
+  },
+  {
+    "id": "hiv",
+    "name": "Hiv",
+    "displayOrder": 12,
+    "subGroups": [],
+    "indicatorCount": 19
+  },
+  {
+    "id": "inpatient_management",
+    "name": "Inpatient Management",
+    "displayOrder": 13,
+    "subGroups": [],
+    "indicatorCount": 15
+  },
+  {
+    "id": "management_phc",
+    "name": "Management Phc",
+    "displayOrder": 14,
+    "subGroups": [],
+    "indicatorCount": 8
+  },
+  {
+    "id": "maternal_and_neonatal",
+    "name": "Maternal And Neonatal",
+    "displayOrder": 15,
+    "subGroups": [],
+    "indicatorCount": 25
+  },
+  {
+    "id": "mental_health",
+    "name": "Mental Health",
+    "displayOrder": 16,
+    "subGroups": [],
+    "indicatorCount": 4
+  },
+  {
+    "id": "non-communicable_disease",
+    "name": "Non-Communicable Disease",
+    "displayOrder": 17,
+    "subGroups": [],
+    "indicatorCount": 4
+  },
+  {
+    "id": "oral_health",
+    "name": "Oral Health",
+    "displayOrder": 18,
+    "subGroups": [],
+    "indicatorCount": 2
+  },
+  {
+    "id": "quality",
+    "name": "Quality",
+    "displayOrder": 19,
+    "subGroups": [],
+    "indicatorCount": 7
+  },
+  {
+    "id": "rehabilitation",
+    "name": "Rehabilitation",
+    "displayOrder": 20,
+    "subGroups": [],
+    "indicatorCount": 4
+  },
+  {
+    "id": "school_health",
+    "name": "School Health",
+    "displayOrder": 21,
+    "subGroups": [],
+    "indicatorCount": 9
+  },
+  {
+    "id": "sti",
+    "name": "Sti",
+    "displayOrder": 22,
+    "subGroups": [],
+    "indicatorCount": 4
+  },
+  {
+    "id": "tb_monthly",
+    "name": "Tb Monthly",
+    "displayOrder": 23,
+    "subGroups": [],
+    "indicatorCount": 4
+  },
+  {
+    "id": "viral_hepatitis",
+    "name": "Viral Hepatitis",
+    "displayOrder": 24,
+    "subGroups": [],
+    "indicatorCount": 3
+  },
+  {
+    "id": "wbphcot",
+    "name": "Wbphcot",
+    "displayOrder": 25,
+    "subGroups": [],
+    "indicatorCount": 3
+  },
+  {
+    "id": "women's_health",
+    "name": "Women'S Health",
+    "displayOrder": 26,
+    "subGroups": [],
+    "indicatorCount": 4
   }
 ]
