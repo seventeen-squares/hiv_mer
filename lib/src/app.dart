@@ -8,6 +8,7 @@ import 'search/search_screen.dart';
 import 'indicators/indicator_detail_screen.dart';
 import 'indicators/indicators_screen.dart';
 import 'indicators/indicator_groups_screen.dart';
+import 'indicators/favorites_screen.dart';
 import 'onboarding/role_selection_screen.dart';
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
@@ -291,6 +292,8 @@ class MyApp extends StatelessWidget {
                     return const IndicatorGroupsScreen();
                   case IndicatorDetailScreen.routeName:
                     return const IndicatorDetailScreen();
+                  case FavoritesScreen.routeName:
+                    return const FavoritesScreen();
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
                   case HomeScreen.routeName:

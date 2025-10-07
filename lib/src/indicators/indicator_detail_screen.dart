@@ -1,12 +1,124 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../models/sa_indicator.dart';
+import '../services/favorites_service.dart';
 import '../utils/app_colors.dart';
 import '../utils/constants.dart';
 
-class IndicatorDetailScreen extends StatelessWidget {
+class IndicatorDetailScreen extends StatefulWidget {
   static const routeName = '/indicator-detail';
 
   const IndicatorDetailScreen({super.key});
+
+  @override
+  State<IndicatorDetailScreen> createState() => _IndicatorDetailScreenState();
+}
+
+class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
+  final _favoritesService = FavoritesService.instance;
+  bool _isFavorite = false;
+  bool _isLoadingFavorite = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _checkFavoriteStatus();
+  }
+
+  Future<void> _checkFavoriteStatus() async {
+    final indicator = ModalRoute.of(context)!.settings.arguments as SAIndicator;
+    final isFav = await _favoritesService.isFavorite(indicator.indicatorId);
+    setState(() {
+      _isFavorite = isFav;
+      _isLoadingFavorite = false;
+    });
+  }
+
+  Future<void> _toggleFavorite(SAIndicator indicator) async {
+    final newStatus = await _favoritesService.toggleFavorite(indicator.indicatorId);
+    setState(() {
+      _isFavorite = newStatus;
+    });
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            newStatus 
+              ? 'Added to favorites'
+              : 'Removed from favorites'
+          ),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  String _formatIndicatorForShare(SAIndicator indicator) {
+    final buffer = StringBuffer();
+
+    buffer.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    buffer.writeln('NIDS INDICATOR INFORMATION');
+    buffer.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+
+    buffer.writeln('📊 ${indicator.name}');
+    if (indicator.shortname.isNotEmpty &&
+        indicator.shortname != indicator.name) {
+      buffer.writeln('Short name: ${indicator.shortname}');
+    }
+    buffer.writeln();
+
+    buffer.writeln('🆔 IDENTIFIERS');
+    buffer.writeln('Indicator ID: ${indicator.indicatorId}');
+    if (indicator.renoId.isNotEmpty) {
+      buffer.writeln('Reno/ID: ${indicator.renoId}');
+    }
+    buffer.writeln('Group ID: ${indicator.groupId}');
+    buffer.writeln();
+
+    buffer.writeln('📝 DEFINITION');
+    buffer.writeln(indicator.definition);
+    buffer.writeln();
+
+    buffer.writeln('🔢 CALCULATION');
+    buffer.writeln('Numerator: ${indicator.numerator}');
+    if (indicator.numeratorFormula != null) {
+      buffer.writeln('Formula: ${indicator.numeratorFormula}');
+    }
+    buffer.writeln();
+    buffer.writeln('Denominator: ${indicator.denominator}');
+    if (indicator.denominatorFormula != null) {
+      buffer.writeln('Formula: ${indicator.denominatorFormula}');
+    }
+    buffer.writeln();
+
+    if (indicator.useContext.isNotEmpty) {
+      buffer.writeln('💡 USE AND CONTEXT');
+      buffer.writeln(indicator.useContext);
+      buffer.writeln();
+    }
+
+    buffer.writeln('ℹ️ METADATA');
+    buffer.writeln('Factor/Type: ${indicator.factorType}');
+    buffer.writeln('Frequency: ${indicator.frequency}');
+    buffer.writeln('Status: ${indicator.status.toString().split('.').last}');
+    buffer.writeln();
+
+    buffer.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    buffer.writeln('Source: National Indicator Data Set (NIDS)');
+    buffer.writeln('Department of Health, South Africa');
+    buffer.writeln('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+    return buffer.toString();
+  }
+
+  void _shareIndicator(BuildContext context, SAIndicator indicator) {
+    final text = _formatIndicatorForShare(indicator);
+    Share.share(
+      text,
+      subject: 'NIDS Indicator: ${indicator.name}',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,38 +150,52 @@ class IndicatorDetailScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          indicator.indicatorId,
+                          indicator.shortname,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          indicator.shortname,
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.9),
-                            fontSize: 14,
-                          ),
-                        ),
+                        // Text(
+                        //   indicator.shortname,
+                        //   style: TextStyle(
+                        //     color: Colors.white.withOpacity(0.9),
+                        //     fontSize: 14,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                   IconButton(
-                    onPressed: () {
-                      // TODO: Add to favorites
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Added to favorites'),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                    },
+                    onPressed: () => _shareIndicator(context, indicator),
                     icon: const Icon(
-                      Icons.favorite_border,
+                      Icons.share,
                       color: Colors.white,
                     ),
+                    tooltip: 'Share indicator',
                   ),
+                  if (_isLoadingFavorite)
+                    const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      ),
+                    )
+                  else
+                    IconButton(
+                      onPressed: () => _toggleFavorite(indicator),
+                      icon: Icon(
+                        _isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: _isFavorite ? Colors.red : Colors.white,
+                      ),
+                      tooltip: _isFavorite ? 'Remove from favorites' : 'Add to favorites',
+                    ),
                 ],
               ),
             ),

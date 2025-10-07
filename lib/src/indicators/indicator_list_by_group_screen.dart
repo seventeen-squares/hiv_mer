@@ -405,16 +405,16 @@ class _IndicatorListByGroupScreenState
                 children: [
                   _buildStatusBadge(indicator.status),
                   const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      indicator.indicatorId,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  // child: Text(
+                  //   indicator.indicatorId,
+                  //   style: TextStyle(
+                  //     fontSize: 12,
+                  //     fontWeight: FontWeight.w600,
+                  //     color: Colors.grey.shade600,
+                  //   ),
+                  // ),
+                  // ),
                 ],
               ),
               const SizedBox(height: 12),

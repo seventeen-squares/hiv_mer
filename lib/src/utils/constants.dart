@@ -67,4 +67,5 @@ const String departmentBranding =
 class StorageKeys {
   static const String hasCompletedOnboarding = 'has_completed_onboarding';
   static const String userProfile = 'user_profile';
+  static const String favoriteIndicators = 'favorite_indicators';
 }

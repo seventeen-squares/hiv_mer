@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icons.favorite_outline,
                       title: 'Favorites',
                       onTap: () {
-                        // TODO: Navigate to Favorites
+                        Navigator.of(context).pushNamed('/favorites');
                       },
                     ),
                     NavigationCard(
