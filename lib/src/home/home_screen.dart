@@ -145,10 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                     NavigationCard(
-                      icon: Icons.feedback_outlined,
-                      title: 'Feedback',
+                      icon: Icons.settings_outlined,
+                      title: 'Settings',
                       onTap: () {
-                        // TODO: Navigate to Feedback
+                        Navigator.of(context).pushNamed('/settings');
                       },
                     ),
                   ],
