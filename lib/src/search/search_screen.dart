@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/mer_models.dart';
-import '../services/mer_data_service.dart';
+import '../models/sa_indicator.dart';
+import '../models/indicator_group.dart';
+import '../services/sa_indicator_service.dart';
 import '../indicators/indicator_detail_screen.dart';
 import '../utils/app_colors.dart';
+import '../utils/constants.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = '/search';
@@ -14,11 +16,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final MERDataService _dataService = MERDataService();
+  final _indicatorService = SAIndicatorService.instance;
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
-  List<MERIndicator> _searchResults = [];
+  List<SAIndicator> _searchResults = [];
   bool _isLoading = true;
   bool _hasSearched = false;
 
@@ -27,6 +29,10 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     _loadData();
     _searchController.addListener(_onSearchChanged);
+    // Auto-focus search field
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _searchFocusNode.requestFocus();
+    });
   }
 
   @override
@@ -38,17 +44,33 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<void> _loadData() async {
-    await _dataService.loadData();
-    setState(() {
-      _isLoading = false;
-    });
+    try {
+      if (!_indicatorService.isLoaded) {
+        await _indicatorService.loadIndicators();
+      }
+      setState(() {
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   void _onSearchChanged() {
     final query = _searchController.text;
+    if (query.isEmpty) {
+      setState(() {
+        _hasSearched = false;
+        _searchResults = [];
+      });
+      return;
+    }
+
     setState(() {
-      _hasSearched = query.isNotEmpty;
-      _searchResults = _dataService.searchIndicators(query);
+      _hasSearched = true;
+      _searchResults = _indicatorService.searchIndicators(query);
     });
   }
 
@@ -67,14 +89,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.indigo.shade600,
-                    Colors.indigo.shade400,
-                  ],
-                ),
+                color: saGovernmentGreen,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,10 +106,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       const SizedBox(width: 8),
                       const Expanded(
                         child: Text(
-                          'QUICK SEARCH',
+                          'SEARCH INDICATORS',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -124,7 +139,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       focusNode: _searchFocusNode,
                       decoration: InputDecoration(
                         hintText:
-                            'Search indicators (e.g., TX_CURR, HIV Testing)',
+                            'Search indicators (e.g., ART, TB, viral load)',
                         hintStyle: TextStyle(
                           color: AppColors.getTertiaryTextColor(context),
                           fontSize: 16,
@@ -186,14 +201,8 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildSearchSuggestions() {
-    final popularSearches = [
-      'TX_CURR',
-      'HTS_TST',
-      'TX_NEW',
-      'PMTCT_STAT',
-      'TB_STAT'
-    ];
-    final recentPrograms = _dataService.programAreas.take(4).toList();
+    final popularSearches = ['ART', 'viral load', 'TB', 'PMTCT', 'retention'];
+    final groups = _indicatorService.getAllGroups().take(5).toList();
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
@@ -201,34 +210,43 @@ class _SearchScreenState extends State<SearchScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Search Tips
-          Card(
-            elevation: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.lightbulb_outline,
-                          color: Colors.amber.shade600),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'Search Tips',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  const Text('• Search by indicator code (e.g., TX_CURR)'),
-                  const Text(
-                      '• Search by indicator name (e.g., Current on ART)'),
-                  const Text('• Search by keywords (e.g., HIV testing)'),
-                ],
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: Colors.grey.shade200,
+                width: 1,
               ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.lightbulb_outline, color: saGovernmentGreen),
+                    const SizedBox(width: 8),
+                    const Text(
+                      'Search Tips',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1F2937),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text('• Search by indicator ID (e.g., NIDS-RF-001)',
+                    style: TextStyle(color: Colors.grey.shade700)),
+                const SizedBox(height: 4),
+                Text('• Search by name (e.g., ART Initiations)',
+                    style: TextStyle(color: Colors.grey.shade700)),
+                const SizedBox(height: 4),
+                Text('• Search by keywords (e.g., viral load, TB)',
+                    style: TextStyle(color: Colors.grey.shade700)),
+              ],
             ),
           ),
 
@@ -240,6 +258,7 @@ class _SearchScreenState extends State<SearchScreen> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: Color(0xFF1F2937),
             ),
           ),
           const SizedBox(height: 12),
@@ -254,19 +273,18 @@ class _SearchScreenState extends State<SearchScreen> {
 
           const SizedBox(height: 24),
 
-          // Browse by Program Area
+          // Browse by Group
           const Text(
-            'Browse by Program Area',
+            'Browse by Indicator Group',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: Color(0xFF1F2937),
             ),
           ),
           const SizedBox(height: 12),
 
-          ...recentPrograms
-              .map((program) => _buildProgramAreaTile(program))
-              .toList(),
+          ...groups.map((group) => _buildGroupTile(group)).toList(),
         ],
       ),
     );
@@ -277,34 +295,60 @@ class _SearchScreenState extends State<SearchScreen> {
       label: Text(searchTerm),
       onPressed: () {
         _searchController.text = searchTerm;
-        _searchFocusNode.unfocus();
+        _searchFocusNode.requestFocus();
       },
-      backgroundColor: Colors.indigo.shade50,
-      labelStyle: TextStyle(color: Colors.indigo.shade700),
+      backgroundColor: saGovernmentGreen.withOpacity(0.1),
+      labelStyle:
+          TextStyle(color: saGovernmentGreen, fontWeight: FontWeight.w600),
+      side: BorderSide(color: saGovernmentGreen.withOpacity(0.3)),
     );
   }
 
-  Widget _buildProgramAreaTile(ProgramArea program) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
+  Widget _buildGroupTile(IndicatorGroup group) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey.shade200,
+          width: 1,
+        ),
+      ),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: _getProgramColor(program.color),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        leading: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: saGovernmentGreen.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Icon(
-            _getProgramIcon(program.icon),
-            color: Colors.white,
-            size: 20,
+            Icons.folder_outlined,
+            color: saGovernmentGreen,
+            size: 24,
           ),
         ),
         title: Text(
-          program.name,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          group.name,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1F2937),
+          ),
         ),
-        subtitle: Text(program.description),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        subtitle: Text(
+          '${group.indicatorCount} indicators',
+          style: TextStyle(
+            fontSize: 13,
+            color: Colors.grey.shade600,
+          ),
+        ),
+        trailing: Icon(Icons.arrow_forward_ios,
+            size: 16, color: Colors.grey.shade400),
         onTap: () {
-          _searchController.text = program.id;
-          _searchFocusNode.unfocus();
+          _searchController.text = group.name;
+          _searchFocusNode.requestFocus();
         },
       ),
     );
@@ -353,10 +397,17 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildIndicatorCard(MERIndicator indicator) {
-    return Card(
+  Widget _buildIndicatorCard(SAIndicator indicator) {
+    return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      elevation: 2,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey.shade200,
+          width: 1,
+        ),
+      ),
       child: InkWell(
         onTap: () {
           Navigator.of(context).pushNamed(
@@ -364,7 +415,7 @@ class _SearchScreenState extends State<SearchScreen> {
             arguments: indicator,
           );
         },
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -374,39 +425,48 @@ class _SearchScreenState extends State<SearchScreen> {
                 children: [
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: _getProgramColor(indicator.programArea),
-                      borderRadius: BorderRadius.circular(4),
+                      color: saGovernmentGreen.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: saGovernmentGreen.withOpacity(0.3),
+                        width: 1,
+                      ),
                     ),
                     child: Text(
-                      indicator.code,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      indicator.indicatorId,
+                      style: TextStyle(
+                        color: saGovernmentGreen,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   const Spacer(),
-                  Text(
-                    indicator.programArea,
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 12,
-                    ),
-                  ),
+                  _buildStatusBadge(indicator.status),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               Text(
                 indicator.name,
                 style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1F2937),
                 ),
               ),
-              const SizedBox(height: 4),
+              if (indicator.shortname.isNotEmpty) ...[
+                const SizedBox(height: 4),
+                Text(
+                  indicator.shortname,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+              const SizedBox(height: 8),
               Text(
                 indicator.definition,
                 style: TextStyle(
@@ -416,7 +476,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               Row(
                 children: [
                   Icon(Icons.schedule, size: 16, color: Colors.grey.shade500),
@@ -429,10 +489,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  Icon(Icons.category, size: 16, color: Colors.grey.shade500),
+                  Icon(Icons.science_outlined,
+                      size: 16, color: Colors.grey.shade500),
                   const SizedBox(width: 4),
                   Text(
-                    '${indicator.disaggregations.length} disaggregations',
+                    indicator.factorType,
                     style: TextStyle(
                       color: Colors.grey.shade600,
                       fontSize: 12,
@@ -447,41 +508,48 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Color _getProgramColor(String program) {
-    switch (program.toLowerCase()) {
-      case 'hts':
-        return Colors.blue.shade600;
-      case 'tx':
-        return Colors.green.shade600;
-      case 'pmtct':
-        return Colors.pink.shade600;
-      case 'tb':
-        return Colors.orange.shade600;
-      case 'kp':
-        return Colors.purple.shade600;
-      case 'ovc':
-        return Colors.teal.shade600;
-      default:
-        return Colors.grey.shade600;
-    }
-  }
+  Widget _buildStatusBadge(IndicatorStatus status) {
+    Color bgColor;
+    Color textColor;
+    String label;
 
-  IconData _getProgramIcon(String icon) {
-    switch (icon.toLowerCase()) {
-      case 'medical_services':
-        return Icons.medical_services;
-      case 'medication':
-        return Icons.medication;
-      case 'pregnant_woman':
-        return Icons.pregnant_woman;
-      case 'air':
-        return Icons.air;
-      case 'group':
-        return Icons.group;
-      case 'child_care':
-        return Icons.child_care;
-      default:
-        return Icons.info;
+    switch (status) {
+      case IndicatorStatus.newIndicator:
+        bgColor = const Color(0xFFDCFCE7);
+        textColor = const Color(0xFF166534);
+        label = 'NEW';
+        break;
+      case IndicatorStatus.amended:
+        bgColor = const Color(0xFFDBEAFE);
+        textColor = const Color(0xFF1E40AF);
+        label = 'AMENDED';
+        break;
+      case IndicatorStatus.retainedWithNew:
+        bgColor = const Color(0xFFFED7AA);
+        textColor = const Color(0xFF9A3412);
+        label = 'RETAINED+';
+        break;
+      case IndicatorStatus.retainedWithoutNew:
+        bgColor = const Color(0xFFF3F4F6);
+        textColor = const Color(0xFF4B5563);
+        label = 'RETAINED';
+        break;
     }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 11,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 }

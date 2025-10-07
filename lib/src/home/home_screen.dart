@@ -40,7 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
       final stats = _indicatorService.getStatistics();
 
       // Load recent updates
-      final updatesJson = await rootBundle.loadString('assets/data/recent_updates.json');
+      final updatesJson =
+          await rootBundle.loadString('assets/data/recent_updates.json');
       final updatesList = jsonDecode(updatesJson) as List<dynamic>;
       final updates = updatesList
           .map((json) => Map<String, String>.from(json as Map))
@@ -81,17 +82,17 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               // NIDS Header with SA branding
               const NIDSHeader(),
-              
+
               const SizedBox(height: 24),
-              
+
               // Search Bar
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 child: HomeSearchBar(),
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Navigation Cards Grid
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -148,9 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Summary Cards
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -174,9 +175,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              
+
               const SizedBox(height: 24),
-              
+
               // Recent Updates Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -184,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   updates: _recentUpdates,
                 ),
               ),
-              
+
               const SizedBox(height: 100), // Extra space for bottom navigation
             ],
           ),

@@ -10,8 +10,7 @@ class IndicatorDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final indicator =
-        ModalRoute.of(context)!.settings.arguments as SAIndicator;
+    final indicator = ModalRoute.of(context)!.settings.arguments as SAIndicator;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
@@ -104,7 +103,8 @@ class IndicatorDetailScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         _buildInfoRow('Indicator ID', indicator.indicatorId),
                         const SizedBox(height: 8),
-                        _buildInfoRow('Sort Order', indicator.sortOrder.toString()),
+                        _buildInfoRow(
+                            'Sort Order', indicator.sortOrder.toString()),
                       ],
                     ),
 
@@ -170,7 +170,8 @@ class IndicatorDetailScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         _buildInfoRow('Frequency', indicator.frequency),
                         const SizedBox(height: 8),
-                        _buildInfoRow('Status', _getStatusText(indicator.status)),
+                        _buildInfoRow(
+                            'Status', _getStatusText(indicator.status)),
                       ],
                     ),
 
@@ -317,7 +318,8 @@ class IndicatorDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard(BuildContext context, {required List<Widget> children}) {
+  Widget _buildInfoCard(BuildContext context,
+      {required List<Widget> children}) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(

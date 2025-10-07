@@ -37,9 +37,10 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
       // Get groups and indicators
       final groups = _indicatorService.getAllGroups();
       final indicatorsByGroup = <String, List<SAIndicator>>{};
-      
+
       for (final group in groups) {
-        indicatorsByGroup[group.id] = _indicatorService.getIndicatorsByGroup(group.id);
+        indicatorsByGroup[group.id] =
+            _indicatorService.getIndicatorsByGroup(group.id);
       }
 
       setState(() {
@@ -236,7 +237,8 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                 final indicator = entry.value;
                 return Column(
                   children: [
-                    if (index > 0) Divider(height: 1, color: Colors.grey.shade200),
+                    if (index > 0)
+                      Divider(height: 1, color: Colors.grey.shade200),
                     ListTile(
                       contentPadding: const EdgeInsets.all(16),
                       leading: _buildStatusBadge(indicator.status),
@@ -326,7 +328,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
   Widget _buildStatusBadge(IndicatorStatus status) {
     Color color;
     String label;
-    
+
     switch (status) {
       case IndicatorStatus.newIndicator:
         color = const Color(0xFF10B981);

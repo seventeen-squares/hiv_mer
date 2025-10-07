@@ -79,9 +79,9 @@ class NIDSHeader extends StatelessWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // App title
           const Text(
             appName,
@@ -92,9 +92,9 @@ class NIDSHeader extends StatelessWidget {
               height: 1.3,
             ),
           ),
-          
+
           const SizedBox(height: 8),
-          
+
           // Version number
           Text(
             appVersion,

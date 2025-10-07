@@ -52,7 +52,7 @@ class RecentUpdatesSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          
+
           // Updates list
           if (updates.isEmpty)
             Center(
@@ -69,58 +69,58 @@ class RecentUpdatesSection extends StatelessWidget {
             )
           else
             ...updates.take(3).map((update) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: _getTypeColor(update['type'] ?? 'feature'),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(
-                      _getTypeIcon(update['type'] ?? 'feature'),
-                      size: 16,
-                      color: Colors.white,
-                    ),
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: _getTypeColor(update['type'] ?? 'feature'),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          _getTypeIcon(update['type'] ?? 'feature'),
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              update['version'] ?? '',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              update['description'] ?? '',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFF1F2937),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              update['date'] ?? '',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          update['version'] ?? '',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey.shade600,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          update['description'] ?? '',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF1F2937),
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          update['date'] ?? '',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )),
+                )),
         ],
       ),
     );
