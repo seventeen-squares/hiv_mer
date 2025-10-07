@@ -109,7 +109,7 @@ class SAIndicator {
   /// Parse status from string
   static IndicatorStatus _statusFromString(String? status) {
     if (status == null) return IndicatorStatus.retainedWithoutNew;
-    
+
     switch (status.toLowerCase()) {
       case 'new':
       case 'newindicator':

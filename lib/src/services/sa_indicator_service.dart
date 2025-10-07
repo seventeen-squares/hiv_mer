@@ -8,7 +8,7 @@ import '../models/indicator_group.dart';
 class SAIndicatorService {
   // Private constructor for singleton pattern
   SAIndicatorService._();
-  
+
   /// Singleton instance
   static final SAIndicatorService instance = SAIndicatorService._();
 
@@ -27,14 +27,16 @@ class SAIndicatorService {
   Future<void> loadIndicators() async {
     try {
       // Load indicators JSON
-      final indicatorsJson = await rootBundle.loadString('assets/data/sa_indicators.json');
+      final indicatorsJson =
+          await rootBundle.loadString('assets/data/sa_indicators.json');
       final indicatorsList = jsonDecode(indicatorsJson) as List<dynamic>;
       _indicators = indicatorsList
           .map((json) => SAIndicator.fromJson(json as Map<String, dynamic>))
           .toList();
 
       // Load groups JSON
-      final groupsJson = await rootBundle.loadString('assets/data/indicator_groups.json');
+      final groupsJson =
+          await rootBundle.loadString('assets/data/indicator_groups.json');
       final groupsList = jsonDecode(groupsJson) as List<dynamic>;
       _groups = groupsList
           .map((json) => IndicatorGroup.fromJson(json as Map<String, dynamic>))

@@ -60,7 +60,8 @@ const String appVersion = 'v.2025.10';
 const String appName = 'National Indicator Data Set (NIDS)';
 
 /// Department branding text
-const String departmentBranding = 'Department: Health\nREPUBLIC OF SOUTH AFRICA';
+const String departmentBranding =
+    'Department: Health\nREPUBLIC OF SOUTH AFRICA';
 
 /// Storage keys for SharedPreferences
 class StorageKeys {

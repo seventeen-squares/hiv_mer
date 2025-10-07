@@ -35,8 +35,9 @@ class UserProfileService {
       final jsonString = jsonEncode(profile.toJson());
 
       // Save profile data
-      final success = await prefs.setString(StorageKeys.userProfile, jsonString);
-      
+      final success =
+          await prefs.setString(StorageKeys.userProfile, jsonString);
+
       if (success) {
         // Mark onboarding as complete
         await prefs.setBool(StorageKeys.hasCompletedOnboarding, true);

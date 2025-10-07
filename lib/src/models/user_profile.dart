@@ -62,7 +62,9 @@ class UserProfile {
 
   /// Get display text for the role
   String get roleDisplayText {
-    if (role == UserRole.other && customRoleText != null && customRoleText!.isNotEmpty) {
+    if (role == UserRole.other &&
+        customRoleText != null &&
+        customRoleText!.isNotEmpty) {
       return customRoleText!;
     }
     return roleLabels[role] ?? 'Other';
