@@ -110,10 +110,18 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
+    // Check if we can pop (i.e., if we're in a navigation stack)
+    final canPop = Navigator.of(context).canPop();
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
+      appBar: canPop
+          ? AppBar(
+              title: const Text('Settings'),
+            )
+          : AppBar(
+              title: const Text('Settings'),
+              automaticallyImplyLeading: false, // Hide back button
+            ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView(

@@ -8,7 +8,7 @@ import '../utils/constants.dart';
 /// Main navigation wrapper with bottom navigation bar
 class MainNavigation extends StatefulWidget {
   static const routeName = '/main';
-  
+
   final SettingsController settingsController;
 
   const MainNavigation({
@@ -18,13 +18,13 @@ class MainNavigation extends StatefulWidget {
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
-  
+
   /// Helper method to switch tabs from child widgets
   static void switchToTab(BuildContext context, int tabIndex) {
     final state = context.findAncestorStateOfType<_MainNavigationState>();
     state?._switchTab(tabIndex);
   }
-  
+
   /// Tab indices for navigation
   static const int homeTab = 0;
   static const int indicatorsTab = 1;
@@ -33,7 +33,7 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
-  
+
   // Use PageController to preserve state when switching tabs
   final PageController _pageController = PageController();
 
@@ -46,7 +46,7 @@ class _MainNavigationState extends State<MainNavigation> {
   void _onTabTapped(int index) {
     _switchTab(index);
   }
-  
+
   void _switchTab(int index) {
     if (_currentIndex != index) {
       setState(() {
@@ -68,7 +68,8 @@ class _MainNavigationState extends State<MainNavigation> {
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,
-        physics: const NeverScrollableScrollPhysics(), // Disable swipe to change page
+        physics:
+            const NeverScrollableScrollPhysics(), // Disable swipe to change page
         children: [
           const HomeScreen(),
           const IndicatorGroupsScreen(),

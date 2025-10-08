@@ -24,7 +24,7 @@ class FavoritesService {
   Future<List<String>> getFavoriteIds() async {
     final prefs = await _preferences;
     final jsonString = prefs.getString(StorageKeys.favoriteIndicators);
-    
+
     if (jsonString == null || jsonString.isEmpty) {
       return [];
     }
@@ -48,7 +48,7 @@ class FavoritesService {
   /// Returns true if successfully added, false if already exists
   Future<bool> addFavorite(String indicatorId) async {
     final favorites = await getFavoriteIds();
-    
+
     // Check if already favorited
     if (favorites.contains(indicatorId)) {
       return false;
@@ -67,7 +67,7 @@ class FavoritesService {
   /// Returns true if successfully removed, false if not in favorites
   Future<bool> removeFavorite(String indicatorId) async {
     final favorites = await getFavoriteIds();
-    
+
     // Check if in favorites
     if (!favorites.contains(indicatorId)) {
       return false;
@@ -86,7 +86,7 @@ class FavoritesService {
   /// Returns the new favorite status (true if now favorited, false if unfavorited)
   Future<bool> toggleFavorite(String indicatorId) async {
     final isFav = await isFavorite(indicatorId);
-    
+
     if (isFav) {
       await removeFavorite(indicatorId);
       return false;

@@ -102,6 +102,9 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Check if we can pop (i.e., if we're in a navigation stack)
+    final canPop = Navigator.of(context).canPop();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
@@ -115,14 +118,15 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
               ),
               child: Row(
                 children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
+                  if (canPop)
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
+                  if (canPop) const SizedBox(width: 8),
                   const Expanded(
                     child: Text(
                       'Indicator Groups',

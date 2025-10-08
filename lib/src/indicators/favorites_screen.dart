@@ -17,7 +17,7 @@ class FavoritesScreen extends StatefulWidget {
 class _FavoritesScreenState extends State<FavoritesScreen> {
   final _indicatorService = SAIndicatorService.instance;
   final _favoritesService = FavoritesService.instance;
-  
+
   List<SAIndicator> _favoriteIndicators = [];
   bool _isLoading = true;
   String? _error;
@@ -67,7 +67,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   Future<void> _removeFavorite(SAIndicator indicator) async {
     await _favoritesService.removeFavorite(indicator.indicatorId);
     await _loadFavorites();
-    
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -113,7 +113,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     if (confirmed == true) {
       await _favoritesService.clearAllFavorites();
       await _loadFavorites();
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -287,10 +287,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(
+          Navigator.of(context)
+              .pushNamed(
             IndicatorDetailScreen.routeName,
             arguments: indicator,
-          ).then((_) {
+          )
+              .then((_) {
             // Refresh favorites when returning from detail screen
             // in case the user unfavorited it there
             _loadFavorites();

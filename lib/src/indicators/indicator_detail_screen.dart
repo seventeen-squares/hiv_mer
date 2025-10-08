@@ -35,7 +35,8 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
   }
 
   Future<void> _toggleFavorite(SAIndicator indicator) async {
-    final newStatus = await _favoritesService.toggleFavorite(indicator.indicatorId);
+    final newStatus =
+        await _favoritesService.toggleFavorite(indicator.indicatorId);
     setState(() {
       _isFavorite = newStatus;
     });
@@ -43,11 +44,8 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            newStatus 
-              ? 'Added to favorites'
-              : 'Removed from favorites'
-          ),
+          content:
+              Text(newStatus ? 'Added to favorites' : 'Removed from favorites'),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -183,7 +181,8 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                         height: 24,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
                         ),
                       ),
                     )
@@ -194,7 +193,9 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                         _isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: _isFavorite ? Colors.red : Colors.white,
                       ),
-                      tooltip: _isFavorite ? 'Remove from favorites' : 'Add to favorites',
+                      tooltip: _isFavorite
+                          ? 'Remove from favorites'
+                          : 'Add to favorites',
                     ),
                 ],
               ),

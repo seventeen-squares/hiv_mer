@@ -110,7 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Indicators',
                       onTap: () {
                         // Switch to indicators tab in bottom nav
-                        MainNavigation.switchToTab(context, MainNavigation.indicatorsTab);
+                        MainNavigation.switchToTab(
+                            context, MainNavigation.indicatorsTab);
                       },
                     ),
                     NavigationCard(
@@ -146,7 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Settings',
                       onTap: () {
                         // Switch to settings tab in bottom nav
-                        MainNavigation.switchToTab(context, MainNavigation.settingsTab);
+                        MainNavigation.switchToTab(
+                            context, MainNavigation.settingsTab);
                       },
                     ),
                   ],
