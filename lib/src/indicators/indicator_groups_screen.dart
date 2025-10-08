@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/indicator_group.dart';
+import '../models/sa_indicator.dart';
 import '../services/sa_indicator_service.dart';
 import '../utils/constants.dart';
-import 'indicator_list_by_group_screen.dart';
+import 'indicator_detail_screen.dart';
 
-/// Screen showing all indicator groups in a card grid layout
-/// Matches the NIDS design with expandable sections and subgroup cards
+/// Screen showing all indicator groups in an accordion layout
+/// with indicators displayed in a grid under each group
 class IndicatorGroupsScreen extends StatefulWidget {
   static const routeName = '/indicator-groups';
 
@@ -18,6 +19,7 @@ class IndicatorGroupsScreen extends StatefulWidget {
 class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
   final _indicatorService = SAIndicatorService.instance;
   List<IndicatorGroup> _groups = [];
+  Map<String, List<SAIndicator>> _indicatorsByGroup = {};
   bool _isLoading = true;
   String? _error;
   String? _expandedGroupId;
@@ -35,11 +37,18 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
         await _indicatorService.loadIndicators();
       }
 
-      // Get groups
+      // Get groups and indicators
       final groups = _indicatorService.getAllGroups();
+      final indicatorsByGroup = <String, List<SAIndicator>>{};
+
+      for (final group in groups) {
+        indicatorsByGroup[group.id] =
+            _indicatorService.getIndicatorsByGroup(group.id);
+      }
 
       setState(() {
         _groups = groups;
+        _indicatorsByGroup = indicatorsByGroup;
         _isLoading = false;
       });
     } catch (e) {
@@ -214,7 +223,7 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
 
   Widget _buildGroupCard(IndicatorGroup group) {
     final isExpanded = _expandedGroupId == group.id;
-    final hasSubGroups = group.subGroups.isNotEmpty;
+    final indicators = _indicatorsByGroup[group.id] ?? [];
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -228,38 +237,45 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       ),
       child: Column(
         children: [
+          // Group Header (Accordion trigger)
           InkWell(
             onTap: () {
-              if (hasSubGroups) {
-                setState(() {
-                  _expandedGroupId = isExpanded ? null : group.id;
-                });
-              } else {
-                // Navigate directly to indicator list if no subgroups
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        IndicatorListByGroupScreen(group: group),
-                  ),
-                );
-              }
+              setState(() {
+                _expandedGroupId = isExpanded ? null : group.id;
+              });
             },
-            borderRadius: BorderRadius.circular(12),
-            child: Padding(
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(12),
+              topRight: const Radius.circular(12),
+              bottomLeft: isExpanded ? Radius.zero : const Radius.circular(12),
+              bottomRight: isExpanded ? Radius.zero : const Radius.circular(12),
+            ),
+            child: Container(
               padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: saGovernmentGreen.withOpacity(0.05),
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(12),
+                  topRight: const Radius.circular(12),
+                  bottomLeft:
+                      isExpanded ? Radius.zero : const Radius.circular(12),
+                  bottomRight:
+                      isExpanded ? Radius.zero : const Radius.circular(12),
+                ),
+              ),
               child: Row(
                 children: [
                   Container(
-                    width: 48,
-                    height: 48,
+                    width: 40,
+                    height: 40,
                     decoration: BoxDecoration(
                       color: _getGroupColor(group.id).withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
                       _getGroupIcon(group.id),
                       color: _getGroupColor(group.id),
-                      size: 24,
+                      size: 22,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -273,41 +289,52 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                       ),
                     ),
                   ),
-                  if (hasSubGroups)
-                    Icon(
-                      isExpanded
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
-                      color: saGovernmentGreen,
-                      size: 24,
-                    )
-                  else
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.grey.shade400,
-                      size: 16,
-                    ),
+                  Icon(
+                    isExpanded
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
+                    color: saGovernmentGreen,
+                    size: 24,
+                  ),
                 ],
               ),
             ),
           ),
 
-          // Subgroups Grid
-          if (isExpanded && hasSubGroups) ...[
+          // Indicators Grid (shown when expanded)
+          if (isExpanded) ...[
             const Divider(height: 1),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                childAspectRatio: 1.5,
-                children: group.subGroups.map((subGroup) {
-                  return _buildSubGroupCard(group, subGroup);
-                }).toList(),
-              ),
+              child: indicators.isEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.info_outline, color: Colors.grey.shade400),
+                          const SizedBox(width: 12),
+                          Text(
+                            'No indicators in this group',
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 14,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 1.2,
+                      children: indicators.map((indicator) {
+                        return _buildIndicatorCard(indicator);
+                      }).toList(),
+                    ),
             ),
           ],
         ],
@@ -315,48 +342,63 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
     );
   }
 
-  Widget _buildSubGroupCard(IndicatorGroup group, String subGroup) {
+  Widget _buildIndicatorCard(SAIndicator indicator) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => IndicatorListByGroupScreen(
-              group: group,
-              subGroup: subGroup,
-            ),
-          ),
+        Navigator.of(context).pushNamed(
+          IndicatorDetailScreen.routeName,
+          arguments: indicator,
         );
       },
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: _getGroupColor(group.id).withOpacity(0.05),
+          color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: _getGroupColor(group.id).withOpacity(0.2),
+            color: Colors.grey.shade200,
             width: 1,
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              _getGroupIcon(group.id),
-              color: _getGroupColor(group.id),
-              size: 20,
+            Row(
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: _getGroupColor(indicator.groupId).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Icon(
+                    _getGroupIcon(indicator.groupId),
+                    color: _getGroupColor(indicator.groupId),
+                    size: 18,
+                  ),
+                ),
+                const Spacer(),
+                Icon(
+                  Icons.arrow_forward,
+                  color: Colors.grey.shade400,
+                  size: 18,
+                ),
+              ],
             ),
             const SizedBox(height: 8),
-            Text(
-              subGroup,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey.shade800,
+            Expanded(
+              child: Text(
+                indicator.shortname,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey.shade800,
+                ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
