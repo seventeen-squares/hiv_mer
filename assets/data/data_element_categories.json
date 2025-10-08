@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ART",
+    "name": "Antiretroviral Therapy (ART)",
+    "elementCount": 45,
+    "displayOrder": 1
+  },
+  {
+    "id": "HIV",
+    "name": "HIV Testing and Care",
+    "elementCount": 38,
+    "displayOrder": 2
+  },
+  {
+    "id": "TB",
+    "name": "Tuberculosis (TB)",
+    "elementCount": 32,
+    "displayOrder": 3
+  },
+  {
+    "id": "MCH",
+    "name": "Maternal and Child Health",
+    "elementCount": 56,
+    "displayOrder": 4
+  },
+  {
+    "id": "IMMUNIZATION",
+    "name": "Immunization Services",
+    "elementCount": 28,
+    "displayOrder": 5
+  },
+  {
+    "id": "CHRONIC",
+    "name": "Chronic Diseases",
+    "elementCount": 42,
+    "displayOrder": 6
+  },
+  {
+    "id": "COMMUNICABLE",
+    "name": "Communicable Diseases",
+    "elementCount": 35,
+    "displayOrder": 7
+  },
+  {
+    "id": "NUTRITION",
+    "name": "Nutrition Services",
+    "elementCount": 24,
+    "displayOrder": 8
+  }
+]

@@ -4,6 +4,7 @@ import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
 import 'src/services/sa_indicator_service.dart';
+import 'src/services/data_element_service.dart';
 import 'src/services/user_profile_service.dart';
 
 void main() async {
@@ -24,6 +25,14 @@ void main() async {
   } catch (e) {
     // Log error but continue - app will handle loading in HomeScreen
     debugPrint('Failed to preload indicators: $e');
+  }
+
+  // Initialize Data Element Service and load data
+  try {
+    await DataElementService.instance.loadDataElements();
+  } catch (e) {
+    // Log error but continue - app will handle loading in screens
+    debugPrint('Failed to preload data elements: $e');
   }
 
   // Check if user has completed onboarding

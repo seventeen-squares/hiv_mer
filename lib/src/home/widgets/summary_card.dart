@@ -6,21 +6,26 @@ class SummaryCard extends StatelessWidget {
   final String title;
   final int count;
   final Color backgroundColor;
+  final VoidCallback? onTap;
 
   const SummaryCard({
     super.key,
     required this.title,
     required this.count,
     required this.backgroundColor,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(16),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -51,6 +56,7 @@ class SummaryCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

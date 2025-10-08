@@ -167,6 +167,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'Total Indicators',
                         count: _statistics?['indicators'] ?? 0,
                         backgroundColor: const Color(0xFF8B7355), // Warm brown
+                        onTap: () {
+                          // Switch to indicators tab in bottom nav
+                          MainNavigation.switchToTab(
+                              context, MainNavigation.indicatorsTab);
+                        },
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -175,6 +180,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: 'Total Data Elements',
                         count: _statistics?['dataElements'] ?? 0,
                         backgroundColor: const Color(0xFFF97316), // Orange
+                        onTap: () {
+                          // Switch to data elements tab in bottom nav
+                          MainNavigation.switchToTab(
+                              context, MainNavigation.dataElementsTab);
+                        },
                       ),
                     ),
                   ],

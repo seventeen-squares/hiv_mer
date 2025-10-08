@@ -1,0 +1,52 @@
+[
+  {
+    "id": "ART_NEW",
+    "name": "New patients started on ART",
+    "shortname": "ART New Starts",
+    "definition": "Number of adults and children newly enrolled on antiretroviral therapy",
+    "category": "ART",
+    "dataType": "Number",
+    "aggregationType": "Sum",
+    "status": "retained"
+  },
+  {
+    "id": "ART_CURR",
+    "name": "Patients currently on ART",
+    "shortname": "ART Current",
+    "definition": "Number of adults and children currently receiving antiretroviral therapy",
+    "category": "ART",
+    "dataType": "Number",
+    "aggregationType": "Sum",
+    "status": "retained"
+  },
+  {
+    "id": "HIV_TST_POS",
+    "name": "HIV tests positive",
+    "shortname": "HIV Positive Tests",
+    "definition": "Number of individuals who received HIV testing services and tested positive",
+    "category": "HIV",
+    "dataType": "Number",
+    "aggregationType": "Sum",
+    "status": "new"
+  },
+  {
+    "id": "TB_SCREEN",
+    "name": "TB screening completed",
+    "shortname": "TB Screening",
+    "definition": "Number of patients screened for tuberculosis",
+    "category": "TB",
+    "dataType": "Number",
+    "aggregationType": "Sum",
+    "status": "amended"
+  },
+  {
+    "id": "MCH_ANC_1",
+    "name": "Antenatal care 1st visit",
+    "shortname": "ANC 1st Visit",
+    "definition": "Number of pregnant women attending first antenatal care visit",
+    "category": "MCH",
+    "dataType": "Number",
+    "aggregationType": "Sum",
+    "status": "retained"
+  }
+]

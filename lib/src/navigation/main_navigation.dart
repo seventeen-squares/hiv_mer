@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../home/home_screen.dart';
 import '../indicators/indicator_groups_screen.dart';
+import '../data_elements/data_elements_screen.dart';
 import '../settings/settings_view.dart';
 import '../settings/settings_controller.dart';
 import '../utils/constants.dart';
@@ -28,7 +29,8 @@ class MainNavigation extends StatefulWidget {
   /// Tab indices for navigation
   static const int homeTab = 0;
   static const int indicatorsTab = 1;
-  static const int settingsTab = 2;
+  static const int dataElementsTab = 2;
+  static const int settingsTab = 3;
 }
 
 class _MainNavigationState extends State<MainNavigation> {
@@ -73,6 +75,7 @@ class _MainNavigationState extends State<MainNavigation> {
         children: [
           const HomeScreen(),
           const IndicatorGroupsScreen(),
+          const DataElementsScreen(),
           SettingsView(controller: widget.settingsController),
         ],
       ),
@@ -96,6 +99,11 @@ class _MainNavigationState extends State<MainNavigation> {
             icon: Icon(Icons.assessment_outlined),
             activeIcon: Icon(Icons.assessment),
             label: 'Indicators',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.description_outlined),
+            activeIcon: Icon(Icons.description),
+            label: 'Data Elements',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),
