@@ -1,13 +1,13 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/sa_indicator_service.dart';
 import '../navigation/main_navigation.dart';
+import '../notifications/notifications_screen.dart';
 import 'widgets/nids_header.dart';
 import 'widgets/home_search_bar.dart';
 import 'widgets/navigation_card.dart';
 import 'widgets/summary_card.dart';
-import 'widgets/recent_updates_section.dart';
+import '../utils/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final _indicatorService = SAIndicatorService.instance;
   bool _isLoading = true;
   Map<String, int>? _statistics;
-  List<Map<String, String>> _recentUpdates = [];
 
   @override
   void initState() {
@@ -40,17 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
       // Get statistics
       final stats = _indicatorService.getStatistics();
 
-      // Load recent updates
-      final updatesJson =
-          await rootBundle.loadString('assets/data/recent_updates.json');
-      final updatesList = jsonDecode(updatesJson) as List<dynamic>;
-      final updates = updatesList
-          .map((json) => Map<String, String>.from(json as Map))
-          .toList();
-
       setState(() {
         _statistics = stats;
-        _recentUpdates = updates;
         _isLoading = false;
       });
     } catch (e) {
@@ -74,138 +64,157 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // NIDS Header with SA branding
-              const NIDSHeader(),
-
-              const SizedBox(height: 24),
-
-              // Search Bar
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: HomeSearchBar(),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8FAFC),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Green header extending to status bar
+            Container(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top,
               ),
+              decoration: const BoxDecoration(
+                color: saGovernmentGreen,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(24),
+                  bottomRight: Radius.circular(24),
+                ),
+              ),
+              child: const NIDSHeader(),
+            ),
 
-              const SizedBox(height: 24),
-
-              // Navigation Cards Grid
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 1.1,
+            // Scrollable content
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    NavigationCard(
-                      icon: Icons.folder_outlined,
-                      title: 'Indicators',
-                      onTap: () {
-                        // Switch to indicators tab in bottom nav
-                        MainNavigation.switchToTab(
-                            context, MainNavigation.indicatorsTab);
-                      },
-                    ),
-                    NavigationCard(
-                      icon: Icons.library_books,
-                      title: 'Data Elements',
-                      onTap: () {
-                        // TODO: Navigate to Help
+                    const SizedBox(height: 24),
 
-                        MainNavigation.switchToTab(
-                            context, MainNavigation.dataElementsTab);
-                      },
+                    // Search Bar
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: HomeSearchBar(),
                     ),
-                    NavigationCard(
-                      icon: Icons.help_outline,
-                      title: 'Help/Support',
-                      onTap: () {
-                        // TODO: Navigate to Help
-                      },
+
+                    const SizedBox(height: 24),
+
+                    // Navigation Cards Grid
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 1.1,
+                        children: [
+                          NavigationCard(
+                            icon: Icons.folder_outlined,
+                            title: 'Indicators',
+                            onTap: () {
+                              // Switch to indicators tab in bottom nav
+                              MainNavigation.switchToTab(
+                                  context, MainNavigation.indicatorsTab);
+                            },
+                          ),
+                          NavigationCard(
+                            icon: Icons.library_books,
+                            title: 'Data Elements',
+                            onTap: () {
+                              // TODO: Navigate to Help
+
+                              MainNavigation.switchToTab(
+                                  context, MainNavigation.dataElementsTab);
+                            },
+                          ),
+                          NavigationCard(
+                            icon: Icons.help_outline,
+                            title: 'Help/Support',
+                            onTap: () {
+                              // TODO: Navigate to Help
+                            },
+                          ),
+                          NavigationCard(
+                            icon: Icons.notifications_outlined,
+                            title: 'Notifications',
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(NotificationsScreen.routeName);
+                            },
+                          ),
+                          NavigationCard(
+                            icon: Icons.favorite_outline,
+                            title: 'Favorites',
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/favorites');
+                            },
+                          ),
+                          NavigationCard(
+                            icon: Icons.settings_outlined,
+                            title: 'Settings',
+                            onTap: () {
+                              // Navigate to settings page
+                              Navigator.of(context).pushNamed('/settings');
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    NavigationCard(
-                      icon: Icons.notifications_outlined,
-                      title: 'Notifications',
-                      onTap: () {
-                        // TODO: Navigate to Notifications
-                      },
+
+                    const SizedBox(height: 24),
+
+                    // Summary Cards
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SummaryCard(
+                              title: 'Total Indicators',
+                              count: _statistics?['indicators'] ?? 0,
+                              backgroundColor:
+                                  const Color(0xFF8B7355), // Warm brown
+                              onTap: () {
+                                // Switch to indicators tab in bottom nav
+                                MainNavigation.switchToTab(
+                                    context, MainNavigation.indicatorsTab);
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: SummaryCard(
+                              title: 'Total Data Elements',
+                              count: _statistics?['dataElements'] ?? 0,
+                              backgroundColor:
+                                  const Color(0xFFF97316), // Orange
+                              onTap: () {
+                                // Switch to data elements tab in bottom nav
+                                MainNavigation.switchToTab(
+                                    context, MainNavigation.dataElementsTab);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    NavigationCard(
-                      icon: Icons.favorite_outline,
-                      title: 'Favorites',
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/favorites');
-                      },
-                    ),
-                    NavigationCard(
-                      icon: Icons.settings_outlined,
-                      title: 'Settings',
-                      onTap: () {
-                        // Navigate to settings page
-                        Navigator.of(context).pushNamed('/settings');
-                      },
-                    ),
+
+                    const SizedBox(
+                        height: 100), // Extra space for bottom navigation
                   ],
                 ),
               ),
-
-              const SizedBox(height: 24),
-
-              // Summary Cards
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: SummaryCard(
-                        title: 'Total Indicators',
-                        count: _statistics?['indicators'] ?? 0,
-                        backgroundColor: const Color(0xFF8B7355), // Warm brown
-                        onTap: () {
-                          // Switch to indicators tab in bottom nav
-                          MainNavigation.switchToTab(
-                              context, MainNavigation.indicatorsTab);
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: SummaryCard(
-                        title: 'Total Data Elements',
-                        count: _statistics?['dataElements'] ?? 0,
-                        backgroundColor: const Color(0xFFF97316), // Orange
-                        onTap: () {
-                          // Switch to data elements tab in bottom nav
-                          MainNavigation.switchToTab(
-                              context, MainNavigation.dataElementsTab);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Recent Updates Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: RecentUpdatesSection(
-                  updates: _recentUpdates,
-                ),
-              ),
-
-              const SizedBox(height: 100), // Extra space for bottom navigation
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

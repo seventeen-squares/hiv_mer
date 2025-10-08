@@ -10,19 +10,8 @@ class NIDSHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +31,7 @@ class NIDSHeader extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: saGovernmentGreen.withOpacity(0.1),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -101,7 +90,7 @@ class NIDSHeader extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1F2937),
+              color: Colors.black,
               height: 1.3,
             ),
           ),
@@ -109,12 +98,12 @@ class NIDSHeader extends StatelessWidget {
           const SizedBox(height: 8),
 
           // Version number
-          Text(
+          const Text(
             appVersion,
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: saGovernmentGreen,
+              color: Colors.black,
             ),
           ),
         ],

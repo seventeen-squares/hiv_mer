@@ -11,6 +11,7 @@ import 'indicators/indicator_groups_screen.dart';
 import 'indicators/favorites_screen.dart';
 import 'data_elements/data_elements_screen.dart';
 import 'data_elements/data_element_detail_screen.dart';
+import 'notifications/notifications_screen.dart';
 import 'navigation/main_navigation.dart';
 import 'onboarding/role_selection_screen.dart';
 import 'sample_feature/sample_item_details_view.dart';
@@ -305,6 +306,8 @@ class MyApp extends StatelessWidget {
                     return const DataElementsScreen();
                   case DataElementDetailScreen.routeName:
                     return const DataElementDetailScreen();
+                  case NotificationsScreen.routeName:
+                    return const NotificationsScreen();
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
                   case HomeScreen.routeName:
