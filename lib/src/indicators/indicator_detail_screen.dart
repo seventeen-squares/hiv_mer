@@ -144,25 +144,15 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          indicator.shortname,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        // Text(
-                        //   indicator.shortname,
-                        //   style: TextStyle(
-                        //     color: Colors.white.withOpacity(0.9),
-                        //     fontSize: 14,
-                        //   ),
-                        // ),
-                      ],
+                    child: Text(
+                      indicator.shortname,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   IconButton(
@@ -216,6 +206,8 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                         fontWeight: FontWeight.bold,
                         color: AppColors.getPrimaryTextColor(context),
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
 
                     const SizedBox(height: 20),
