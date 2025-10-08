@@ -18,6 +18,7 @@ import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
+import 'splash/splash_screen.dart';
 import 'utils/constants.dart';
 
 /// The Widget that configures your application.
@@ -271,10 +272,8 @@ class MyApp extends StatelessWidget {
           // Force light theme mode for consistency
           themeMode: ThemeMode.light,
 
-          // Set initial route based on onboarding status
-          initialRoute: hasCompletedOnboarding
-              ? MainNavigation.routeName
-              : RoleSelectionScreen.routeName,
+          // Set initial route - always start with splash screen
+          initialRoute: SplashScreen.routeName,
 
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
@@ -283,6 +282,8 @@ class MyApp extends StatelessWidget {
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
+                  case SplashScreen.routeName:
+                    return const SplashScreen();
                   case RoleSelectionScreen.routeName:
                     return const RoleSelectionScreen();
                   case MainNavigation.routeName:
