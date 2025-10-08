@@ -64,8 +64,9 @@ class DataElementService {
           'Data elements not loaded. Call loadDataElements() first.');
     }
 
-    final filtered =
-        _dataElements!.where((element) => element.category == categoryId).toList();
+    final filtered = _dataElements!
+        .where((element) => element.category == categoryId)
+        .toList();
     return filtered;
   }
 

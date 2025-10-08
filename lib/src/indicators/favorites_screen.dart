@@ -148,14 +148,27 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Expanded(
-                    child: Text(
-                      'Favorites',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Favorites',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        if (_favoriteIndicators.isNotEmpty)
+                          Text(
+                            '${_favoriteIndicators.length} ${_favoriteIndicators.length == 1 ? 'indicator' : 'indicators'}',
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 14,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                   if (_favoriteIndicators.isNotEmpty)
