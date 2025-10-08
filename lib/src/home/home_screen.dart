@@ -115,17 +115,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                     NavigationCard(
+                      icon: Icons.library_books,
+                      title: 'Data Elements',
+                      onTap: () {
+                        // TODO: Navigate to Help
+
+                        MainNavigation.switchToTab(
+                            context, MainNavigation.dataElementsTab);
+                      },
+                    ),
+                    NavigationCard(
                       icon: Icons.help_outline,
                       title: 'Help/Support',
                       onTap: () {
                         // TODO: Navigate to Help
-                      },
-                    ),
-                    NavigationCard(
-                      icon: Icons.library_books,
-                      title: 'Resource Center',
-                      onTap: () {
-                        // TODO: Navigate to Resources
                       },
                     ),
                     NavigationCard(
