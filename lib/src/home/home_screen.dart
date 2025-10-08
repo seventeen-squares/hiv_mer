@@ -146,9 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icons.settings_outlined,
                       title: 'Settings',
                       onTap: () {
-                        // Switch to settings tab in bottom nav
-                        MainNavigation.switchToTab(
-                            context, MainNavigation.settingsTab);
+                        // Navigate to settings page
+                        Navigator.of(context).pushNamed('/settings');
                       },
                     ),
                   ],

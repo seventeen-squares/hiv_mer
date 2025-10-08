@@ -30,7 +30,7 @@ class MainNavigation extends StatefulWidget {
   static const int homeTab = 0;
   static const int indicatorsTab = 1;
   static const int dataElementsTab = 2;
-  static const int settingsTab = 3;
+  static const int moreTab = 3; // Changed from settingsTab
 }
 
 class _MainNavigationState extends State<MainNavigation> {
@@ -46,7 +46,142 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 
   void _onTabTapped(int index) {
-    _switchTab(index);
+    // If More tab is tapped, show menu instead of switching
+    if (index == MainNavigation.moreTab) {
+      _showMoreMenu(context);
+    } else {
+      _switchTab(index);
+    }
+  }
+
+  void _showMoreMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Handle bar
+              Container(
+                margin: const EdgeInsets.only(top: 12, bottom: 20),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+
+              // Menu items
+              _buildMenuItem(
+                context,
+                icon: Icons.help_outline,
+                title: 'Help',
+                onTap: () {
+                  Navigator.pop(context);
+                  // TODO: Navigate to Help page
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Help page coming soon')),
+                  );
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.settings_outlined,
+                title: 'Settings',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/settings');
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.abc_outlined,
+                title: 'Acronyms',
+                onTap: () {
+                  Navigator.pop(context);
+                  // TODO: Navigate to Acronyms page
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Acronyms page coming soon')),
+                  );
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.info_outline,
+                title: 'Background Info',
+                onTap: () {
+                  Navigator.pop(context);
+                  // TODO: Navigate to Background Info page
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Background Info page coming soon')),
+                  );
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.article_outlined,
+                title: 'About',
+                onTap: () {
+                  Navigator.pop(context);
+                  // TODO: Navigate to About page
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('About page coming soon')),
+                  );
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.share_outlined,
+                title: 'Share',
+                onTap: () {
+                  Navigator.pop(context);
+                  // TODO: Implement share functionality
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Share functionality coming soon')),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildMenuItem(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: saGovernmentGreen, size: 24),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Color(0xFF1F2937),
+        ),
+      ),
+      trailing:
+          Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey.shade400),
+      onTap: onTap,
+    );
   }
 
   void _switchTab(int index) {
@@ -76,7 +211,8 @@ class _MainNavigationState extends State<MainNavigation> {
           const HomeScreen(),
           const IndicatorGroupsScreen(),
           const DataElementsScreen(),
-          SettingsView(controller: widget.settingsController),
+          // Placeholder for More tab (will show menu instead)
+          const Center(child: Text('More')),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -106,9 +242,9 @@ class _MainNavigationState extends State<MainNavigation> {
             label: 'Data Elements',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            activeIcon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.more_horiz),
+            activeIcon: Icon(Icons.more_horiz),
+            label: 'More',
           ),
         ],
       ),
