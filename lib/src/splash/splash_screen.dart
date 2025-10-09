@@ -21,22 +21,22 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    
+
     // Set up animation
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     );
-    
+
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeIn,
       ),
     );
-    
+
     _animationController.forward();
-    
+
     // Initialize app and navigate after delay
     _initializeApp();
   }
@@ -48,10 +48,10 @@ class _SplashScreenState extends State<SplashScreen>
       if (!indicatorService.isLoaded) {
         await indicatorService.loadIndicators();
       }
-      
+
       // Wait minimum time for splash screen
       await Future.delayed(const Duration(seconds: 3));
-      
+
       if (mounted) {
         Navigator.of(context).pushReplacementNamed(MainNavigation.routeName);
       }
@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: Column(
                 children: [
                   const Spacer(flex: 2),
-                  
+
                   // Department of Health Logo
                   Image.asset(
                     'assets/images/South_African_National_Department_of_Health_logo_2023.jpg',
@@ -150,9 +150,9 @@ class _SplashScreenState extends State<SplashScreen>
                       );
                     },
                   ),
-                  
+
                   const Spacer(flex: 1),
-                  
+
                   // App Icon/Logo (M blocks)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -214,9 +214,9 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ],
                   ),
-                  
+
                   const Spacer(flex: 1),
-                  
+
                   // App Title
                   const Text(
                     appName,
@@ -228,9 +228,9 @@ class _SplashScreenState extends State<SplashScreen>
                       letterSpacing: 0.5,
                     ),
                   ),
-                  
+
                   const SizedBox(height: 8),
-                  
+
                   // Version
                   Text(
                     appVersion,
@@ -240,9 +240,9 @@ class _SplashScreenState extends State<SplashScreen>
                       color: Colors.grey.shade600,
                     ),
                   ),
-                  
+
                   const Spacer(flex: 2),
-                  
+
                   // Loading indicator
                   SizedBox(
                     width: 40,
@@ -254,9 +254,9 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 32),
-                  
+
                   // Copyright
                   Text(
                     '© 2023 Department of Health National Indicator Data Set (NIDS). All rights reserved.',
@@ -267,7 +267,7 @@ class _SplashScreenState extends State<SplashScreen>
                       height: 1.4,
                     ),
                   ),
-                  
+
                   const SizedBox(height: 16),
                 ],
               ),
@@ -287,16 +287,13 @@ class MBlockPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..style = PaintingStyle.fill;
+    final paint = Paint()..style = PaintingStyle.fill;
 
     // Draw the M shape with 3D effect
     final path = Path();
-    
+
     // Top face of M
-    paint.color = isGold 
-        ? const Color(0xFFFFE55C) 
-        : Colors.grey.shade200;
+    paint.color = isGold ? const Color(0xFFFFE55C) : Colors.grey.shade200;
     path.moveTo(size.width * 0.2, size.height * 0.3);
     path.lineTo(size.width * 0.4, size.height * 0.5);
     path.lineTo(size.width * 0.5, size.height * 0.4);
@@ -310,7 +307,7 @@ class MBlockPainter extends CustomPainter {
     path.lineTo(size.width * 0.4, size.height * 0.7);
     path.lineTo(size.width * 0.2, size.height * 0.7);
     path.close();
-    
+
     canvas.drawPath(path, paint);
   }
 
