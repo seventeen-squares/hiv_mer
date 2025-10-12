@@ -130,10 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                             ),
                             NavigationCard(
-                              icon: Icons.help_outline,
-                              title: 'Help/Support',
+                              icon: Icons.menu_book_outlined,
+                              title: 'Resources',
                               onTap: () {
-                                // TODO: Navigate to Help
+                                Navigator.of(context).pushNamed('/resources');
                               },
                             ),
                             NavigationCard(

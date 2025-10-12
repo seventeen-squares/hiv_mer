@@ -16,6 +16,7 @@ dependencies:
     sdk: flutter
   shared_preferences: ^2.2.2
   share_plus: ^10.1.2
+  path_provider: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +35,5 @@ flutter:
     - assets/images/
     # Add SA indicator data files
     - assets/data/
+    # Add documents for Resources screen
+    - assets/documents/

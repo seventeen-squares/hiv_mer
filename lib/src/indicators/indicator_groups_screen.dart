@@ -88,24 +88,119 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
   }
 
   Color _getGroupColor(String groupId) {
-    if (groupId.contains('art') || groupId.contains('antiretroviral')) {
-      return const Color(0xFFF59E0B);
-    } else if (groupId.contains('tb') || groupId.contains('tuberculosis')) {
-      return const Color(0xFF10B981);
-    } else if (groupId.contains('hiv')) {
-      return const Color(0xFF8B5CF6);
-    } else if (groupId.contains('child') || groupId.contains('nutrition')) {
-      return const Color(0xFF06B6D4);
-    } else if (groupId.contains('immunis') || groupId.contains('epi')) {
-      return const Color(0xFFEC4899);
-    } else if (groupId.contains('communicable') ||
-        groupId.contains('disease')) {
-      return const Color(0xFF10B981);
-    } else if (groupId.contains('chronic') || groupId.contains('medicine')) {
-      return const Color(0xFF3B82F6);
-    } else if (groupId.contains('eye')) {
-      return const Color(0xFF8B5CF6);
+    final groupLower = groupId.toLowerCase();
+    
+    // Adolescent Health - Blue
+    if (groupLower.contains('adolescent')) {
+      return const Color(0xFF5DADE2);
     }
+    // ART Categories - Browns/Pinks
+    else if (groupLower.contains('art baseline')) {
+      return const Color(0xFFA1887F);
+    } else if (groupLower.contains('art monthly')) {
+      return const Color(0xFFE91E63);
+    } else if (groupLower.contains('art outcome')) {
+      return const Color(0xFF827717);
+    } else if (groupLower.contains('art') || groupLower.contains('antiretroviral')) {
+      return const Color(0xFFA1887F);
+    }
+    // Central Chronic Medicines - Dark Green
+    else if (groupLower.contains('chronic medicine') || groupLower.contains('central chronic')) {
+      return const Color(0xFF00897B);
+    }
+    // Child and Nutrition - Light Blue
+    else if (groupLower.contains('child') || groupLower.contains('nutrition')) {
+      return const Color(0xFF81D4FA);
+    }
+    // Chronic - Yellow
+    else if (groupLower.contains('chronic')) {
+      return const Color(0xFFFFEB3B);
+    }
+    // Communicable Diseases - Orange
+    else if (groupLower.contains('communicable')) {
+      return const Color(0xFFFF7043);
+    }
+    // Emergency Medical Services - Dark Gray
+    else if (groupLower.contains('emergency') || groupLower.contains('ems')) {
+      return const Color(0xFF424242);
+    }
+    // Environmental Health - Yellow/Green
+    else if (groupLower.contains('environmental')) {
+      return const Color(0xFFCDDC39);
+    }
+    // Expanded Programme on Immunisation - Red
+    else if (groupLower.contains('epi') || groupLower.contains('immunis') || groupLower.contains('immunization')) {
+      return const Color(0xFFF44336);
+    }
+    // Eye Care - Light Pink
+    else if (groupLower.contains('eye')) {
+      return const Color(0xFFF8BBD0);
+    }
+    // HIV - Purple
+    else if (groupLower.contains('hiv')) {
+      return const Color(0xFF7986CB);
+    }
+    // Malaria - Green
+    else if (groupLower.contains('malaria')) {
+      return const Color(0xFF66BB6A);
+    }
+    // Management Inpatients - Magenta/Pink
+    else if (groupLower.contains('inpatient') || groupLower.contains('management inpatient')) {
+      return const Color(0xFFE91E63);
+    }
+    // Management PHC - Cyan
+    else if (groupLower.contains('phc') || groupLower.contains('primary health')) {
+      return const Color(0xFF00BCD4);
+    }
+    // Maternal and Neonatal - Orange
+    else if (groupLower.contains('maternal') || groupLower.contains('neonatal')) {
+      return const Color(0xFFFF9800);
+    }
+    // Mental Health - Light Green
+    else if (groupLower.contains('mental')) {
+      return const Color(0xFFAED581);
+    }
+    // Oral Health - Light Olive
+    else if (groupLower.contains('oral') || groupLower.contains('dental')) {
+      return const Color(0xFFD4E157);
+    }
+    // PHC Ward Based Outreach Teams - Gray
+    else if (groupLower.contains('wbot') || groupLower.contains('ward based') || groupLower.contains('outreach')) {
+      return const Color(0xFF9E9E9E);
+    }
+    // Quality - Purple
+    else if (groupLower.contains('quality')) {
+      return const Color(0xFF7E57C2);
+    }
+    // Rehabilitation - Light Purple
+    else if (groupLower.contains('rehab')) {
+      return const Color(0xFFB39DDB);
+    }
+    // School Health - Dark Red
+    else if (groupLower.contains('school')) {
+      return const Color(0xFFC62828);
+    }
+    // Sexually Transmitted Infections - Brown/Tan
+    else if (groupLower.contains('sti') || groupLower.contains('sexually transmitted')) {
+      return const Color(0xFFBCAAA4);
+    }
+    // TB Monthly - Teal
+    else if (groupLower.contains('tb') && groupLower.contains('monthly')) {
+      return const Color(0xFF00BCD4);
+    }
+    // TB Quarterly - Brown
+    else if (groupLower.contains('tb') && groupLower.contains('quarterly')) {
+      return const Color(0xFF8D6E63);
+    }
+    // TB General - Teal
+    else if (groupLower.contains('tb') || groupLower.contains('tuberculosis')) {
+      return const Color(0xFF00BCD4);
+    }
+    // Women's Health - Pink
+    else if (groupLower.contains('women')) {
+      return const Color(0xFFE57373);
+    }
+    // Default
     return saGovernmentGreen;
   }
 

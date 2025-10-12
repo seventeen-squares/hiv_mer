@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../home/home_screen.dart';
 import '../indicators/indicator_groups_screen.dart';
 import '../data_elements/data_elements_screen.dart';
-import '../settings/settings_view.dart';
 import '../settings/settings_controller.dart';
 import '../utils/constants.dart';
 
@@ -88,6 +87,16 @@ class _MainNavigationState extends State<MainNavigation> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Help page coming soon')),
                   );
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.menu_book_outlined,
+                title: 'Resources',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/resources');
                 },
               ),
               const Divider(height: 1),
