@@ -73,136 +73,150 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: saGovernmentGreen,
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Status bar spacer with green background
             SizedBox(height: MediaQuery.of(context).padding.top),
 
-            // White header card with rounded bottom corners
-            const NIDSHeader(),
-
-            // Scrollable content with light background
+            // Scrollable content with header and search bar
             Expanded(
               child: Container(
-                color: const Color(0xFFF8FAFC),
+                color: saGovernmentGreen,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 24),
+                      // White header card with rounded bottom corners (now scrollable)
+                      const NIDSHeader(),
 
-                      // Search Bar
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 24),
-                        child: HomeSearchBar(),
-                      ),
-
-                      const SizedBox(height: 24),
-
-                      // Navigation Cards Grid
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: GridView.count(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 1.1,
+                      // Light background for rest of content
+                      Container(
+                        color: const Color(0xFFF8FAFC),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            NavigationCard(
-                              icon: Icons.folder_outlined,
-                              title: 'Indicators',
-                              onTap: () {
-                                // Switch to indicators tab in bottom nav
-                                MainNavigation.switchToTab(
-                                    context, MainNavigation.indicatorsTab);
-                              },
-                            ),
-                            NavigationCard(
-                              icon: Icons.library_books,
-                              title: 'Data Elements',
-                              onTap: () {
-                                // TODO: Navigate to Help
+                            const SizedBox(height: 24),
 
-                                MainNavigation.switchToTab(
-                                    context, MainNavigation.dataElementsTab);
-                              },
+                            // Search Bar
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 24),
+                              child: HomeSearchBar(),
                             ),
-                            NavigationCard(
-                              icon: Icons.menu_book_outlined,
-                              title: 'Resources',
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/resources');
-                              },
+
+                            const SizedBox(height: 24),
+
+                            // Navigation Cards Grid
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24),
+                              child: GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                                childAspectRatio: 1.1,
+                                children: [
+                                  NavigationCard(
+                                    icon: Icons.folder_outlined,
+                                    title: 'Indicators',
+                                    onTap: () {
+                                      // Switch to indicators tab in bottom nav
+                                      MainNavigation.switchToTab(context,
+                                          MainNavigation.indicatorsTab);
+                                    },
+                                  ),
+                                  NavigationCard(
+                                    icon: Icons.library_books,
+                                    title: 'Data Elements',
+                                    onTap: () {
+                                      // TODO: Navigate to Help
+
+                                      MainNavigation.switchToTab(context,
+                                          MainNavigation.dataElementsTab);
+                                    },
+                                  ),
+                                  NavigationCard(
+                                    icon: Icons.menu_book_outlined,
+                                    title: 'Resources',
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed('/resources');
+                                    },
+                                  ),
+                                  NavigationCard(
+                                    icon: Icons.notifications_outlined,
+                                    title: 'Notifications',
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          NotificationsScreen.routeName);
+                                    },
+                                  ),
+                                  NavigationCard(
+                                    icon: Icons.favorite_outline,
+                                    title: 'Favorites',
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed('/favorites');
+                                    },
+                                  ),
+                                  NavigationCard(
+                                    icon: Icons.settings_outlined,
+                                    title: 'Settings',
+                                    onTap: () {
+                                      // Navigate to settings page
+                                      Navigator.of(context)
+                                          .pushNamed('/settings');
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
-                            NavigationCard(
-                              icon: Icons.notifications_outlined,
-                              title: 'Notifications',
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed(NotificationsScreen.routeName);
-                              },
+
+                            const SizedBox(height: 24),
+
+                            // Summary Cards
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: SummaryCard(
+                                      title: 'Total Indicators',
+                                      count: _statistics?['indicators'] ?? 0,
+                                      backgroundColor:
+                                          const Color(0xFF8B7355), // Warm brown
+                                      onTap: () {
+                                        // Switch to indicators tab in bottom nav
+                                        MainNavigation.switchToTab(context,
+                                            MainNavigation.indicatorsTab);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: SummaryCard(
+                                      title: 'Total Data Elements',
+                                      count: _statistics?['dataElements'] ?? 0,
+                                      backgroundColor:
+                                          const Color(0xFFF97316), // Orange
+                                      onTap: () {
+                                        // Switch to data elements tab in bottom nav
+                                        MainNavigation.switchToTab(context,
+                                            MainNavigation.dataElementsTab);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            NavigationCard(
-                              icon: Icons.favorite_outline,
-                              title: 'Favorites',
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/favorites');
-                              },
-                            ),
-                            NavigationCard(
-                              icon: Icons.settings_outlined,
-                              title: 'Settings',
-                              onTap: () {
-                                // Navigate to settings page
-                                Navigator.of(context).pushNamed('/settings');
-                              },
-                            ),
+
+                            const SizedBox(
+                                height:
+                                    100), // Extra space for bottom navigation
                           ],
                         ),
                       ),
-
-                      const SizedBox(height: 24),
-
-                      // Summary Cards
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: SummaryCard(
-                                title: 'Total Indicators',
-                                count: _statistics?['indicators'] ?? 0,
-                                backgroundColor:
-                                    const Color(0xFF8B7355), // Warm brown
-                                onTap: () {
-                                  // Switch to indicators tab in bottom nav
-                                  MainNavigation.switchToTab(
-                                      context, MainNavigation.indicatorsTab);
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: SummaryCard(
-                                title: 'Total Data Elements',
-                                count: _statistics?['dataElements'] ?? 0,
-                                backgroundColor:
-                                    const Color(0xFFF97316), // Orange
-                                onTap: () {
-                                  // Switch to data elements tab in bottom nav
-                                  MainNavigation.switchToTab(
-                                      context, MainNavigation.dataElementsTab);
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(
-                          height: 100), // Extra space for bottom navigation
                     ],
                   ),
                 ),

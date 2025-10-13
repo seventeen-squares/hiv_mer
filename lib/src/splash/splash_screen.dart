@@ -259,7 +259,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                   // Copyright
                   Text(
-                    '© 2023 Department of Health National Indicator Data Set (NIDS). All rights reserved.',
+                    '© 2025 Department of Health National Indicator Data Set (NIDS). All rights reserved.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 11,

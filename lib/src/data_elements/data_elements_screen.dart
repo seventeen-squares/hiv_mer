@@ -75,7 +75,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
 
   Color _getCategoryColor(String categoryId) {
     final categoryLower = categoryId.toLowerCase();
-    
+
     // Use the same color scheme as indicators
     if (categoryLower.contains('adolescent')) {
       return const Color(0xFF5DADE2);
@@ -87,19 +87,24 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
       return const Color(0xFF827717);
     } else if (categoryLower.contains('art')) {
       return const Color(0xFFA1887F);
-    } else if (categoryLower.contains('chronic medicine') || categoryLower.contains('central chronic')) {
+    } else if (categoryLower.contains('chronic medicine') ||
+        categoryLower.contains('central chronic')) {
       return const Color(0xFF00897B);
-    } else if (categoryLower.contains('child') || categoryLower.contains('nutrition')) {
+    } else if (categoryLower.contains('child') ||
+        categoryLower.contains('nutrition')) {
       return const Color(0xFF81D4FA);
     } else if (categoryLower.contains('chronic')) {
       return const Color(0xFFFFEB3B);
     } else if (categoryLower.contains('communicable')) {
       return const Color(0xFFFF7043);
-    } else if (categoryLower.contains('emergency') || categoryLower.contains('ems')) {
+    } else if (categoryLower.contains('emergency') ||
+        categoryLower.contains('ems')) {
       return const Color(0xFF424242);
     } else if (categoryLower.contains('environmental')) {
       return const Color(0xFFCDDC39);
-    } else if (categoryLower.contains('epi') || categoryLower.contains('immunis') || categoryLower.contains('immunization')) {
+    } else if (categoryLower.contains('epi') ||
+        categoryLower.contains('immunis') ||
+        categoryLower.contains('immunization')) {
       return const Color(0xFFF44336);
     } else if (categoryLower.contains('eye')) {
       return const Color(0xFFF8BBD0);
@@ -107,17 +112,24 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
       return const Color(0xFF7986CB);
     } else if (categoryLower.contains('malaria')) {
       return const Color(0xFF66BB6A);
-    } else if (categoryLower.contains('inpatient') || categoryLower.contains('management inpatient')) {
+    } else if (categoryLower.contains('inpatient') ||
+        categoryLower.contains('management inpatient')) {
       return const Color(0xFFE91E63);
-    } else if (categoryLower.contains('phc') || categoryLower.contains('primary health')) {
+    } else if (categoryLower.contains('phc') ||
+        categoryLower.contains('primary health')) {
       return const Color(0xFF00BCD4);
-    } else if (categoryLower.contains('maternal') || categoryLower.contains('neonatal') || categoryLower.contains('mch')) {
+    } else if (categoryLower.contains('maternal') ||
+        categoryLower.contains('neonatal') ||
+        categoryLower.contains('mch')) {
       return const Color(0xFFFF9800);
     } else if (categoryLower.contains('mental')) {
       return const Color(0xFFAED581);
-    } else if (categoryLower.contains('oral') || categoryLower.contains('dental')) {
+    } else if (categoryLower.contains('oral') ||
+        categoryLower.contains('dental')) {
       return const Color(0xFFD4E157);
-    } else if (categoryLower.contains('wbot') || categoryLower.contains('ward based') || categoryLower.contains('outreach')) {
+    } else if (categoryLower.contains('wbot') ||
+        categoryLower.contains('ward based') ||
+        categoryLower.contains('outreach')) {
       return const Color(0xFF9E9E9E);
     } else if (categoryLower.contains('quality')) {
       return const Color(0xFF7E57C2);
@@ -125,11 +137,14 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
       return const Color(0xFFB39DDB);
     } else if (categoryLower.contains('school')) {
       return const Color(0xFFC62828);
-    } else if (categoryLower.contains('sti') || categoryLower.contains('sexually transmitted')) {
+    } else if (categoryLower.contains('sti') ||
+        categoryLower.contains('sexually transmitted')) {
       return const Color(0xFFBCAAA4);
-    } else if (categoryLower.contains('tb') && categoryLower.contains('monthly')) {
+    } else if (categoryLower.contains('tb') &&
+        categoryLower.contains('monthly')) {
       return const Color(0xFF00BCD4);
-    } else if (categoryLower.contains('tb') && categoryLower.contains('quarterly')) {
+    } else if (categoryLower.contains('tb') &&
+        categoryLower.contains('quarterly')) {
       return const Color(0xFF8D6E63);
     } else if (categoryLower.contains('tb')) {
       return const Color(0xFF00BCD4);

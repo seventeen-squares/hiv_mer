@@ -42,7 +42,7 @@ class NIDSHeader extends StatelessWidget {
                 height: 80,
                 width: double.infinity,
                 fit: BoxFit.contain,
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.center,
                 errorBuilder: (context, error, stackTrace) {
                   // Fallback to placeholder if image fails to load
                   return Container(

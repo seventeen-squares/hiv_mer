@@ -44,7 +44,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     Document(
       title: 'NIDS Booklet 2017',
       subtitle: 'National Indicator Data Set',
-      description: 'The official NIDS booklet containing comprehensive information about all indicators, their definitions, and usage guidelines.',
+      description:
+          'The official NIDS booklet containing comprehensive information about all indicators, their definitions, and usage guidelines.',
       fileName: 'NIDS_booklet_2017.pdf',
       fileSize: '2.8 MB',
       color: Colors.red,
@@ -52,7 +53,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     Document(
       title: 'VMMC Guidelines 2025',
       subtitle: 'Voluntary Medical Male Circumcision',
-      description: 'Comprehensive guidelines for voluntary medical male circumcision programs, including clinical protocols and best practices.',
+      description:
+          'Comprehensive guidelines for voluntary medical male circumcision programs, including clinical protocols and best practices.',
       fileName: 'VMMC_Guidelines_2025.pdf',
       fileSize: '11 MB',
       color: Color(0xFF2196F3), // Blue
@@ -60,7 +62,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     Document(
       title: 'Maternal & Perinatal Care',
       subtitle: 'Integrated Clinical Guideline',
-      description: 'Integrated maternal and perinatal care guidelines covering pregnancy, childbirth, and postnatal care protocols.',
+      description:
+          'Integrated maternal and perinatal care guidelines covering pregnancy, childbirth, and postnatal care protocols.',
       fileName: 'Maternal_Perinatal_Care_Guideline.pdf',
       fileSize: '14 MB',
       color: Color(0xFFE91E63), // Pink
@@ -68,7 +71,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     Document(
       title: 'DHMIS Policy 2011',
       subtitle: 'District Health Management Information System',
-      description: 'Policy framework for the District Health Management Information System, including data collection and reporting standards.',
+      description:
+          'Policy framework for the District Health Management Information System, including data collection and reporting standards.',
       fileName: 'DHMIS_Policy_2011.pdf',
       fileSize: '481 KB',
       color: Color(0xFF9C27B0), // Purple
@@ -82,7 +86,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
     try {
       // Load the PDF from assets
-      final ByteData data = await rootBundle.load('assets/documents/${document.fileName}');
+      final ByteData data =
+          await rootBundle.load('assets/documents/${document.fileName}');
       final bytes = data.buffer.asUint8List();
 
       // Get the directory to save the file
@@ -147,7 +152,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
   Future<void> _openPDF(Document document) async {
     try {
       // Load the PDF from assets
-      final ByteData data = await rootBundle.load('assets/documents/${document.fileName}');
+      final ByteData data =
+          await rootBundle.load('assets/documents/${document.fileName}');
       final bytes = data.buffer.asUint8List();
 
       // Get temporary directory
@@ -251,9 +257,9 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
                     // Document Cards
                     ..._documents.map((doc) => Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: _buildDocumentCard(doc),
-                    )),
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: _buildDocumentCard(doc),
+                        )),
 
                     // Info Section
                     Container(
@@ -425,14 +431,16 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton.icon(
-                    onPressed: isDownloading ? null : () => _downloadPDF(document),
+                    onPressed:
+                        isDownloading ? null : () => _downloadPDF(document),
                     icon: isDownloading
                         ? const SizedBox(
                             width: 18,
                             height: 18,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           )
                         : const Icon(Icons.download, size: 18),

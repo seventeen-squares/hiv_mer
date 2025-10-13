@@ -89,7 +89,7 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
 
   Color _getGroupColor(String groupId) {
     final groupLower = groupId.toLowerCase();
-    
+
     // Adolescent Health - Blue
     if (groupLower.contains('adolescent')) {
       return const Color(0xFF5DADE2);
@@ -101,11 +101,13 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return const Color(0xFFE91E63);
     } else if (groupLower.contains('art outcome')) {
       return const Color(0xFF827717);
-    } else if (groupLower.contains('art') || groupLower.contains('antiretroviral')) {
+    } else if (groupLower.contains('art') ||
+        groupLower.contains('antiretroviral')) {
       return const Color(0xFFA1887F);
     }
     // Central Chronic Medicines - Dark Green
-    else if (groupLower.contains('chronic medicine') || groupLower.contains('central chronic')) {
+    else if (groupLower.contains('chronic medicine') ||
+        groupLower.contains('central chronic')) {
       return const Color(0xFF00897B);
     }
     // Child and Nutrition - Light Blue
@@ -129,7 +131,9 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return const Color(0xFFCDDC39);
     }
     // Expanded Programme on Immunisation - Red
-    else if (groupLower.contains('epi') || groupLower.contains('immunis') || groupLower.contains('immunization')) {
+    else if (groupLower.contains('epi') ||
+        groupLower.contains('immunis') ||
+        groupLower.contains('immunization')) {
       return const Color(0xFFF44336);
     }
     // Eye Care - Light Pink
@@ -145,15 +149,18 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return const Color(0xFF66BB6A);
     }
     // Management Inpatients - Magenta/Pink
-    else if (groupLower.contains('inpatient') || groupLower.contains('management inpatient')) {
+    else if (groupLower.contains('inpatient') ||
+        groupLower.contains('management inpatient')) {
       return const Color(0xFFE91E63);
     }
     // Management PHC - Cyan
-    else if (groupLower.contains('phc') || groupLower.contains('primary health')) {
+    else if (groupLower.contains('phc') ||
+        groupLower.contains('primary health')) {
       return const Color(0xFF00BCD4);
     }
     // Maternal and Neonatal - Orange
-    else if (groupLower.contains('maternal') || groupLower.contains('neonatal')) {
+    else if (groupLower.contains('maternal') ||
+        groupLower.contains('neonatal')) {
       return const Color(0xFFFF9800);
     }
     // Mental Health - Light Green
@@ -165,7 +172,9 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return const Color(0xFFD4E157);
     }
     // PHC Ward Based Outreach Teams - Gray
-    else if (groupLower.contains('wbot') || groupLower.contains('ward based') || groupLower.contains('outreach')) {
+    else if (groupLower.contains('wbot') ||
+        groupLower.contains('ward based') ||
+        groupLower.contains('outreach')) {
       return const Color(0xFF9E9E9E);
     }
     // Quality - Purple
@@ -181,7 +190,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return const Color(0xFFC62828);
     }
     // Sexually Transmitted Infections - Brown/Tan
-    else if (groupLower.contains('sti') || groupLower.contains('sexually transmitted')) {
+    else if (groupLower.contains('sti') ||
+        groupLower.contains('sexually transmitted')) {
       return const Color(0xFFBCAAA4);
     }
     // TB Monthly - Teal
