@@ -153,7 +153,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Favorites',
+                          'Favourites',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -178,7 +178,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         Icons.delete_outline,
                         color: Colors.white,
                       ),
-                      tooltip: 'Clear all favorites',
+                      tooltip: 'Clear all favourites',
                     ),
                 ],
               ),

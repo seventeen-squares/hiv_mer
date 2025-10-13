@@ -3,7 +3,7 @@ import '../models/indicator_group.dart';
 import '../models/sa_indicator.dart';
 import '../services/sa_indicator_service.dart';
 import '../utils/constants.dart';
-import 'indicator_detail_screen.dart';
+import 'indicator_list_by_group_screen.dart';
 
 /// Screen showing all indicator groups in an accordion layout
 /// with indicators displayed in a grid under each group
@@ -22,7 +22,6 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
   Map<String, List<SAIndicator>> _indicatorsByGroup = {};
   bool _isLoading = true;
   String? _error;
-  String? _expandedGroupId;
 
   @override
   void initState() {
@@ -60,31 +59,106 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
   }
 
   IconData _getGroupIcon(String groupId) {
-    if (groupId.contains('art') || groupId.contains('antiretroviral')) {
-      return Icons.medication;
-    } else if (groupId.contains('tb') || groupId.contains('tuberculosis')) {
-      return Icons.masks;
-    } else if (groupId.contains('hiv')) {
-      return Icons.health_and_safety;
-    } else if (groupId.contains('child') || groupId.contains('nutrition')) {
-      return Icons.child_care;
-    } else if (groupId.contains('immunis') || groupId.contains('epi')) {
-      return Icons.vaccines;
-    } else if (groupId.contains('communicable') ||
-        groupId.contains('disease')) {
-      return Icons.people;
-    } else if (groupId.contains('chronic') || groupId.contains('medicine')) {
-      return Icons.local_pharmacy;
-    } else if (groupId.contains('eye')) {
-      return Icons.visibility;
-    } else if (groupId.contains('facility')) {
-      return Icons.local_hospital;
-    } else if (groupId.contains('campaign')) {
-      return Icons.campaign;
-    } else if (groupId.contains('site')) {
-      return Icons.location_on;
+    final groupLower = groupId.toLowerCase();
+    
+    // Adolescent Health
+    if (groupLower.contains('adolescent')) {
+      return Icons.people_alt;
     }
-    return Icons.folder;
+    // ART Categories
+    else if (groupLower.contains('art') || groupLower.contains('antiretroviral')) {
+      return Icons.medical_services;
+    }
+    // Central Chronic Medicines
+    else if (groupLower.contains('chronic medicine') || groupLower.contains('central chronic')) {
+      return Icons.medication_liquid;
+    }
+    // Child and Nutrition
+    else if (groupLower.contains('child') || groupLower.contains('nutrition')) {
+      return Icons.child_care;
+    }
+    // Chronic
+    else if (groupLower.contains('chronic')) {
+      return Icons.local_pharmacy;
+    }
+    // Communicable Diseases
+    else if (groupLower.contains('communicable')) {
+      return Icons.coronavirus;
+    }
+    // Emergency Medical Services
+    else if (groupLower.contains('emergency') || groupLower.contains('ems')) {
+      return Icons.emergency;
+    }
+    // Environmental Health
+    else if (groupLower.contains('environmental')) {
+      return Icons.eco;
+    }
+    // Immunisation
+    else if (groupLower.contains('epi') || groupLower.contains('immunis') || groupLower.contains('immunization')) {
+      return Icons.vaccines;
+    }
+    // Eye Care
+    else if (groupLower.contains('eye')) {
+      return Icons.remove_red_eye;
+    }
+    // HIV
+    else if (groupLower.contains('hiv')) {
+      return Icons.health_and_safety;
+    }
+    // Malaria
+    else if (groupLower.contains('malaria')) {
+      return Icons.bug_report;
+    }
+    // Inpatient Management
+    else if (groupLower.contains('inpatient')) {
+      return Icons.local_hospital;
+    }
+    // PHC
+    else if (groupLower.contains('phc') || groupLower.contains('primary health')) {
+      return Icons.medical_information;
+    }
+    // Maternal and Neonatal
+    else if (groupLower.contains('maternal') || groupLower.contains('neonatal')) {
+      return Icons.pregnant_woman;
+    }
+    // Mental Health
+    else if (groupLower.contains('mental')) {
+      return Icons.psychology;
+    }
+    // Oral Health
+    else if (groupLower.contains('oral') || groupLower.contains('dental')) {
+      return Icons.mood;
+    }
+    // Ward Based Outreach Teams
+    else if (groupLower.contains('wbot') || groupLower.contains('ward based') || groupLower.contains('outreach')) {
+      return Icons.group;
+    }
+    // Quality
+    else if (groupLower.contains('quality')) {
+      return Icons.stars;
+    }
+    // Rehabilitation
+    else if (groupLower.contains('rehab')) {
+      return Icons.accessible;
+    }
+    // School Health
+    else if (groupLower.contains('school')) {
+      return Icons.school;
+    }
+    // STI
+    else if (groupLower.contains('sti') || groupLower.contains('sexually transmitted')) {
+      return Icons.warning;
+    }
+    // TB
+    else if (groupLower.contains('tb') || groupLower.contains('tuberculosis')) {
+      return Icons.masks;
+    }
+    // Women's Health
+    else if (groupLower.contains('women')) {
+      return Icons.female;
+    }
+    // Default
+    return Icons.folder_outlined;
   }
 
   Color _getGroupColor(String groupId) {
@@ -224,10 +298,10 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Custom App Bar with SA branding
+            // Custom App Bar with SA branding - compact version
             Container(
-              padding: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              decoration: const BoxDecoration(
                 color: saGovernmentGreen,
               ),
               child: Row(
@@ -239,6 +313,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                         Icons.arrow_back,
                         color: Colors.white,
                       ),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
                     ),
                   if (canPop) const SizedBox(width: 8),
                   const Expanded(
@@ -246,26 +322,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                       'Indicator Groups',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // TODO: Add help/info dialog
-                    },
-                    icon: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.help_outline,
-                        color: Colors.white,
-                        size: 20,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -312,11 +370,11 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                           ),
                         )
                       : ListView.builder(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                           itemCount: _groups.length,
                           itemBuilder: (context, index) {
                             final group = _groups[index];
-                            return _buildGroupCard(group);
+                            return _buildGroupListItem(group);
                           },
                         ),
             ),
@@ -326,186 +384,97 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
     );
   }
 
-  Widget _buildGroupCard(IndicatorGroup group) {
-    final isExpanded = _expandedGroupId == group.id;
+  Widget _buildGroupListItem(IndicatorGroup group) {
     final indicators = _indicatorsByGroup[group.id] ?? [];
+    final color = _getGroupColor(group.id);
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isExpanded ? saGovernmentGreen : Colors.grey.shade200,
-          width: isExpanded ? 2 : 1,
-        ),
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: Column(
-        children: [
-          // Group Header (Accordion trigger)
-          InkWell(
-            onTap: () {
-              setState(() {
-                _expandedGroupId = isExpanded ? null : group.id;
-              });
-            },
-            borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(12),
-              topRight: const Radius.circular(12),
-              bottomLeft: isExpanded ? Radius.zero : const Radius.circular(12),
-              bottomRight: isExpanded ? Radius.zero : const Radius.circular(12),
+      child: InkWell(
+        onTap: () {
+          // Navigate to indicator list by group screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => IndicatorListByGroupScreen(group: group),
             ),
-            child: Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: saGovernmentGreen.withOpacity(0.05),
-                borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(12),
-                  topRight: const Radius.circular(12),
-                  bottomLeft:
-                      isExpanded ? Radius.zero : const Radius.circular(12),
-                  bottomRight:
-                      isExpanded ? Radius.zero : const Radius.circular(12),
+          );
+        },
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              // Colored bar on the left
+              Container(
+                width: 4,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: _getGroupColor(group.id).withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(
-                      _getGroupIcon(group.id),
-                      color: _getGroupColor(group.id),
-                      size: 22,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
+              const SizedBox(width: 12),
+              // Icon
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  _getGroupIcon(group.id),
+                  color: color,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              // Group name and count
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       group.name,
                       style: const TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Color(0xFF1F2937),
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  Icon(
-                    isExpanded
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    color: saGovernmentGreen,
-                    size: 24,
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Indicators Grid (shown when expanded)
-          if (isExpanded) ...[
-            const Divider(height: 1),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: indicators.isEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.info_outline, color: Colors.grey.shade400),
-                          const SizedBox(width: 12),
-                          Text(
-                            'No indicators in this group',
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
+                    const SizedBox(height: 4),
+                    Text(
+                      '${indicators.length} indicator${indicators.length != 1 ? 's' : ''}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
                       ),
-                    )
-                  : GridView.count(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: 1.2,
-                      children: indicators.map((indicator) {
-                        return _buildIndicatorCard(indicator);
-                      }).toList(),
                     ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildIndicatorCard(SAIndicator indicator) {
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(
-          IndicatorDetailScreen.routeName,
-          arguments: indicator,
-        );
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade50,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: Colors.grey.shade200,
-            width: 1,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: _getGroupColor(indicator.groupId).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Icon(
-                    _getGroupIcon(indicator.groupId),
-                    color: _getGroupColor(indicator.groupId),
-                    size: 18,
-                  ),
+                  ],
                 ),
-                const Spacer(),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Colors.grey.shade400,
-                  size: 18,
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Expanded(
-              child: Text(
-                indicator.shortname,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey.shade800,
-                ),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
+              // Arrow icon
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey.shade400,
+                size: 16,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -156,8 +156,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       controller: _searchController,
                       focusNode: _searchFocusNode,
                       decoration: InputDecoration(
-                        hintText:
-                            'Search indicators (e.g., ART, TB, viral load)',
+                        hintText: 'Search',
                         hintStyle: TextStyle(
                           color: AppColors.getTertiaryTextColor(context),
                           fontSize: 16,

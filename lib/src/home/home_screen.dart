@@ -102,8 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: HomeSearchBar(),
                             ),
 
-                            const SizedBox(height: 24),
-
                             // Navigation Cards Grid
                             Padding(
                               padding:
