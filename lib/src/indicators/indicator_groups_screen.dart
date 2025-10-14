@@ -60,17 +60,19 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
 
   IconData _getGroupIcon(String groupId) {
     final groupLower = groupId.toLowerCase();
-    
+
     // Adolescent Health
     if (groupLower.contains('adolescent')) {
       return Icons.people_alt;
     }
     // ART Categories
-    else if (groupLower.contains('art') || groupLower.contains('antiretroviral')) {
+    else if (groupLower.contains('art') ||
+        groupLower.contains('antiretroviral')) {
       return Icons.medical_services;
     }
     // Central Chronic Medicines
-    else if (groupLower.contains('chronic medicine') || groupLower.contains('central chronic')) {
+    else if (groupLower.contains('chronic medicine') ||
+        groupLower.contains('central chronic')) {
       return Icons.medication_liquid;
     }
     // Child and Nutrition
@@ -94,7 +96,9 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return Icons.eco;
     }
     // Immunisation
-    else if (groupLower.contains('epi') || groupLower.contains('immunis') || groupLower.contains('immunization')) {
+    else if (groupLower.contains('epi') ||
+        groupLower.contains('immunis') ||
+        groupLower.contains('immunization')) {
       return Icons.vaccines;
     }
     // Eye Care
@@ -114,11 +118,13 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return Icons.local_hospital;
     }
     // PHC
-    else if (groupLower.contains('phc') || groupLower.contains('primary health')) {
+    else if (groupLower.contains('phc') ||
+        groupLower.contains('primary health')) {
       return Icons.medical_information;
     }
     // Maternal and Neonatal
-    else if (groupLower.contains('maternal') || groupLower.contains('neonatal')) {
+    else if (groupLower.contains('maternal') ||
+        groupLower.contains('neonatal')) {
       return Icons.pregnant_woman;
     }
     // Mental Health
@@ -130,7 +136,9 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return Icons.mood;
     }
     // Ward Based Outreach Teams
-    else if (groupLower.contains('wbot') || groupLower.contains('ward based') || groupLower.contains('outreach')) {
+    else if (groupLower.contains('wbot') ||
+        groupLower.contains('ward based') ||
+        groupLower.contains('outreach')) {
       return Icons.group;
     }
     // Quality
@@ -146,7 +154,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
       return Icons.school;
     }
     // STI
-    else if (groupLower.contains('sti') || groupLower.contains('sexually transmitted')) {
+    else if (groupLower.contains('sti') ||
+        groupLower.contains('sexually transmitted')) {
       return Icons.warning;
     }
     // TB
@@ -300,7 +309,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
           children: [
             // Custom App Bar with SA branding - compact version
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               decoration: const BoxDecoration(
                 color: saGovernmentGreen,
               ),
@@ -370,7 +380,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                           ),
                         )
                       : ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
                           itemCount: _groups.length,
                           itemBuilder: (context, index) {
                             final group = _groups[index];

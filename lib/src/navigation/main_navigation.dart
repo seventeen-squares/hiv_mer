@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../home/home_screen.dart';
 import '../indicators/indicator_groups_screen.dart';
 import '../data_elements/data_elements_screen.dart';
+import '../search/search_screen.dart';
 import '../settings/settings_controller.dart';
 import '../utils/constants.dart';
 
@@ -29,7 +30,8 @@ class MainNavigation extends StatefulWidget {
   static const int homeTab = 0;
   static const int indicatorsTab = 1;
   static const int dataElementsTab = 2;
-  static const int moreTab = 3; // Changed from settingsTab
+  static const int searchTab = 3;
+  static const int moreTab = 4;
 }
 
 class _MainNavigationState extends State<MainNavigation> {
@@ -220,6 +222,7 @@ class _MainNavigationState extends State<MainNavigation> {
           const HomeScreen(),
           const IndicatorGroupsScreen(),
           const DataElementsScreen(),
+          const SearchScreen(),
           // Placeholder for More tab (will show menu instead)
           const Center(child: Text('More')),
         ],
@@ -232,8 +235,8 @@ class _MainNavigationState extends State<MainNavigation> {
         unselectedItemColor: Colors.white.withOpacity(0.6),
         type: BottomNavigationBarType.fixed,
         elevation: 8,
-        selectedFontSize: 14,
-        unselectedFontSize: 12,
+        selectedFontSize: 12,
+        unselectedFontSize: 11,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -249,6 +252,11 @@ class _MainNavigationState extends State<MainNavigation> {
             icon: Icon(Icons.description_outlined),
             activeIcon: Icon(Icons.description),
             label: 'Data Elements',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            activeIcon: Icon(Icons.search),
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),

@@ -67,63 +67,94 @@ class _IndicatorListByGroupScreenState
     if (groupLower.contains('art baseline')) return const Color(0xFFA1887F);
     if (groupLower.contains('art monthly')) return const Color(0xFFE91E63);
     if (groupLower.contains('art outcome')) return const Color(0xFF827717);
-    if (groupLower.contains('art') || groupLower.contains('antiretroviral')) return const Color(0xFFA1887F);
-    if (groupLower.contains('chronic medicine') || groupLower.contains('central chronic')) return const Color(0xFF00897B);
-    if (groupLower.contains('child') || groupLower.contains('nutrition')) return const Color(0xFF81D4FA);
+    if (groupLower.contains('art') || groupLower.contains('antiretroviral'))
+      return const Color(0xFFA1887F);
+    if (groupLower.contains('chronic medicine') ||
+        groupLower.contains('central chronic')) return const Color(0xFF00897B);
+    if (groupLower.contains('child') || groupLower.contains('nutrition'))
+      return const Color(0xFF81D4FA);
     if (groupLower.contains('chronic')) return const Color(0xFFFFEB3B);
     if (groupLower.contains('communicable')) return const Color(0xFFFF7043);
-    if (groupLower.contains('emergency') || groupLower.contains('ems')) return const Color(0xFF424242);
+    if (groupLower.contains('emergency') || groupLower.contains('ems'))
+      return const Color(0xFF424242);
     if (groupLower.contains('environmental')) return const Color(0xFFCDDC39);
-    if (groupLower.contains('epi') || groupLower.contains('immunis') || groupLower.contains('immunization')) return const Color(0xFFF44336);
+    if (groupLower.contains('epi') ||
+        groupLower.contains('immunis') ||
+        groupLower.contains('immunization')) return const Color(0xFFF44336);
     if (groupLower.contains('eye')) return const Color(0xFFF8BBD0);
     if (groupLower.contains('hiv')) return const Color(0xFF7986CB);
     if (groupLower.contains('malaria')) return const Color(0xFF66BB6A);
-    if (groupLower.contains('inpatient') || groupLower.contains('management inpatient')) return const Color(0xFFE91E63);
-    if (groupLower.contains('phc') || groupLower.contains('primary health')) return const Color(0xFF00BCD4);
-    if (groupLower.contains('maternal') || groupLower.contains('neonatal')) return const Color(0xFFFF9800);
+    if (groupLower.contains('inpatient') ||
+        groupLower.contains('management inpatient'))
+      return const Color(0xFFE91E63);
+    if (groupLower.contains('phc') || groupLower.contains('primary health'))
+      return const Color(0xFF00BCD4);
+    if (groupLower.contains('maternal') || groupLower.contains('neonatal'))
+      return const Color(0xFFFF9800);
     if (groupLower.contains('mental')) return const Color(0xFFAED581);
-    if (groupLower.contains('oral') || groupLower.contains('dental')) return const Color(0xFFD4E157);
-    if (groupLower.contains('wbot') || groupLower.contains('ward based') || groupLower.contains('outreach')) return const Color(0xFF9E9E9E);
+    if (groupLower.contains('oral') || groupLower.contains('dental'))
+      return const Color(0xFFD4E157);
+    if (groupLower.contains('wbot') ||
+        groupLower.contains('ward based') ||
+        groupLower.contains('outreach')) return const Color(0xFF9E9E9E);
     if (groupLower.contains('quality')) return const Color(0xFF7E57C2);
     if (groupLower.contains('rehab')) return const Color(0xFFB39DDB);
     if (groupLower.contains('school')) return const Color(0xFFC62828);
-    if (groupLower.contains('sti') || groupLower.contains('sexually transmitted')) return const Color(0xFFBCAAA4);
-    if (groupLower.contains('tb') && groupLower.contains('monthly')) return const Color(0xFF00BCD4);
-    if (groupLower.contains('tb') && groupLower.contains('quarterly')) return const Color(0xFF8D6E63);
-    if (groupLower.contains('tb') || groupLower.contains('tuberculosis')) return const Color(0xFF00BCD4);
+    if (groupLower.contains('sti') ||
+        groupLower.contains('sexually transmitted'))
+      return const Color(0xFFBCAAA4);
+    if (groupLower.contains('tb') && groupLower.contains('monthly'))
+      return const Color(0xFF00BCD4);
+    if (groupLower.contains('tb') && groupLower.contains('quarterly'))
+      return const Color(0xFF8D6E63);
+    if (groupLower.contains('tb') || groupLower.contains('tuberculosis'))
+      return const Color(0xFF00BCD4);
     if (groupLower.contains('women')) return const Color(0xFFE57373);
-    
+
     return saGovernmentGreen;
   }
 
   IconData _getGroupIcon() {
     final groupLower = widget.group.id.toLowerCase();
-    
+
     if (groupLower.contains('adolescent')) return Icons.people_alt;
-    if (groupLower.contains('art') || groupLower.contains('antiretroviral')) return Icons.medical_services;
-    if (groupLower.contains('chronic medicine') || groupLower.contains('central chronic')) return Icons.medication_liquid;
-    if (groupLower.contains('child') || groupLower.contains('nutrition')) return Icons.child_care;
+    if (groupLower.contains('art') || groupLower.contains('antiretroviral'))
+      return Icons.medical_services;
+    if (groupLower.contains('chronic medicine') ||
+        groupLower.contains('central chronic')) return Icons.medication_liquid;
+    if (groupLower.contains('child') || groupLower.contains('nutrition'))
+      return Icons.child_care;
     if (groupLower.contains('chronic')) return Icons.local_pharmacy;
     if (groupLower.contains('communicable')) return Icons.coronavirus;
-    if (groupLower.contains('emergency') || groupLower.contains('ems')) return Icons.emergency;
+    if (groupLower.contains('emergency') || groupLower.contains('ems'))
+      return Icons.emergency;
     if (groupLower.contains('environmental')) return Icons.eco;
-    if (groupLower.contains('epi') || groupLower.contains('immunis') || groupLower.contains('immunization')) return Icons.vaccines;
+    if (groupLower.contains('epi') ||
+        groupLower.contains('immunis') ||
+        groupLower.contains('immunization')) return Icons.vaccines;
     if (groupLower.contains('eye')) return Icons.remove_red_eye;
     if (groupLower.contains('hiv')) return Icons.health_and_safety;
     if (groupLower.contains('malaria')) return Icons.bug_report;
     if (groupLower.contains('inpatient')) return Icons.local_hospital;
-    if (groupLower.contains('phc') || groupLower.contains('primary health')) return Icons.medical_information;
-    if (groupLower.contains('maternal') || groupLower.contains('neonatal')) return Icons.pregnant_woman;
+    if (groupLower.contains('phc') || groupLower.contains('primary health'))
+      return Icons.medical_information;
+    if (groupLower.contains('maternal') || groupLower.contains('neonatal'))
+      return Icons.pregnant_woman;
     if (groupLower.contains('mental')) return Icons.psychology;
-    if (groupLower.contains('oral') || groupLower.contains('dental')) return Icons.mood;
-    if (groupLower.contains('wbot') || groupLower.contains('ward based') || groupLower.contains('outreach')) return Icons.group;
+    if (groupLower.contains('oral') || groupLower.contains('dental'))
+      return Icons.mood;
+    if (groupLower.contains('wbot') ||
+        groupLower.contains('ward based') ||
+        groupLower.contains('outreach')) return Icons.group;
     if (groupLower.contains('quality')) return Icons.stars;
     if (groupLower.contains('rehab')) return Icons.accessible;
     if (groupLower.contains('school')) return Icons.school;
-    if (groupLower.contains('sti') || groupLower.contains('sexually transmitted')) return Icons.warning;
-    if (groupLower.contains('tb') || groupLower.contains('tuberculosis')) return Icons.masks;
+    if (groupLower.contains('sti') ||
+        groupLower.contains('sexually transmitted')) return Icons.warning;
+    if (groupLower.contains('tb') || groupLower.contains('tuberculosis'))
+      return Icons.masks;
     if (groupLower.contains('women')) return Icons.female;
-    
+
     return Icons.folder_outlined;
   }
 
@@ -223,7 +254,8 @@ class _IndicatorListByGroupScreenState
           children: [
             // Custom App Bar - compact version with group color
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               decoration: BoxDecoration(
                 color: _getGroupColor(),
               ),

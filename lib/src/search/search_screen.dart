@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../models/sa_indicator.dart';
+import '../models/data_element.dart';
 import '../models/indicator_group.dart';
 import '../services/sa_indicator_service.dart';
+import '../services/data_element_service.dart';
 import '../indicators/indicator_detail_screen.dart';
+import '../data_elements/data_element_detail_screen.dart';
 import '../indicators/indicator_list_by_group_screen.dart';
 import '../utils/app_colors.dart';
 import '../utils/constants.dart';
@@ -19,10 +22,12 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final _indicatorService = SAIndicatorService.instance;
+  final _dataElementService = DataElementService.instance;
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
-  List<SAIndicator> _searchResults = [];
+  List<SAIndicator> _indicatorResults = [];
+  List<DataElement> _dataElementResults = [];
   bool _isLoading = true;
   bool _hasSearched = false;
   bool _isSearching = false;
@@ -53,6 +58,9 @@ class _SearchScreenState extends State<SearchScreen> {
       if (!_indicatorService.isLoaded) {
         await _indicatorService.loadIndicators();
       }
+      if (!_dataElementService.isLoaded) {
+        await _dataElementService.loadDataElements();
+      }
       setState(() {
         _isLoading = false;
       });
@@ -71,7 +79,8 @@ class _SearchScreenState extends State<SearchScreen> {
     if (query.isEmpty) {
       setState(() {
         _hasSearched = false;
-        _searchResults = [];
+        _indicatorResults = [];
+        _dataElementResults = [];
         _isSearching = false;
       });
       return;
@@ -86,7 +95,8 @@ class _SearchScreenState extends State<SearchScreen> {
     _debounceTimer = Timer(const Duration(milliseconds: 300), () {
       setState(() {
         _hasSearched = true;
-        _searchResults = _indicatorService.searchIndicators(query);
+        _indicatorResults = _indicatorService.searchIndicators(query);
+        _dataElementResults = _dataElementService.searchDataElements(query);
         _isSearching = false;
       });
     });
@@ -105,34 +115,21 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             // Search Header
             Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              decoration: const BoxDecoration(
                 color: saGovernmentGreen,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Expanded(
-                        child: Text(
-                          'SEARCH INDICATORS',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
+                  const Text(
+                    'SEARCH',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 16),
 
@@ -212,7 +209,7 @@ class _SearchScreenState extends State<SearchScreen> {
       return _buildSearchSuggestions();
     }
 
-    if (_searchResults.isEmpty) {
+    if (_indicatorResults.isEmpty && _dataElementResults.isEmpty) {
       return _buildNoResults();
     }
 
@@ -257,13 +254,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   ],
                 ),
                 const SizedBox(height: 12),
-                Text('• Search by indicator ID (e.g., NIDS-RF-001)',
+                Text('• Search indicators and data elements',
                     style: TextStyle(color: Colors.grey.shade700)),
                 const SizedBox(height: 4),
-                Text('• Search by name (e.g., ART Initiations)',
+                Text('• Search by ID, name, or keywords',
                     style: TextStyle(color: Colors.grey.shade700)),
                 const SizedBox(height: 4),
-                Text('• Search by keywords (e.g., viral load, TB)',
+                Text('• Results show both types separately',
                     style: TextStyle(color: Colors.grey.shade700)),
               ],
             ),
@@ -409,13 +406,71 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildSearchResults() {
-    return ListView.builder(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
-      itemCount: _searchResults.length,
-      itemBuilder: (context, index) {
-        final indicator = _searchResults[index];
-        return _buildIndicatorCard(indicator);
-      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Summary
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: saGovernmentGreen.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.search, color: saGovernmentGreen, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  'Found ${_indicatorResults.length} indicator${_indicatorResults.length != 1 ? 's' : ''} and ${_dataElementResults.length} data element${_dataElementResults.length != 1 ? 's' : ''}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: saGovernmentGreen,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Indicators Section
+          if (_indicatorResults.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Text(
+              'Indicators (${_indicatorResults.length})',
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1F2937),
+              ),
+            ),
+            const SizedBox(height: 12),
+            ...List.generate(_indicatorResults.length, (index) {
+              final indicator = _indicatorResults[index];
+              return _buildIndicatorCard(indicator);
+            }),
+          ],
+
+          // Data Elements Section
+          if (_dataElementResults.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Text(
+              'Data Elements (${_dataElementResults.length})',
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1F2937),
+              ),
+            ),
+            const SizedBox(height: 12),
+            ...List.generate(_dataElementResults.length, (index) {
+              final dataElement = _dataElementResults[index];
+              return _buildDataElementCard(dataElement);
+            }),
+          ],
+        ],
+      ),
     );
   }
 
@@ -530,6 +585,119 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
+  Widget _buildDataElementCard(DataElement dataElement) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey.shade200,
+          width: 1,
+        ),
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            DataElementDetailScreen.routeName,
+            arguments: dataElement,
+          );
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: Colors.blue.withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.description, size: 14, color: Colors.blue),
+                        const SizedBox(width: 4),
+                        Text(
+                          'DATA ELEMENT',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  _buildDataElementStatusBadge(dataElement.status),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                dataElement.name,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1F2937),
+                ),
+              ),
+              if (dataElement.shortname.isNotEmpty &&
+                  dataElement.shortname != dataElement.name) ...[
+                const SizedBox(height: 4),
+                Text(
+                  dataElement.shortname,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+              if (dataElement.definition.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Text(
+                  dataElement.definition,
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: 14,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Icon(Icons.category, size: 16, color: Colors.grey.shade500),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      dataElement.category,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildStatusBadge(IndicatorStatus status) {
     Color bgColor;
     Color textColor;
@@ -552,6 +720,46 @@ class _SearchScreenState extends State<SearchScreen> {
         label = 'RETAINED+';
         break;
       case IndicatorStatus.retainedWithoutNew:
+        bgColor = const Color(0xFFF3F4F6);
+        textColor = const Color(0xFF4B5563);
+        label = 'RETAINED';
+        break;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 11,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDataElementStatusBadge(DataElementStatus status) {
+    Color bgColor;
+    Color textColor;
+    String label;
+
+    switch (status) {
+      case DataElementStatus.newElement:
+        bgColor = const Color(0xFFDCFCE7);
+        textColor = const Color(0xFF166534);
+        label = 'NEW';
+        break;
+      case DataElementStatus.amended:
+        bgColor = const Color(0xFFDBEAFE);
+        textColor = const Color(0xFF1E40AF);
+        label = 'AMENDED';
+        break;
+      case DataElementStatus.retained:
         bgColor = const Color(0xFFF3F4F6);
         textColor = const Color(0xFF4B5563);
         label = 'RETAINED';

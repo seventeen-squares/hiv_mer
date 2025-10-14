@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../navigation/main_navigation.dart';
 import '../../utils/constants.dart';
 
 /// Home screen search bar widget
-/// Navigates to search screen when tapped
+/// Switches to search tab when tapped
 class HomeSearchBar extends StatelessWidget {
   const HomeSearchBar({super.key});
 
@@ -10,7 +11,8 @@ class HomeSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/search');
+        // Switch to search tab in bottom navigation
+        MainNavigation.switchToTab(context, MainNavigation.searchTab);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
