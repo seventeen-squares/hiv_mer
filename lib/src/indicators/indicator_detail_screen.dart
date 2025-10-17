@@ -124,83 +124,86 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Custom App Bar with SA branding - compact with scrollable title
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              decoration: const BoxDecoration(
-                color: saGovernmentGreen,
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
+      body: Column(
+        children: [
+          // Custom App Bar with SA branding - compact with scrollable title
+          Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 8,
+              left: 16.0,
+              right: 16.0,
+              bottom: 10.0,
+            ),
+            decoration: const BoxDecoration(
+              color: saGovernmentGreen,
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Text(
-                        indicator.shortname,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      indicator.shortname,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  onPressed: () => _shareIndicator(context, indicator),
+                  icon: const Icon(
+                    Icons.share,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  tooltip: 'Share indicator',
+                ),
+                const SizedBox(width: 12),
+                if (_isLoadingFavorite)
+                  const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                else
                   IconButton(
-                    onPressed: () => _shareIndicator(context, indicator),
-                    icon: const Icon(
-                      Icons.share,
-                      color: Colors.white,
+                    onPressed: () => _toggleFavorite(indicator),
+                    icon: Icon(
+                      _isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: _isFavorite ? Colors.red : Colors.white,
                       size: 20,
                     ),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    tooltip: 'Share indicator',
+                    tooltip: _isFavorite
+                        ? 'Remove from favorites'
+                        : 'Add to favorites',
                   ),
-                  const SizedBox(width: 12),
-                  if (_isLoadingFavorite)
-                    const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                    )
-                  else
-                    IconButton(
-                      onPressed: () => _toggleFavorite(indicator),
-                      icon: Icon(
-                        _isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: _isFavorite ? Colors.red : Colors.white,
-                        size: 20,
-                      ),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      tooltip: _isFavorite
-                          ? 'Remove from favorites'
-                          : 'Add to favorites',
-                    ),
-                ],
-              ),
+              ],
             ),
+          ),
 
-            // Content
-            Expanded(
+          // Content
+          Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -307,8 +310,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                 ),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     );
   }

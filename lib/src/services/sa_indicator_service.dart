@@ -138,6 +138,21 @@ class SAIndicatorService {
     }
   }
 
+  /// Returns a group by its ID
+  IndicatorGroup? getGroupById(String groupId) {
+    if (_groups == null) {
+      throw StateError('Indicators not loaded. Call loadIndicators() first.');
+    }
+
+    try {
+      return _groups!.firstWhere(
+        (group) => group.id == groupId,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
   /// Returns total count of indicators and data elements
   /// Returns map with keys: 'indicators' and 'dataElements'
   Map<String, int> getStatistics() {

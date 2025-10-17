@@ -304,45 +304,48 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Custom App Bar with SA branding - compact version
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              decoration: const BoxDecoration(
-                color: saGovernmentGreen,
-              ),
-              child: Row(
-                children: [
-                  if (canPop)
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
+      body: Column(
+        children: [
+          // Custom App Bar with SA branding - compact version
+          Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 8,
+              left: 16.0,
+              right: 16.0,
+              bottom: 10.0,
+            ),
+            decoration: const BoxDecoration(
+              color: saGovernmentGreen,
+            ),
+            child: Row(
+              children: [
+                if (canPop)
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
                     ),
-                  if (canPop) const SizedBox(width: 8),
-                  const Expanded(
-                    child: Text(
-                      'Indicator Groups',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
+                if (canPop) const SizedBox(width: 8),
+                const Expanded(
+                  child: Text(
+                    'Indicator Groups',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
 
-            // Content
-            Expanded(
+          // Content
+          Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _error != null
@@ -388,9 +391,8 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                             return _buildGroupListItem(group);
                           },
                         ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

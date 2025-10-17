@@ -22,6 +22,7 @@ class SummaryCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Container(
+        height: 110, // Fixed height for symmetry
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: backgroundColor,
@@ -36,6 +37,7 @@ class SummaryCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               title,
@@ -44,8 +46,9 @@ class SummaryCard extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 8),
             Text(
               count.toString(),
               style: const TextStyle(

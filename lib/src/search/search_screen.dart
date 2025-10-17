@@ -110,28 +110,33 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Search Header
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              decoration: const BoxDecoration(
-                color: saGovernmentGreen,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'SEARCH',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+      backgroundColor: const Color(0xFFF8FAFC),
+      body: Column(
+        children: [
+          // Remove SafeArea to eliminate white space
+          // Search Header
+          Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 12,
+              left: 16.0,
+              right: 16.0,
+              bottom: 16.0,
+            ),
+            decoration: const BoxDecoration(
+              color: saGovernmentGreen,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'SEARCH',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 16),
+                ),
+                const SizedBox(height: 12),
 
                   // Search Bar
                   Container(
@@ -186,20 +191,19 @@ class _SearchScreenState extends State<SearchScreen> {
                       onSubmitted: (_) => _searchFocusNode.unfocus(),
                     ),
                   ),
-                ],
-              ),
+              ],
             ),
+          ),
 
-            // Search Results
-            Expanded(
+          // Search Results
+          Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _isSearching
                       ? const Center(child: CircularProgressIndicator())
                       : _buildSearchContent(),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -475,6 +479,10 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildIndicatorCard(SAIndicator indicator) {
+    // Get the group name for this indicator
+    final group = _indicatorService.getGroupById(indicator.groupId);
+    final groupName = group?.name ?? indicator.groupId;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -511,10 +519,38 @@ class _SearchScreenState extends State<SearchScreen> {
                         width: 1,
                       ),
                     ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.folder_outlined,
+                            size: 14, color: saGovernmentGreen),
+                        const SizedBox(width: 4),
+                        Text(
+                          'INDICATOR',
+                          style: TextStyle(
+                            color: saGovernmentGreen,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.purple.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: Colors.purple.withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
                     child: Text(
                       indicator.indicatorId,
-                      style: TextStyle(
-                        color: saGovernmentGreen,
+                      style: const TextStyle(
+                        color: Colors.purple,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
@@ -522,6 +558,27 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   const Spacer(),
                   _buildStatusBadge(indicator.status),
+                ],
+              ),
+              const SizedBox(height: 8),
+              // Programme Group
+              Row(
+                children: [
+                  Icon(Icons.category_outlined,
+                      size: 14, color: Colors.grey.shade600),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      groupName,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),

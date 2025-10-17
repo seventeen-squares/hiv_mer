@@ -4,6 +4,7 @@ import 'package:share_plus/share_plus.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import '../utils/constants.dart';
+import 'pdf_viewer_screen.dart';
 
 /// Document model
 class Document {
@@ -149,37 +150,15 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     }
   }
 
-  Future<void> _openPDF(Document document) async {
-    try {
-      // Load the PDF from assets
-      final ByteData data =
-          await rootBundle.load('assets/documents/${document.fileName}');
-      final bytes = data.buffer.asUint8List();
-
-      // Get temporary directory
-      final directory = await getTemporaryDirectory();
-      final filePath = '${directory.path}/${document.fileName}';
-
-      // Write the file
-      final file = File(filePath);
-      await file.writeAsBytes(bytes);
-
-      // For now, we'll just share it since opening PDFs requires platform-specific code
-      await Share.shareXFiles(
-        [XFile(filePath)],
-        subject: document.title,
-        text: document.subtitle,
-      );
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error opening PDF: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
+  /// Opens PDF in the in-app viewer
+  void _openPDF(Document document) {
+    Navigator.of(context).pushNamed(
+      PdfViewerScreen.routeName,
+      arguments: {
+        'title': document.title,
+        'assetPath': 'assets/documents/${document.fileName}',
+      },
+    );
   }
 
   @override

@@ -161,36 +161,42 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Custom App Bar
-            Container(
-              padding: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                color: saGovernmentGreen,
-              ),
-              child: Row(
-                children: [
-                  if (canPop)
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ),
+      body: Column(
+        children: [
+          // Custom App Bar
+          Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 8,
+              left: 16.0,
+              right: 16.0,
+              bottom: 10.0,
+            ),
+            decoration: const BoxDecoration(
+              color: saGovernmentGreen,
+            ),
+            child: Row(
+              children: [
+                if (canPop)
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
                     ),
-                  if (canPop) const SizedBox(width: 8),
-                  const Expanded(
-                    child: Text(
-                      'Data Elements',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  ),
+                if (canPop) const SizedBox(width: 8),
+                const Expanded(
+                  child: Text(
+                    'Data Elements',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
+                ),
                   IconButton(
                     onPressed: () {
                       // TODO: Add help/info dialog
@@ -209,12 +215,12 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                       ),
                     ),
                   ),
-                ],
-              ),
+              ],
             ),
+          ),
 
-            // Content
-            Expanded(
+          // Content
+          Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _error != null
@@ -266,9 +272,8 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                             return _buildCategoryCard(category);
                           },
                         ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -302,10 +307,9 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Category Icon
+              // Category Icon - fixed alignment
               Container(
                 width: 48,
                 height: 48,
@@ -319,38 +323,44 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                   size: 24,
                 ),
               ),
-              const SizedBox(height: 10),
-              // Category Name
-              Flexible(
-                child: Text(
-                  category.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1F2937),
+              const SizedBox(height: 12),
+              // Category Name - fixed height for alignment
+              SizedBox(
+                height: 36, // Fixed height to accommodate 2 lines
+                child: Center(
+                  child: Text(
+                    category.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF1F2937),
+                      height: 1.3,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const SizedBox(height: 6),
-              // Element Count Badge
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 3,
-                ),
-                decoration: BoxDecoration(
-                  color: categoryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  '${category.elementCount} elements',
-                  style: TextStyle(
-                    color: categoryColor,
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
+              const SizedBox(height: 8),
+              // Element Count Badge - fixed alignment at bottom
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
+                  decoration: BoxDecoration(
+                    color: categoryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '${category.elementCount} elements',
+                    style: TextStyle(
+                      color: categoryColor,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

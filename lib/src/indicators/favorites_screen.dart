@@ -129,67 +129,75 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Custom App Bar
-            Container(
-              padding: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                color: saGovernmentGreen,
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
+      body: Column(
+        children: [
+          // Custom App Bar
+          Container(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 8,
+              left: 16.0,
+              right: 16.0,
+              bottom: 10.0,
+            ),
+            decoration: const BoxDecoration(
+              color: saGovernmentGreen,
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Favourites',
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Favorites',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (_favoriteIndicators.isNotEmpty)
+                        Text(
+                          '${_favoriteIndicators.length} ${_favoriteIndicators.length == 1 ? 'indicator' : 'indicators'}',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            color: Colors.white.withOpacity(0.9),
+                            fontSize: 12,
                           ),
                         ),
-                        if (_favoriteIndicators.isNotEmpty)
-                          Text(
-                            '${_favoriteIndicators.length} ${_favoriteIndicators.length == 1 ? 'indicator' : 'indicators'}',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.9),
-                              fontSize: 14,
-                            ),
-                          ),
-                      ],
-                    ),
+                    ],
                   ),
-                  if (_favoriteIndicators.isNotEmpty)
-                    IconButton(
-                      onPressed: _clearAllFavorites,
-                      icon: const Icon(
-                        Icons.delete_outline,
-                        color: Colors.white,
-                      ),
-                      tooltip: 'Clear all favourites',
+                ),
+                if (_favoriteIndicators.isNotEmpty)
+                  IconButton(
+                    onPressed: _clearAllFavorites,
+                    icon: const Icon(
+                      Icons.delete_outline,
+                      color: Colors.white,
+                      size: 20,
                     ),
-                ],
-              ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    tooltip: 'Clear all favorites',
+                  ),
+              ],
             ),
+          ),
 
-            // Content
-            Expanded(
-              child: _buildContent(),
-            ),
-          ],
-        ),
+          // Content
+          Expanded(
+            child: _buildContent(),
+          ),
+        ],
       ),
     );
   }

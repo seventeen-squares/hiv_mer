@@ -14,6 +14,7 @@ import 'data_elements/data_element_detail_screen.dart';
 import 'data_elements/data_element_list_screen.dart';
 import 'notifications/notifications_screen.dart';
 import 'resources/resources_screen.dart';
+import 'resources/pdf_viewer_screen.dart';
 import 'navigation/main_navigation.dart';
 import 'onboarding/role_selection_screen.dart';
 import 'sample_feature/sample_item_details_view.dart';
@@ -315,6 +316,8 @@ class MyApp extends StatelessWidget {
                     return const NotificationsScreen();
                   case ResourcesScreen.routeName:
                     return const ResourcesScreen();
+                  case PdfViewerScreen.routeName:
+                    return const PdfViewerScreen();
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
                   case HomeScreen.routeName:

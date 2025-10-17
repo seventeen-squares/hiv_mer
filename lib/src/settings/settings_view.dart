@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'settings_controller.dart';
 import '../services/user_profile_service.dart';
@@ -108,6 +109,15 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
+  void _shareApp() {
+    Share.share(
+      'Check out the NIDS (National Indicator Data Set) app! '
+      'Access comprehensive health indicators and data elements from the South African Department of Health. '
+      '\n\nDownload now to stay informed about key health metrics and reporting standards.',
+      subject: 'NIDS - National Indicator Data Set App',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Check if we can pop (i.e., if we're in a navigation stack)
@@ -156,6 +166,39 @@ class _SettingsViewState extends State<SettingsView> {
                   subtitle: Text(_getRoleDisplayText()),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                   onTap: _navigateToRoleSelection,
+                ),
+                const Divider(height: 1),
+
+                // About Section
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
+                  child: Text(
+                    'About',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF6B7280),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: saGovernmentGreen.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(
+                      Icons.share,
+                      color: saGovernmentGreen,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text('Share App'),
+                  subtitle: const Text('Share NIDS with colleagues'),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: _shareApp,
                 ),
                 const Divider(height: 1),
 
