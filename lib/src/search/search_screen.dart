@@ -138,70 +138,69 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 const SizedBox(height: 12),
 
-                  // Search Bar
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.getSearchBarColor(context),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                      border: Theme.of(context).brightness == Brightness.dark
-                          ? Border.all(color: AppColors.getBorderColor(context))
-                          : null,
-                    ),
-                    child: TextField(
-                      controller: _searchController,
-                      focusNode: _searchFocusNode,
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: TextStyle(
-                          color: AppColors.getTertiaryTextColor(context),
-                          fontSize: 16,
-                        ),
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: AppColors.getTertiaryTextColor(context),
-                        ),
-                        suffixIcon: _searchController.text.isNotEmpty
-                            ? IconButton(
-                                onPressed: _clearSearch,
-                                icon: Icon(
-                                  Icons.clear,
-                                  color:
-                                      AppColors.getTertiaryTextColor(context),
-                                ),
-                              )
-                            : null,
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
-                        ),
+                // Search Bar
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.getSearchBarColor(context),
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
                       ),
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColors.getPrimaryTextColor(context),
-                      ),
-                      textInputAction: TextInputAction.search,
-                      onSubmitted: (_) => _searchFocusNode.unfocus(),
-                    ),
+                    ],
+                    border: Theme.of(context).brightness == Brightness.dark
+                        ? Border.all(color: AppColors.getBorderColor(context))
+                        : null,
                   ),
+                  child: TextField(
+                    controller: _searchController,
+                    focusNode: _searchFocusNode,
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      hintStyle: TextStyle(
+                        color: AppColors.getTertiaryTextColor(context),
+                        fontSize: 16,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: AppColors.getTertiaryTextColor(context),
+                      ),
+                      suffixIcon: _searchController.text.isNotEmpty
+                          ? IconButton(
+                              onPressed: _clearSearch,
+                              icon: Icon(
+                                Icons.clear,
+                                color: AppColors.getTertiaryTextColor(context),
+                              ),
+                            )
+                          : null,
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 16,
+                      ),
+                    ),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColors.getPrimaryTextColor(context),
+                    ),
+                    textInputAction: TextInputAction.search,
+                    onSubmitted: (_) => _searchFocusNode.unfocus(),
+                  ),
+                ),
               ],
             ),
           ),
 
           // Search Results
           Expanded(
-              child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : _isSearching
-                      ? const Center(child: CircularProgressIndicator())
-                      : _buildSearchContent(),
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _isSearching
+                    ? const Center(child: CircularProgressIndicator())
+                    : _buildSearchContent(),
           ),
         ],
       ),

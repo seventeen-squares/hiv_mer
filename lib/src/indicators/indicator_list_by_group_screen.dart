@@ -307,8 +307,54 @@ class _IndicatorListByGroupScreenState
 
           // Description Section
           Container(
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Colors.grey.shade200,
+                width: 1,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      color: saGovernmentGreen,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'About this indicator group',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: saGovernmentGreen,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  _getGroupDescription(),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.shade700,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Search Bar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
@@ -317,167 +363,120 @@ class _IndicatorListByGroupScreenState
                   width: 1,
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.info_outline,
-                        color: saGovernmentGreen,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'About this indicator group',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: saGovernmentGreen,
-                        ),
-                      ),
-                    ],
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search indicators in this group...',
+                  hintStyle: TextStyle(color: Colors.grey.shade400),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: saGovernmentGreen,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _getGroupDescription(),
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey.shade700,
-                      height: 1.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Search Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: Colors.grey.shade200,
-                    width: 1,
-                  ),
-                ),
-                child: TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Search indicators in this group...',
-                    hintStyle: TextStyle(color: Colors.grey.shade400),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: saGovernmentGreen,
-                    ),
-                    suffixIcon: _searchController.text.isNotEmpty
-                        ? IconButton(
-                            icon:
-                                Icon(Icons.clear, color: Colors.grey.shade400),
-                            onPressed: () {
-                              _searchController.clear();
-                            },
-                          )
-                        : null,
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 14,
-                    ),
-                  ),
-                  style: const TextStyle(fontSize: 15),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Content
-            Expanded(
-              child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : _error != null
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(24),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.error_outline,
-                                  size: 64,
-                                  color: Colors.red,
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'Error loading indicators',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey.shade800,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  _error!,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                  suffixIcon: _searchController.text.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear, color: Colors.grey.shade400),
+                          onPressed: () {
+                            _searchController.clear();
+                          },
                         )
-                      : _filteredIndicators.isEmpty
-                          ? Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(32),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      _searchController.text.isEmpty
-                                          ? Icons.inventory_2_outlined
-                                          : Icons.search_off,
-                                      size: 64,
-                                      color: Colors.grey.shade300,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Text(
-                                      _searchController.text.isEmpty
-                                          ? 'No indicators found in this group'
-                                          : 'No indicators match your search',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey.shade600,
-                                      ),
-                                    ),
-                                    if (_searchController.text.isNotEmpty) ...[
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        'Try different keywords or clear the search',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey.shade400,
-                                        ),
-                                      ),
-                                    ],
-                                  ],
+                      : null,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                ),
+                style: const TextStyle(fontSize: 15),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          // Content
+          Expanded(
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _error != null
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.error_outline,
+                                size: 64,
+                                color: Colors.red,
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                'Error loading indicators',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey.shade800,
                                 ),
                               ),
-                            )
-                          : ListView.builder(
-                              padding: const EdgeInsets.all(16.0),
-                              itemCount: _filteredIndicators.length,
-                              itemBuilder: (context, index) {
-                                final indicator = _filteredIndicators[index];
-                                return _buildIndicatorCard(indicator);
-                              },
+                              const SizedBox(height: 8),
+                              Text(
+                                _error!,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : _filteredIndicators.isEmpty
+                        ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(32),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    _searchController.text.isEmpty
+                                        ? Icons.inventory_2_outlined
+                                        : Icons.search_off,
+                                    size: 64,
+                                    color: Colors.grey.shade300,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    _searchController.text.isEmpty
+                                        ? 'No indicators found in this group'
+                                        : 'No indicators match your search',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  if (_searchController.text.isNotEmpty) ...[
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      'Try different keywords or clear the search',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey.shade400,
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
                             ),
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.all(16.0),
+                            itemCount: _filteredIndicators.length,
+                            itemBuilder: (context, index) {
+                              final indicator = _filteredIndicators[index];
+                              return _buildIndicatorCard(indicator);
+                            },
+                          ),
           ),
         ],
       ),

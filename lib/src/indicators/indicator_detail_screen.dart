@@ -204,112 +204,111 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
 
           // Content
           Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Indicator Name
-                    Text(
-                      indicator.name,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.getPrimaryTextColor(context),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Indicator Name
+                  Text(
+                    indicator.name,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.getPrimaryTextColor(context),
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
 
-                    const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                    // IDs Card
-                    _buildInfoCard(
-                      context,
-                      children: [
-                        _buildInfoRow('Reno/ID', indicator.renoId),
-                        const SizedBox(height: 8),
-                        _buildInfoRow('Group ID', indicator.groupId),
-                        const SizedBox(height: 8),
-                        _buildInfoRow('Indicator ID', indicator.indicatorId),
-                        const SizedBox(height: 8),
-                        _buildInfoRow(
-                            'Sort Order', indicator.sortOrder.toString()),
-                      ],
-                    ),
+                  // IDs Card
+                  _buildInfoCard(
+                    context,
+                    children: [
+                      _buildInfoRow('Reno/ID', indicator.renoId),
+                      const SizedBox(height: 8),
+                      _buildInfoRow('Group ID', indicator.groupId),
+                      const SizedBox(height: 8),
+                      _buildInfoRow('Indicator ID', indicator.indicatorId),
+                      const SizedBox(height: 8),
+                      _buildInfoRow(
+                          'Sort Order', indicator.sortOrder.toString()),
+                    ],
+                  ),
 
-                    const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                    // Definition Section
-                    _buildSection(
-                      context,
-                      title: 'DEFINITION',
-                      content: indicator.definition,
-                      icon: Icons.info_outline,
-                    ),
+                  // Definition Section
+                  _buildSection(
+                    context,
+                    title: 'DEFINITION',
+                    content: indicator.definition,
+                    icon: Icons.info_outline,
+                  ),
 
-                    const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                    // Numerator Card
+                  // Numerator Card
+                  _buildDetailCard(
+                    context,
+                    title: 'NUMERATOR',
+                    content: indicator.numerator,
+                    formula: indicator.numeratorFormula,
+                    color: const Color(0xFF10B981),
+                    icon: Icons.add_circle_outline,
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Denominator Card (if present)
+                  if (indicator.denominator != null)
                     _buildDetailCard(
                       context,
-                      title: 'NUMERATOR',
-                      content: indicator.numerator,
-                      formula: indicator.numeratorFormula,
-                      color: const Color(0xFF10B981),
-                      icon: Icons.add_circle_outline,
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    // Denominator Card (if present)
-                    if (indicator.denominator != null)
-                      _buildDetailCard(
-                        context,
-                        title: 'DENOMINATOR',
-                        content: indicator.denominator!,
-                        formula: indicator.denominatorFormula,
-                        color: const Color(0xFF3B82F6),
-                        icon: Icons.calculate_outlined,
-                      )
-                    else
-                      _buildSection(
-                        context,
-                        title: 'DENOMINATOR',
-                        content: 'Not applicable',
-                        icon: Icons.remove_circle_outline,
-                      ),
-
-                    const SizedBox(height: 16),
-
-                    // Use and Context Section
+                      title: 'DENOMINATOR',
+                      content: indicator.denominator!,
+                      formula: indicator.denominatorFormula,
+                      color: const Color(0xFF3B82F6),
+                      icon: Icons.calculate_outlined,
+                    )
+                  else
                     _buildSection(
                       context,
-                      title: 'USE AND CONTEXT',
-                      content: indicator.useContext,
-                      icon: Icons.lightbulb_outline,
+                      title: 'DENOMINATOR',
+                      content: 'Not applicable',
+                      icon: Icons.remove_circle_outline,
                     ),
 
-                    const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                    // Metadata Card
-                    _buildInfoCard(
-                      context,
-                      children: [
-                        _buildInfoRow('Factor/Type', indicator.factorType),
-                        const SizedBox(height: 8),
-                        _buildInfoRow('Frequency', indicator.frequency),
-                        const SizedBox(height: 8),
-                        _buildInfoRow(
-                            'Status', _getStatusText(indicator.status)),
-                      ],
-                    ),
+                  // Use and Context Section
+                  _buildSection(
+                    context,
+                    title: 'USE AND CONTEXT',
+                    content: indicator.useContext,
+                    icon: Icons.lightbulb_outline,
+                  ),
 
-                    const SizedBox(height: 32),
-                  ],
-                ),
+                  const SizedBox(height: 16),
+
+                  // Metadata Card
+                  _buildInfoCard(
+                    context,
+                    children: [
+                      _buildInfoRow('Factor/Type', indicator.factorType),
+                      const SizedBox(height: 8),
+                      _buildInfoRow('Frequency', indicator.frequency),
+                      const SizedBox(height: 8),
+                      _buildInfoRow('Status', _getStatusText(indicator.status)),
+                    ],
+                  ),
+
+                  const SizedBox(height: 32),
+                ],
               ),
             ),
+          ),
         ],
       ),
     );

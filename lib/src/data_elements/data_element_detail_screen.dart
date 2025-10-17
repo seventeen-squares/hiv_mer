@@ -181,59 +181,59 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
 
           // Content
           Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Element Name
-                    Text(
-                      element.name,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1F2937),
-                      ),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Element Name
+                  Text(
+                    element.name,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1F2937),
                     ),
+                  ),
 
-                    const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                    // IDs Card
+                  // IDs Card
+                  _buildInfoCard(
+                    context,
+                    children: [
+                      _buildInfoRow('Element ID', element.id),
+                      const SizedBox(height: 8),
+                      _buildInfoRow('Category', element.category),
+                      const SizedBox(height: 8),
+                      _buildInfoRow('Data Type', element.dataType),
+                      const SizedBox(height: 8),
+                      _buildInfoRow('Aggregation', element.aggregationType),
+                    ],
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Definition Card
+                  if (element.definition.isNotEmpty)
                     _buildInfoCard(
                       context,
+                      title: 'Definition',
                       children: [
-                        _buildInfoRow('Element ID', element.id),
-                        const SizedBox(height: 8),
-                        _buildInfoRow('Category', element.category),
-                        const SizedBox(height: 8),
-                        _buildInfoRow('Data Type', element.dataType),
-                        const SizedBox(height: 8),
-                        _buildInfoRow('Aggregation', element.aggregationType),
+                        Text(
+                          element.definition,
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey.shade700,
+                            height: 1.5,
+                          ),
+                        ),
                       ],
                     ),
-
-                    const SizedBox(height: 16),
-
-                    // Definition Card
-                    if (element.definition.isNotEmpty)
-                      _buildInfoCard(
-                        context,
-                        title: 'Definition',
-                        children: [
-                          Text(
-                            element.definition,
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey.shade700,
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                  ],
-                ),
+                ],
               ),
             ),
+          ),
         ],
       ),
     );
