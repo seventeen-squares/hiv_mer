@@ -55,7 +55,7 @@ class NavigationCard extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF1F2937),
                 height: 1.3,

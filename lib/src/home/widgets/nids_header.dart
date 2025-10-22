@@ -70,7 +70,7 @@ class NIDSHeader extends StatelessWidget {
                             Text(
                               'health',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xFF1F2937),
                               ),
@@ -109,7 +109,7 @@ class NIDSHeader extends StatelessWidget {
           const Text(
             appName,
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Color(0xFF1F2937),
               height: 1.3,
@@ -122,7 +122,7 @@ class NIDSHeader extends StatelessWidget {
           const Text(
             appVersion,
             style: TextStyle(
-              fontSize: 13,
+              fontSize: 11,
               fontWeight: FontWeight.w500,
               color: Color(0xFF6B7280),
             ),

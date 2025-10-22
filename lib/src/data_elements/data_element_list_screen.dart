@@ -124,7 +124,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                           categoryName,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           maxLines: 1,
@@ -135,7 +135,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                           '${_dataElements.length} data elements',
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.9),
-                            fontSize: 14,
+                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -165,7 +165,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                                 Text(
                                   'No Data Elements',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.grey.shade800,
                                   ),
@@ -175,7 +175,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                                   'No data elements found in this category',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     color: Colors.grey.shade600,
                                   ),
                                 ),
@@ -251,7 +251,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                           Text(
                             element.id,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 10,
                               fontWeight: FontWeight.w600,
                               color: Colors.grey.shade600,
                             ),
@@ -260,7 +260,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                           Text(
                             element.category,
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 9,
                               color: Colors.grey.shade500,
                             ),
                           ),
@@ -293,7 +293,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                 Text(
                   element.name,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF1F2937),
                   ),
@@ -311,7 +311,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                     Text(
                       element.dataType,
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 11,
                         color: Colors.grey.shade600,
                       ),
                     ),
@@ -326,7 +326,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                       Text(
                         element.aggregationType,
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 11,
                           color: Colors.grey.shade600,
                         ),
                       ),

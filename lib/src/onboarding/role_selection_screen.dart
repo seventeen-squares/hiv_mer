@@ -147,7 +147,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 Text(
                   'To help us serve you better, please select your professional role.',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 13,
                     color: Colors.grey.shade700,
                     height: 1.5,
                   ),
@@ -159,7 +159,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               const Text(
                 'Select Your Role',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF1F2937),
                 ),
@@ -205,7 +205,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                       Text(
                         'Please specify your role:',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Colors.grey.shade700,
                           fontWeight: FontWeight.w500,
                         ),
@@ -275,7 +275,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                       : Text(
                           _isEditing ? 'Update Role' : 'Continue',
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

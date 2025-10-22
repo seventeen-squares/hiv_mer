@@ -214,7 +214,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                       element.shortname,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -271,7 +271,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                   Text(
                     element.name,
                     style: const TextStyle(
-                      fontSize: 22,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF1F2937),
                     ),
@@ -304,7 +304,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                         Text(
                           element.definition,
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 14,
                             color: Colors.grey.shade700,
                             height: 1.5,
                           ),
@@ -343,7 +343,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
             Text(
               title,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1F2937),
               ),
@@ -365,7 +365,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.w600,
               color: Colors.grey.shade600,
             ),
@@ -375,7 +375,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
           child: Text(
             value,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               color: Color(0xFF1F2937),
             ),
           ),

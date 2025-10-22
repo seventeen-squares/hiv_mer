@@ -192,7 +192,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                     'Data Elements',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -239,7 +239,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                               Text(
                                 'Error loading data elements',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey.shade800,
                                 ),
@@ -249,7 +249,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                                 _error!,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   color: Colors.grey.shade600,
                                 ),
                               ),
@@ -332,7 +332,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                     category.name,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 13,
+                      fontSize: 11,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF1F2937),
                       height: 1.3,
@@ -358,7 +358,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                     '${category.elementCount} elements',
                     style: TextStyle(
                       color: categoryColor,
-                      fontSize: 11,
+                      fontSize: 9,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

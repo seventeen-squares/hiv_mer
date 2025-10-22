@@ -199,7 +199,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                       'Resources',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -219,7 +219,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                     Text(
                       'Available Documents',
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey.shade800,
                       ),
@@ -228,7 +228,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                     Text(
                       'Access and download official NIDS documentation',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: Colors.grey.shade600,
                       ),
                     ),
@@ -263,7 +263,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                             child: Text(
                               'These documents are available offline once downloaded. You can view them anytime without an internet connection.',
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 11,
                                 color: Colors.blue.shade900,
                                 height: 1.4,
                               ),
@@ -336,7 +336,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                       Text(
                         document.title,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF1F2937),
                         ),
@@ -345,7 +345,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                       Text(
                         document.subtitle,
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 11,
                           color: Colors.grey.shade600,
                         ),
                       ),
@@ -364,7 +364,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                   child: Text(
                     document.fileSize,
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 9,
                       fontWeight: FontWeight.bold,
                       color: document.color,
                     ),
@@ -380,7 +380,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
             child: Text(
               document.description,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 color: Colors.grey.shade700,
                 height: 1.5,
               ),

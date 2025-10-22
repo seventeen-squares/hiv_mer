@@ -142,7 +142,7 @@ class _SettingsViewState extends State<SettingsView> {
                   child: Text(
                     'User Profile',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF6B7280),
                     ),
@@ -175,7 +175,7 @@ class _SettingsViewState extends State<SettingsView> {
                   child: Text(
                     'About',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF6B7280),
                     ),
@@ -208,7 +208,7 @@ class _SettingsViewState extends State<SettingsView> {
                   child: Text(
                     'Appearance',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF6B7280),
                     ),

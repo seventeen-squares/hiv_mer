@@ -282,7 +282,7 @@ class _IndicatorListByGroupScreenState
                         displayTitle,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
                         maxLines: 1,
@@ -295,7 +295,7 @@ class _IndicatorListByGroupScreenState
                             : '${_filteredIndicators.length} of ${_indicators.length}',
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.85),
-                          fontSize: 11,
+                          fontSize: 9,
                         ),
                       ),
                     ],
@@ -325,7 +325,7 @@ class _IndicatorListByGroupScreenState
                               Text(
                                 'Error loading indicators',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey.shade800,
                                 ),
@@ -335,7 +335,7 @@ class _IndicatorListByGroupScreenState
                                 _error!,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   color: Colors.grey.shade600,
                                 ),
                               ),
@@ -372,7 +372,7 @@ class _IndicatorListByGroupScreenState
                                       Text(
                                         'About this indicator group',
                                         style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w600,
                                           color: saGovernmentGreen,
                                         ),
@@ -383,7 +383,7 @@ class _IndicatorListByGroupScreenState
                                   Text(
                                     _getGroupDescription(),
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 12,
                                       color: Colors.grey.shade700,
                                       height: 1.5,
                                     ),
@@ -432,7 +432,7 @@ class _IndicatorListByGroupScreenState
                                       vertical: 14,
                                     ),
                                   ),
-                                  style: const TextStyle(fontSize: 15),
+                                  style: const TextStyle(fontSize: 14),
                                 ),
                               ),
                             ),
@@ -458,7 +458,7 @@ class _IndicatorListByGroupScreenState
                                               ? 'No indicators found in this group'
                                               : 'No indicators match your search',
                                           style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 13,
                                             color: Colors.grey.shade600,
                                           ),
                                         ),
@@ -468,7 +468,7 @@ class _IndicatorListByGroupScreenState
                                           Text(
                                             'Try different keywords or clear the search',
                                             style: TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 12,
                                               color: Colors.grey.shade400,
                                             ),
                                           ),
@@ -530,7 +530,7 @@ class _IndicatorListByGroupScreenState
                   // child: Text(
                   //   indicator.indicatorId,
                   //   style: TextStyle(
-                  //     fontSize: 12,
+                  //     fontSize: 10,
                   //     fontWeight: FontWeight.w600,
                   //     color: Colors.grey.shade600,
                   //   ),
@@ -542,7 +542,7 @@ class _IndicatorListByGroupScreenState
               Text(
                 indicator.name,
                 style: const TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF1F2937),
                 ),
@@ -552,7 +552,7 @@ class _IndicatorListByGroupScreenState
                 Text(
                   indicator.shortname,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 11,
                     color: Colors.grey.shade700,
                   ),
                 ),
@@ -566,7 +566,7 @@ class _IndicatorListByGroupScreenState
                     indicator.frequency,
                     style: TextStyle(
                       color: Colors.grey.shade600,
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -577,7 +577,7 @@ class _IndicatorListByGroupScreenState
                     indicator.factorType,
                     style: TextStyle(
                       color: Colors.grey.shade600,
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
                 ],

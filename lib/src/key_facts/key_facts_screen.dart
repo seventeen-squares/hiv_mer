@@ -65,7 +65,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                       'KEY FACTS',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -105,7 +105,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                                       Text(
                                         'PEPFAR MER OVERVIEW',
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           color: AppColors.getPrimaryTextColor(
                                               context),
@@ -117,7 +117,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                                   Text(
                                     'The President\'s Emergency Plan for AIDS Relief (PEPFAR) Monitoring, Evaluation, and Reporting (MER) indicators provide essential data on HIV prevention, care, and treatment services globally.',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 13,
                                       color: AppColors.getSecondaryTextColor(
                                           context),
                                       height: 1.5,
@@ -171,7 +171,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                                       Text(
                                         'PEPFAR GOALS',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.bold,
                                           color: AppColors.getPrimaryTextColor(
                                               context),
@@ -240,7 +240,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
               fact.title,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -250,7 +250,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                 fact.subtitle!,
                 style: TextStyle(
                   color: Colors.white.withOpacity(0.9),
-                  fontSize: 12,
+                  fontSize: 10,
                 ),
               ),
             const SizedBox(height: 8),
@@ -266,7 +266,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                   _getTrendText(fact.trend),
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.9),
-                    fontSize: 12,
+                    fontSize: 10,
                   ),
                 ),
               ],
@@ -301,7 +301,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: AppColors.getPrimaryTextColor(context),
                   ),
@@ -310,7 +310,7 @@ class _KeyFactsScreenState extends State<KeyFactsScreen> {
                 Text(
                   description,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 11,
                     color: AppColors.getSecondaryTextColor(context),
                   ),
                 ),

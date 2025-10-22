@@ -32,7 +32,7 @@ class RecentUpdatesSection extends StatelessWidget {
               const Text(
                 'Recent Updates',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1F2937),
                 ),
@@ -44,7 +44,7 @@ class RecentUpdatesSection extends StatelessWidget {
                 child: const Text(
                   'See all',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -61,7 +61,7 @@ class RecentUpdatesSection extends StatelessWidget {
                 child: Text(
                   'No recent updates',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     color: Colors.grey.shade500,
                   ),
                 ),
@@ -93,7 +93,7 @@ class RecentUpdatesSection extends StatelessWidget {
                             Text(
                               update['version'] ?? '',
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 10,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.grey.shade600,
                               ),
@@ -102,7 +102,7 @@ class RecentUpdatesSection extends StatelessWidget {
                             Text(
                               update['description'] ?? '',
                               style: const TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xFF1F2937),
                               ),
@@ -111,7 +111,7 @@ class RecentUpdatesSection extends StatelessWidget {
                             Text(
                               update['date'] ?? '',
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 10,
                                 color: Colors.grey.shade500,
                               ),
                             ),

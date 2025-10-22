@@ -98,7 +98,7 @@ class RoleOptionCard extends StatelessWidget {
                 child: Text(
                   _getRoleLabel(role),
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 13,
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                     color: isSelected
                         ? saGovernmentGreen

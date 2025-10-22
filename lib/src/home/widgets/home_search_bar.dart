@@ -42,7 +42,7 @@ class HomeSearchBar extends StatelessWidget {
             Text(
               'Search',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 13,
                 color: Colors.grey.shade500,
                 fontWeight: FontWeight.w400,
               ),

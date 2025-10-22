@@ -132,7 +132,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   'SEARCH',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -161,7 +161,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       hintText: 'Search',
                       hintStyle: TextStyle(
                         color: AppColors.getTertiaryTextColor(context),
-                        fontSize: 16,
+                        fontSize: 13,
                       ),
                       prefixIcon: Icon(
                         Icons.search,
@@ -183,7 +183,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 13,
                       color: AppColors.getPrimaryTextColor(context),
                     ),
                     textInputAction: TextInputAction.search,
@@ -249,7 +249,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     const Text(
                       'Search Tips',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF1F2937),
                       ),
@@ -275,7 +275,7 @@ class _SearchScreenState extends State<SearchScreen> {
           const Text(
             'Popular Searches',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Color(0xFF1F2937),
             ),
@@ -296,7 +296,7 @@ class _SearchScreenState extends State<SearchScreen> {
           const Text(
             'Browse by Indicator Group',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Color(0xFF1F2937),
             ),
@@ -359,7 +359,7 @@ class _SearchScreenState extends State<SearchScreen> {
         subtitle: Text(
           '${group.indicatorCount} indicators',
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 11,
             color: Colors.grey.shade600,
           ),
         ),
@@ -390,7 +390,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Text(
             'No indicators found',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.grey.shade600,
             ),
@@ -399,7 +399,7 @@ class _SearchScreenState extends State<SearchScreen> {
           Text(
             'Try searching with different keywords',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               color: Colors.grey.shade500,
             ),
           ),
@@ -428,7 +428,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 Text(
                   'Found ${_indicatorResults.length} indicator${_indicatorResults.length != 1 ? 's' : ''} and ${_dataElementResults.length} data element${_dataElementResults.length != 1 ? 's' : ''}',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: saGovernmentGreen,
                   ),
@@ -443,7 +443,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Text(
               'Indicators (${_indicatorResults.length})',
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1F2937),
               ),
@@ -461,7 +461,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Text(
               'Data Elements (${_dataElementResults.length})',
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1F2937),
               ),
@@ -527,7 +527,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           'INDICATOR',
                           style: TextStyle(
                             color: saGovernmentGreen,
-                            fontSize: 11,
+                            fontSize: 9,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -550,7 +550,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       indicator.indicatorId,
                       style: const TextStyle(
                         color: Colors.purple,
-                        fontSize: 12,
+                        fontSize: 10,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -571,7 +571,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       groupName,
                       style: TextStyle(
                         color: Colors.grey.shade600,
-                        fontSize: 12,
+                        fontSize: 10,
                         fontWeight: FontWeight.w500,
                       ),
                       maxLines: 1,
@@ -584,7 +584,7 @@ class _SearchScreenState extends State<SearchScreen> {
               Text(
                 indicator.name,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF1F2937),
                 ),
@@ -595,7 +595,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   indicator.shortname,
                   style: TextStyle(
                     color: Colors.grey.shade600,
-                    fontSize: 13,
+                    fontSize: 11,
                   ),
                 ),
               ],
@@ -604,7 +604,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 indicator.definition,
                 style: TextStyle(
                   color: Colors.grey.shade700,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -618,7 +618,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     indicator.frequency,
                     style: TextStyle(
                       color: Colors.grey.shade600,
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -629,7 +629,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     indicator.factorType,
                     style: TextStyle(
                       color: Colors.grey.shade600,
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
                 ],
@@ -686,7 +686,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           'DATA ELEMENT',
                           style: TextStyle(
                             color: Colors.blue,
-                            fontSize: 11,
+                            fontSize: 9,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -701,7 +701,7 @@ class _SearchScreenState extends State<SearchScreen> {
               Text(
                 dataElement.name,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF1F2937),
                 ),
@@ -713,7 +713,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   dataElement.shortname,
                   style: TextStyle(
                     color: Colors.grey.shade600,
-                    fontSize: 13,
+                    fontSize: 11,
                   ),
                 ),
               ],
@@ -723,7 +723,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   dataElement.definition,
                   style: TextStyle(
                     color: Colors.grey.shade700,
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -739,7 +739,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       dataElement.category,
                       style: TextStyle(
                         color: Colors.grey.shade600,
-                        fontSize: 12,
+                        fontSize: 10,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -792,7 +792,7 @@ class _SearchScreenState extends State<SearchScreen> {
         label,
         style: TextStyle(
           color: textColor,
-          fontSize: 11,
+          fontSize: 9,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -832,7 +832,7 @@ class _SearchScreenState extends State<SearchScreen> {
         label,
         style: TextStyle(
           color: textColor,
-          fontSize: 11,
+          fontSize: 9,
           fontWeight: FontWeight.bold,
         ),
       ),

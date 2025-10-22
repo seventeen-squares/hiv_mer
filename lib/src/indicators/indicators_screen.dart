@@ -84,7 +84,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                       'SA INDICATOR GROUPS',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -113,7 +113,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                                 Text(
                                   'Error loading indicators',
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.grey.shade800,
                                   ),
@@ -123,7 +123,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                                   _error!,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     color: Colors.grey.shade600,
                                   ),
                                 ),
@@ -189,7 +189,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                         group.name,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -199,7 +199,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                           group.subGroups.join(' • '),
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.9),
-                            fontSize: 13,
+                            fontSize: 11,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -220,7 +220,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                     '${indicators.length}',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -245,7 +245,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                       title: Text(
                         indicator.name,
                         style: const TextStyle(
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFF1F2937),
                         ),
@@ -257,7 +257,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                           Text(
                             indicator.shortname,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 11,
                               color: Colors.grey.shade700,
                               fontWeight: FontWeight.w500,
                             ),
@@ -272,7 +272,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                                 indicator.frequency,
                                 style: TextStyle(
                                   color: Colors.grey.shade600,
-                                  fontSize: 12,
+                                  fontSize: 10,
                                 ),
                               ),
                               const SizedBox(width: 12),
@@ -283,7 +283,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                                 indicator.indicatorId,
                                 style: TextStyle(
                                   color: Colors.grey.shade600,
-                                  fontSize: 12,
+                                  fontSize: 10,
                                 ),
                               ),
                             ],
@@ -313,7 +313,7 @@ class _IndicatorsScreenState extends State<IndicatorsScreen> {
                     'No indicators in this group',
                     style: TextStyle(
                       color: Colors.grey.shade600,
-                      fontSize: 14,
+                      fontSize: 12,
                       fontStyle: FontStyle.italic,
                     ),
                   ),

@@ -283,7 +283,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                       indicator.shortname,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -340,7 +340,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                   Text(
                     indicator.name,
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.getPrimaryTextColor(context),
                     ),
@@ -475,7 +475,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 10,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade600,
                   letterSpacing: 0.5,
@@ -487,7 +487,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
           Text(
             content,
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 14,
               color: AppColors.getPrimaryTextColor(context),
               height: 1.5,
             ),
@@ -529,7 +529,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 10,
                   fontWeight: FontWeight.bold,
                   color: color,
                   letterSpacing: 0.5,
@@ -541,7 +541,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
           Text(
             content,
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 14,
               color: AppColors.getPrimaryTextColor(context),
               height: 1.5,
             ),
@@ -562,7 +562,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                     child: Text(
                       formula,
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 11,
                         color: Colors.grey.shade700,
                         fontFamily: 'Courier',
                       ),
@@ -604,7 +604,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.w600,
               color: Colors.grey.shade700,
             ),
@@ -615,7 +615,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
           child: Text(
             value,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.w500,
               color: Color(0xFF1F2937),
             ),

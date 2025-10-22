@@ -120,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 Text(
                                   'health',
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: Color(0xFF1F2937),
                                   ),
@@ -129,7 +129,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 Text(
                                   'Department: Health',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 10,
                                     fontWeight: FontWeight.w500,
                                     color: Color(0xFF6B7280),
                                   ),
@@ -137,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen>
                                 Text(
                                   'REPUBLIC OF SOUTH AFRICA',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 10,
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xFF1F2937),
                                     letterSpacing: 0.5,
@@ -222,7 +222,7 @@ class _SplashScreenState extends State<SplashScreen>
                     appName,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF1F2937),
                       letterSpacing: 0.5,
@@ -235,7 +235,7 @@ class _SplashScreenState extends State<SplashScreen>
                   Text(
                     appVersion,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey.shade600,
                     ),
@@ -262,7 +262,7 @@ class _SplashScreenState extends State<SplashScreen>
                     '© 2025 Department of Health National Indicator Data Set (NIDS). All rights reserved.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 9,
                       color: Colors.grey.shade500,
                       height: 1.4,
                     ),

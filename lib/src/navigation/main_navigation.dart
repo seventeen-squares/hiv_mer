@@ -116,7 +116,7 @@ class _MainNavigationState extends State<MainNavigation> {
       title: Text(
         title,
         style: const TextStyle(
-          fontSize: 16,
+          fontSize: 13,
           fontWeight: FontWeight.w500,
           color: Color(0xFF1F2937),
         ),
@@ -167,8 +167,8 @@ class _MainNavigationState extends State<MainNavigation> {
         unselectedItemColor: Colors.white.withOpacity(0.6),
         type: BottomNavigationBarType.fixed,
         elevation: 8,
-        selectedFontSize: 12,
-        unselectedFontSize: 11,
+        selectedFontSize: 10,
+        unselectedFontSize: 9,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

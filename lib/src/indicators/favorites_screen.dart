@@ -162,7 +162,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         'Favorites',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -171,7 +171,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           '${_favoriteIndicators.length} ${_favoriteIndicators.length == 1 ? 'indicator' : 'indicators'}',
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.9),
-                            fontSize: 12,
+                            fontSize: 10,
                           ),
                         ),
                     ],
@@ -225,7 +225,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               Text(
                 'Error loading favorites',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey[800],
                 ),
@@ -235,7 +235,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 _error!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   color: Colors.grey[600],
                 ),
               ),
@@ -266,7 +266,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               Text(
                 'No Favorites Yet',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey[800],
                 ),
@@ -276,7 +276,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 'Tap the heart icon on any indicator to save it here for quick access.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   color: Colors.grey[600],
                 ),
               ),
@@ -334,7 +334,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     Text(
                       indicator.shortname,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF1E293B),
                       ),
@@ -344,7 +344,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     Text(
                       indicator.indicatorId,
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Colors.grey[600],
                       ),
                     ),
@@ -354,7 +354,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       Text(
                         indicator.name,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Colors.grey[700],
                         ),
                         maxLines: 2,

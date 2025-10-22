@@ -335,7 +335,7 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                     'Indicator Groups',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -364,7 +364,7 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                               Text(
                                 'Error loading indicator groups',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey.shade800,
                                 ),
@@ -374,7 +374,7 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                                 _error!,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   color: Colors.grey.shade600,
                                 ),
                               ),
@@ -462,7 +462,7 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                     Text(
                       group.name,
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: Color(0xFF1F2937),
                       ),
@@ -473,7 +473,7 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                     Text(
                       '${indicators.length} indicator${indicators.length != 1 ? 's' : ''}',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 10,
                         color: Colors.grey.shade600,
                       ),
                     ),

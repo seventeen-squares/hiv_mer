@@ -86,7 +86,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       'Recent Updates',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -115,7 +115,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                 Text(
                                   'No Updates',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.grey.shade800,
                                   ),
@@ -125,7 +125,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                   'Check back later for updates',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     color: Colors.grey.shade600,
                                   ),
                                 ),
@@ -188,7 +188,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         Text(
                           version,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF1F2937),
                           ),
@@ -197,7 +197,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         Text(
                           date,
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 10,
                             color: Colors.grey.shade600,
                           ),
                         ),
@@ -212,7 +212,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               Text(
                 description,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   color: Colors.grey.shade700,
                   height: 1.5,
                 ),
