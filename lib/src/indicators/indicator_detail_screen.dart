@@ -3,7 +3,6 @@ import 'package:share_plus/share_plus.dart';
 import '../models/sa_indicator.dart';
 import '../services/favorites_service.dart';
 import '../utils/app_colors.dart';
-import '../utils/constants.dart';
 
 class IndicatorDetailScreen extends StatefulWidget {
   static const routeName = '/indicator-detail';
@@ -18,6 +17,133 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
   final _favoritesService = FavoritesService.instance;
   bool _isFavorite = false;
   bool _isLoadingFavorite = true;
+
+  Color _getGroupColor(String groupId) {
+    final groupLower = groupId.toLowerCase();
+
+    // Adolescent Health - Blue
+    if (groupLower.contains('adolescent')) {
+      return const Color(0xFF5DADE2);
+    }
+    // ART Categories - Browns/Pinks
+    else if (groupLower.contains('art baseline')) {
+      return const Color(0xFFA1887F);
+    } else if (groupLower.contains('art monthly')) {
+      return const Color(0xFFE91E63);
+    } else if (groupLower.contains('art outcome')) {
+      return const Color(0xFF827717);
+    } else if (groupLower.contains('art') ||
+        groupLower.contains('antiretroviral')) {
+      return const Color(0xFFA1887F);
+    }
+    // Central Chronic Medicines - Dark Green
+    else if (groupLower.contains('chronic medicine') ||
+        groupLower.contains('central chronic')) {
+      return const Color(0xFF00897B);
+    }
+    // Child and Nutrition - Light Blue
+    else if (groupLower.contains('child') || groupLower.contains('nutrition')) {
+      return const Color(0xFF81D4FA);
+    }
+    // Chronic - Yellow
+    else if (groupLower.contains('chronic')) {
+      return const Color(0xFFFFEB3B);
+    }
+    // Communicable Diseases - Orange
+    else if (groupLower.contains('communicable')) {
+      return const Color(0xFFFF7043);
+    }
+    // Emergency Medical Services - Dark Gray
+    else if (groupLower.contains('emergency') || groupLower.contains('ems')) {
+      return const Color(0xFF424242);
+    }
+    // Environmental Health - Yellow/Green
+    else if (groupLower.contains('environmental')) {
+      return const Color(0xFFCDDC39);
+    }
+    // Expanded Programme on Immunisation - Red
+    else if (groupLower.contains('epi') ||
+        groupLower.contains('immunis') ||
+        groupLower.contains('immunization')) {
+      return const Color(0xFFF44336);
+    }
+    // Eye Care - Light Pink
+    else if (groupLower.contains('eye')) {
+      return const Color(0xFFF8BBD0);
+    }
+    // HIV - Purple
+    else if (groupLower.contains('hiv')) {
+      return const Color(0xFF7986CB);
+    }
+    // Malaria - Green
+    else if (groupLower.contains('malaria')) {
+      return const Color(0xFF66BB6A);
+    }
+    // Management Inpatients - Magenta/Pink
+    else if (groupLower.contains('inpatient') ||
+        groupLower.contains('management inpatient')) {
+      return const Color(0xFFE91E63);
+    }
+    // Management PHC - Cyan
+    else if (groupLower.contains('phc') ||
+        groupLower.contains('primary health')) {
+      return const Color(0xFF00BCD4);
+    }
+    // Maternal and Neonatal - Orange
+    else if (groupLower.contains('maternal') ||
+        groupLower.contains('neonatal')) {
+      return const Color(0xFFFF9800);
+    }
+    // Mental Health - Light Green
+    else if (groupLower.contains('mental')) {
+      return const Color(0xFFAED581);
+    }
+    // Oral Health - Light Olive
+    else if (groupLower.contains('oral') || groupLower.contains('dental')) {
+      return const Color(0xFFD4E157);
+    }
+    // PHC Ward Based Outreach Teams - Gray
+    else if (groupLower.contains('wbot') ||
+        groupLower.contains('ward based') ||
+        groupLower.contains('outreach')) {
+      return const Color(0xFF9E9E9E);
+    }
+    // Quality - Purple
+    else if (groupLower.contains('quality')) {
+      return const Color(0xFF7E57C2);
+    }
+    // Rehabilitation - Light Purple
+    else if (groupLower.contains('rehab')) {
+      return const Color(0xFFB39DDB);
+    }
+    // School Health - Dark Red
+    else if (groupLower.contains('school')) {
+      return const Color(0xFFC62828);
+    }
+    // Sexually Transmitted Infections - Brown/Tan
+    else if (groupLower.contains('sti') ||
+        groupLower.contains('sexually transmitted')) {
+      return const Color(0xFFBCAAA4);
+    }
+    // TB Monthly - Teal
+    else if (groupLower.contains('tb') && groupLower.contains('monthly')) {
+      return const Color(0xFF00BCD4);
+    }
+    // TB Quarterly - Brown
+    else if (groupLower.contains('tb') && groupLower.contains('quarterly')) {
+      return const Color(0xFF8D6E63);
+    }
+    // TB General - Teal
+    else if (groupLower.contains('tb') || groupLower.contains('tuberculosis')) {
+      return const Color(0xFF00BCD4);
+    }
+    // Women's Health - Pink
+    else if (groupLower.contains('women')) {
+      return const Color(0xFFE57373);
+    }
+    // Default
+    return const Color(0xFF007A4D); // saGovernmentGreen
+  }
 
   @override
   void didChangeDependencies() {
@@ -121,6 +247,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final indicator = ModalRoute.of(context)!.settings.arguments as SAIndicator;
+    final groupColor = _getGroupColor(indicator.groupId);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
@@ -134,8 +261,8 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
               right: 16.0,
               bottom: 10.0,
             ),
-            decoration: const BoxDecoration(
-              color: saGovernmentGreen,
+            decoration: BoxDecoration(
+              color: groupColor,
             ),
             child: Row(
               children: [
@@ -246,6 +373,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                     title: 'DEFINITION',
                     content: indicator.definition,
                     icon: Icons.info_outline,
+                    iconColor: groupColor,
                   ),
 
                   const SizedBox(height: 16),
@@ -278,6 +406,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                       title: 'DENOMINATOR',
                       content: 'Not applicable',
                       icon: Icons.remove_circle_outline,
+                      iconColor: groupColor,
                     ),
 
                   const SizedBox(height: 16),
@@ -288,6 +417,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                     title: 'USE AND CONTEXT',
                     content: indicator.useContext,
                     icon: Icons.lightbulb_outline,
+                    iconColor: groupColor,
                   ),
 
                   const SizedBox(height: 16),
@@ -319,6 +449,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
     required String title,
     required String content,
     required IconData icon,
+    required Color iconColor,
   }) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -338,7 +469,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
               Icon(
                 icon,
                 size: 20,
-                color: saGovernmentGreen,
+                color: iconColor,
               ),
               const SizedBox(width: 8),
               Text(

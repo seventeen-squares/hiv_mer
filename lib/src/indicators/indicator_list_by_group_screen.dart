@@ -305,94 +305,6 @@ class _IndicatorListByGroupScreenState
             ),
           ),
 
-          // Description Section
-          Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Colors.grey.shade200,
-                width: 1,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.info_outline,
-                      color: saGovernmentGreen,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'About this indicator group',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: saGovernmentGreen,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  _getGroupDescription(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey.shade700,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Search Bar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: Colors.grey.shade200,
-                  width: 1,
-                ),
-              ),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search indicators in this group...',
-                  hintStyle: TextStyle(color: Colors.grey.shade400),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: saGovernmentGreen,
-                  ),
-                  suffixIcon: _searchController.text.isNotEmpty
-                      ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey.shade400),
-                          onPressed: () {
-                            _searchController.clear();
-                          },
-                        )
-                      : null,
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                ),
-                style: const TextStyle(fontSize: 15),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
           // Content
           Expanded(
             child: _isLoading
@@ -431,52 +343,155 @@ class _IndicatorListByGroupScreenState
                           ),
                         ),
                       )
-                    : _filteredIndicators.isEmpty
-                        ? Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(32),
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            // Description Section
+                            Container(
+                              margin: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.grey.shade200,
+                                  width: 1,
+                                ),
+                              ),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
-                                    _searchController.text.isEmpty
-                                        ? Icons.inventory_2_outlined
-                                        : Icons.search_off,
-                                    size: 64,
-                                    color: Colors.grey.shade300,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    _searchController.text.isEmpty
-                                        ? 'No indicators found in this group'
-                                        : 'No indicators match your search',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey.shade600,
-                                    ),
-                                  ),
-                                  if (_searchController.text.isNotEmpty) ...[
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Try different keywords or clear the search',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey.shade400,
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: saGovernmentGreen,
+                                        size: 20,
                                       ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'About this indicator group',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: saGovernmentGreen,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    _getGroupDescription(),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey.shade700,
+                                      height: 1.5,
                                     ),
-                                  ],
+                                  ),
                                 ],
                               ),
                             ),
-                          )
-                        : ListView.builder(
-                            padding: const EdgeInsets.all(16.0),
-                            itemCount: _filteredIndicators.length,
-                            itemBuilder: (context, index) {
-                              final indicator = _filteredIndicators[index];
-                              return _buildIndicatorCard(indicator);
-                            },
-                          ),
+
+                            // Search Bar
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: Colors.grey.shade200,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: TextField(
+                                  controller: _searchController,
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        'Search indicators in this group...',
+                                    hintStyle:
+                                        TextStyle(color: Colors.grey.shade400),
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: saGovernmentGreen,
+                                    ),
+                                    suffixIcon: _searchController
+                                            .text.isNotEmpty
+                                        ? IconButton(
+                                            icon: Icon(Icons.clear,
+                                                color: Colors.grey.shade400),
+                                            onPressed: () {
+                                              _searchController.clear();
+                                            },
+                                          )
+                                        : null,
+                                    border: InputBorder.none,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 14,
+                                    ),
+                                  ),
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            // Indicators List or Empty State
+                            _filteredIndicators.isEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(32),
+                                    child: Column(
+                                      children: [
+                                        Icon(
+                                          _searchController.text.isEmpty
+                                              ? Icons.inventory_2_outlined
+                                              : Icons.search_off,
+                                          size: 64,
+                                          color: Colors.grey.shade300,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text(
+                                          _searchController.text.isEmpty
+                                              ? 'No indicators found in this group'
+                                              : 'No indicators match your search',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey.shade600,
+                                          ),
+                                        ),
+                                        if (_searchController
+                                            .text.isNotEmpty) ...[
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            'Try different keywords or clear the search',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey.shade400,
+                                            ),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: Column(
+                                      children: _filteredIndicators
+                                          .map((indicator) =>
+                                              _buildIndicatorCard(indicator))
+                                          .toList(),
+                                    ),
+                                  ),
+
+                            // Bottom padding for better scrolling
+                            const SizedBox(height: 32),
+                          ],
+                        ),
+                      ),
           ),
         ],
       ),

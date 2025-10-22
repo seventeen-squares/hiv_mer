@@ -78,19 +78,6 @@ class _MainNavigationState extends State<MainNavigation> {
                 ),
               ),
 
-              // Menu items
-              _buildMenuItem(
-                context,
-                icon: Icons.help_outline,
-                title: 'Help',
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Navigate to Help page
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Help page coming soon')),
-                  );
-                },
-              ),
               const Divider(height: 1),
               _buildMenuItem(
                 context,
@@ -110,62 +97,7 @@ class _MainNavigationState extends State<MainNavigation> {
                   Navigator.pop(context);
                   Navigator.of(context).pushNamed('/settings');
                 },
-              ),
-              const Divider(height: 1),
-              _buildMenuItem(
-                context,
-                icon: Icons.abc_outlined,
-                title: 'Acronyms',
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Navigate to Acronyms page
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Acronyms page coming soon')),
-                  );
-                },
-              ),
-              const Divider(height: 1),
-              _buildMenuItem(
-                context,
-                icon: Icons.info_outline,
-                title: 'Background Info',
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Navigate to Background Info page
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Background Info page coming soon')),
-                  );
-                },
-              ),
-              const Divider(height: 1),
-              _buildMenuItem(
-                context,
-                icon: Icons.article_outlined,
-                title: 'About',
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Navigate to About page
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('About page coming soon')),
-                  );
-                },
-              ),
-              const Divider(height: 1),
-              _buildMenuItem(
-                context,
-                icon: Icons.share_outlined,
-                title: 'Share',
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Implement share functionality
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Share functionality coming soon')),
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
+              )
             ],
           ),
         );
