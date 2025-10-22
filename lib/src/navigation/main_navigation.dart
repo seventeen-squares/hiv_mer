@@ -5,6 +5,10 @@ import '../indicators/indicator_groups_screen.dart';
 import '../data_elements/data_elements_screen.dart';
 import '../search/search_screen.dart';
 import '../settings/settings_controller.dart';
+import '../more/help_screen.dart';
+import '../more/acronyms_screen.dart';
+import '../more/background_info_screen.dart';
+import '../more/about_screen.dart';
 import '../utils/constants.dart';
 
 /// Main navigation wrapper with bottom navigation bar
@@ -79,6 +83,37 @@ class _MainNavigationState extends State<MainNavigation> {
                 ),
               ),
 
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.help_outline,
+                title: 'Help',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed(HelpScreen.routeName);
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.short_text,
+                title: 'Acronyms',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed(AcronymsScreen.routeName);
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.info_outline,
+                title: 'Background Info',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context)
+                      .pushNamed(BackgroundInfoScreen.routeName);
+                },
+              ),
               const Divider(height: 1),
               _buildMenuItem(
                 context,
