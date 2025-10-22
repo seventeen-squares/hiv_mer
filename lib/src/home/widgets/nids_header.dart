@@ -25,7 +25,7 @@ class NIDSHeader extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Official Department of Health banner
           Container(

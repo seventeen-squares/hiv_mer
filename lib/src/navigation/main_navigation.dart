@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../home/home_screen.dart';
 import '../indicators/indicator_groups_screen.dart';
 import '../data_elements/data_elements_screen.dart';
@@ -96,6 +97,21 @@ class _MainNavigationState extends State<MainNavigation> {
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.of(context).pushNamed('/settings');
+                },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.feedback_outlined,
+                title: 'Provide Feedback',
+                onTap: () {
+                  Navigator.pop(context);
+                  // Open feedback form URL
+                  // You'll need to add url_launcher package to pubspec.yaml
+                  // and import 'package:url_launcher/url_launcher.dart';
+                  final Uri feedbackUrl =
+                      Uri.parse('https://forms.gle/JwC1mRZ5jLGCK9PE8');
+                  launchUrl(feedbackUrl, mode: LaunchMode.externalApplication);
                 },
               )
             ],

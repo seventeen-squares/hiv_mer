@@ -173,13 +173,13 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
         backgroundColor: const Color(0xFFF8FAFC),
         body: Column(
           children: [
-            // Custom App Bar
+            // Custom App Bar - compact version like elements screen
             Container(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 12.0,
-                bottom: 20.0,
-                left: 20.0,
-                right: 20.0,
+                top: MediaQuery.of(context).padding.top + 8,
+                left: 16.0,
+                right: 16.0,
+                bottom: 10.0,
               ),
               decoration: const BoxDecoration(
                 color: saGovernmentGreen,
@@ -192,6 +192,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
                   ),
                   const SizedBox(width: 8),
                   const Expanded(
@@ -199,8 +201,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                       'Resources',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -232,15 +234,9 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                         color: Colors.grey.shade600,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
 
-                    // Document Cards
-                    ..._documents.map((doc) => Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: _buildDocumentCard(doc),
-                        )),
-
-                    // Info Section
+                    // Info Section - moved to top
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -272,6 +268,13 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 24),
+
+                    // Document Cards
+                    ..._documents.map((doc) => Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: _buildDocumentCard(doc),
+                        )),
                   ],
                 ),
               ),

@@ -153,66 +153,34 @@ class _SplashScreenState extends State<SplashScreen>
 
                   const Spacer(flex: 1),
 
-                  // App Icon/Logo (M blocks)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Gold M block
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xFFFFD700),
-                              Color(0xFFFFB700),
-                              Color(0xFFFF8C00),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.orange.withOpacity(0.3),
-                              blurRadius: 12,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: CustomPaint(
-                          painter: MBlockPainter(isGold: true),
-                        ),
+                  // App Icon/Logo (Chart icon)
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          saGovernmentGreen,
+                          saGovernmentGreen.withOpacity(0.8),
+                          saGovernmentGreen.withOpacity(0.9),
+                        ],
                       ),
-                      const SizedBox(width: 16),
-                      // Grey M block
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Colors.grey.shade300,
-                              Colors.grey.shade400,
-                              Colors.grey.shade500,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 12,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: saGovernmentGreen.withOpacity(0.3),
+                          blurRadius: 16,
+                          offset: const Offset(0, 4),
                         ),
-                        child: CustomPaint(
-                          painter: MBlockPainter(isGold: false),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.auto_graph_rounded,
+                      color: Colors.white,
+                      size: 40,
+                    ),
                   ),
 
                   const Spacer(flex: 1),
@@ -277,40 +245,4 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
   }
-}
-
-// Custom painter for the M block 3D effect
-class MBlockPainter extends CustomPainter {
-  final bool isGold;
-
-  MBlockPainter({required this.isGold});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
-
-    // Draw the M shape with 3D effect
-    final path = Path();
-
-    // Top face of M
-    paint.color = isGold ? const Color(0xFFFFE55C) : Colors.grey.shade200;
-    path.moveTo(size.width * 0.2, size.height * 0.3);
-    path.lineTo(size.width * 0.4, size.height * 0.5);
-    path.lineTo(size.width * 0.5, size.height * 0.4);
-    path.lineTo(size.width * 0.6, size.height * 0.5);
-    path.lineTo(size.width * 0.8, size.height * 0.3);
-    path.lineTo(size.width * 0.8, size.height * 0.7);
-    path.lineTo(size.width * 0.6, size.height * 0.7);
-    path.lineTo(size.width * 0.6, size.height * 0.6);
-    path.lineTo(size.width * 0.5, size.height * 0.55);
-    path.lineTo(size.width * 0.4, size.height * 0.6);
-    path.lineTo(size.width * 0.4, size.height * 0.7);
-    path.lineTo(size.width * 0.2, size.height * 0.7);
-    path.close();
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
