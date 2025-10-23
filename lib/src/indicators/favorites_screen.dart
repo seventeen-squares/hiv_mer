@@ -3,6 +3,7 @@ import '../models/sa_indicator.dart';
 import '../services/sa_indicator_service.dart';
 import '../services/favorites_service.dart';
 import '../utils/constants.dart';
+
 import 'indicator_detail_screen.dart';
 
 class FavoritesScreen extends StatefulWidget {
@@ -300,11 +301,15 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   Widget _buildIndicatorCard(SAIndicator indicator) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12.0),
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey.shade200,
+          width: 1,
+        ),
       ),
       child: InkWell(
         onTap: () {
@@ -319,61 +324,124 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             _loadFavorites();
           });
         },
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Indicator content
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Short name
-                    Text(
-                      indicator.shortname,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1E293B),
-                      ),
+              Row(
+                children: [
+                  _buildStatusBadge(indicator.status),
+                  const Spacer(),
+                  // Remove button
+                  IconButton(
+                    onPressed: () => _removeFavorite(indicator),
+                    icon: const Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 20,
                     ),
-                    const SizedBox(height: 4),
-                    // Indicator ID
-                    Text(
-                      indicator.indicatorId,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey[600],
-                      ),
+                    tooltip: 'Remove from favorites',
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(
+                      minHeight: 24,
+                      minWidth: 24,
                     ),
-                    const SizedBox(height: 8),
-                    // Name (if different from shortname)
-                    if (indicator.name != indicator.shortname)
-                      Text(
-                        indicator.name,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[700],
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                  ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                indicator.name,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1F2937),
                 ),
               ),
-              // Remove button
-              IconButton(
-                onPressed: () => _removeFavorite(indicator),
-                icon: const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
+              if (indicator.shortname.isNotEmpty) ...[
+                const SizedBox(height: 6),
+                Text(
+                  indicator.shortname,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.grey.shade700,
+                  ),
                 ),
-                tooltip: 'Remove from favorites',
+              ],
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Icon(Icons.schedule, size: 14, color: Colors.grey.shade500),
+                  const SizedBox(width: 4),
+                  Text(
+                    indicator.frequency,
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 10,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Icon(Icons.science_outlined,
+                      size: 14, color: Colors.grey.shade500),
+                  const SizedBox(width: 4),
+                  Text(
+                    indicator.factorType,
+                    style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatusBadge(IndicatorStatus status) {
+    Color bgColor;
+    Color textColor;
+    String label;
+
+    switch (status) {
+      case IndicatorStatus.newIndicator:
+        bgColor = const Color(0xFFDCFCE7);
+        textColor = const Color(0xFF166534);
+        label = 'NEW';
+        break;
+      case IndicatorStatus.amended:
+        bgColor = const Color(0xFFDBEAFE);
+        textColor = const Color(0xFF1E40AF);
+        label = 'AMENDED';
+        break;
+      case IndicatorStatus.retainedWithNew:
+        bgColor = const Color(0xFFFED7AA);
+        textColor = const Color(0xFF9A3412);
+        label = 'RETAINED+';
+        break;
+      case IndicatorStatus.retainedWithoutNew:
+        bgColor = const Color(0xFFF3F4F6);
+        textColor = const Color(0xFF4B5563);
+        label = 'RETAINED';
+        break;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: textColor,
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

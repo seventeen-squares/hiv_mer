@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../models/indicator_group.dart';
 import '../models/sa_indicator.dart';
 import '../services/sa_indicator_service.dart';
+import '../widgets/standard_cards.dart';
 import '../utils/constants.dart';
-import 'indicator_detail_screen.dart';
+
 
 /// Screen showing indicators for a specific group
 class IndicatorListByGroupScreen extends StatefulWidget {
@@ -482,7 +483,7 @@ class _IndicatorListByGroupScreenState
                                     child: Column(
                                       children: _filteredIndicators
                                           .map((indicator) =>
-                                              _buildIndicatorCard(indicator))
+                                              StandardIndicatorCard(indicator: indicator))
                                           .toList(),
                                     ),
                                   ),
@@ -498,139 +499,7 @@ class _IndicatorListByGroupScreenState
     );
   }
 
-  Widget _buildIndicatorCard(SAIndicator indicator) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey.shade200,
-          width: 1,
-        ),
-      ),
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            IndicatorDetailScreen.routeName,
-            arguments: indicator,
-          );
-        },
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  _buildStatusBadge(indicator.status),
-                  const SizedBox(width: 12),
-                  // Expanded(
-                  // child: Text(
-                  //   indicator.indicatorId,
-                  //   style: TextStyle(
-                  //     fontSize: 10,
-                  //     fontWeight: FontWeight.w600,
-                  //     color: Colors.grey.shade600,
-                  //   ),
-                  // ),
-                  // ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Text(
-                indicator.name,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF1F2937),
-                ),
-              ),
-              if (indicator.shortname.isNotEmpty) ...[
-                const SizedBox(height: 6),
-                Text(
-                  indicator.shortname,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-              ],
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Icon(Icons.schedule, size: 14, color: Colors.grey.shade500),
-                  const SizedBox(width: 4),
-                  Text(
-                    indicator.frequency,
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 10,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Icon(Icons.science_outlined,
-                      size: 14, color: Colors.grey.shade500),
-                  const SizedBox(width: 4),
-                  Text(
-                    indicator.factorType,
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 10,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
-  Widget _buildStatusBadge(IndicatorStatus status) {
-    Color bgColor;
-    Color textColor;
-    String label;
 
-    switch (status) {
-      case IndicatorStatus.newIndicator:
-        bgColor = const Color(0xFFDCFCE7);
-        textColor = const Color(0xFF166534);
-        label = 'NEW';
-        break;
-      case IndicatorStatus.amended:
-        bgColor = const Color(0xFFDBEAFE);
-        textColor = const Color(0xFF1E40AF);
-        label = 'AMENDED';
-        break;
-      case IndicatorStatus.retainedWithNew:
-        bgColor = const Color(0xFFFED7AA);
-        textColor = const Color(0xFF9A3412);
-        label = 'RETAINED+';
-        break;
-      case IndicatorStatus.retainedWithoutNew:
-        bgColor = const Color(0xFFF3F4F6);
-        textColor = const Color(0xFF4B5563);
-        label = 'RETAINED';
-        break;
-    }
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
 }

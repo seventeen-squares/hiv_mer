@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import '../models/data_element.dart';
 import '../services/data_element_service.dart';
 import '../utils/constants.dart';
-import 'data_element_detail_screen.dart';
+import '../widgets/standard_cards.dart';
+
 
 /// Screen showing a list of data elements for a specific category
 class DataElementListScreen extends StatefulWidget {
@@ -56,27 +57,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
     }
   }
 
-  Color _getStatusColor(DataElementStatus status) {
-    switch (status) {
-      case DataElementStatus.newElement:
-        return const Color(0xFF10B981);
-      case DataElementStatus.amended:
-        return const Color(0xFFF59E0B);
-      case DataElementStatus.retained:
-        return const Color(0xFF3B82F6);
-    }
-  }
 
-  String _getStatusText(DataElementStatus status) {
-    switch (status) {
-      case DataElementStatus.newElement:
-        return 'NEW';
-      case DataElementStatus.amended:
-        return 'AMENDED';
-      case DataElementStatus.retained:
-        return 'RETAINED';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,8 +169,7 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                           itemCount: _dataElements.length,
                           itemBuilder: (context, index) {
                             final element = _dataElements[index];
-                            return _buildDataElementCard(
-                                element, categoryColor);
+                            return StandardDataElementCard(dataElement: element);
                           },
                         ),
             ),
@@ -199,145 +179,5 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
     );
   }
 
-  Widget _buildDataElementCard(DataElement element, Color? categoryColor) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: Material(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(
-              DataElementDetailScreen.routeName,
-              arguments: element,
-            );
-          },
-          borderRadius: BorderRadius.circular(12),
-          child: Container(
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey.shade200,
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header with ID and Status
-                Row(
-                  children: [
-                    // Data Element Icon
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: (categoryColor ?? saGovernmentGreen)
-                            .withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.data_object,
-                        color: categoryColor ?? saGovernmentGreen,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            element.id,
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade600,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            element.category,
-                            style: TextStyle(
-                              fontSize: 9,
-                              color: Colors.grey.shade500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Status Badge
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _getStatusColor(element.status).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        _getStatusText(element.status),
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: _getStatusColor(element.status),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                // Data Element Name
-                Text(
-                  element.name,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1F2937),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                // Data Type
-                Row(
-                  children: [
-                    Icon(
-                      Icons.category_outlined,
-                      size: 14,
-                      color: Colors.grey.shade500,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      element.dataType,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                    if (element.aggregationType.isNotEmpty) ...[
-                      const SizedBox(width: 16),
-                      Icon(
-                        Icons.functions,
-                        size: 14,
-                        color: Colors.grey.shade500,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        element.aggregationType,
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+
 }

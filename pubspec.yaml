@@ -1,4 +1,4 @@
-name: hiv_mer
+name: NIDS
 description: "A new Flutter project."
 
 # Prevent accidental publishing to pub.dev.
