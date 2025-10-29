@@ -8,6 +8,7 @@ import 'widgets/home_search_bar.dart';
 import 'widgets/navigation_card.dart';
 import 'widgets/summary_card.dart';
 import '../utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
@@ -203,6 +204,69 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MainNavigation.switchToTab(context,
                                             MainNavigation.dataElementsTab);
                                       },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            // Development Notice
+                            Container(
+                              margin:
+                                  const EdgeInsets.only(top: 24, bottom: 16),
+                              padding: const EdgeInsets.all(24),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade50,
+                                border: Border.all(color: Colors.blue.shade200),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.info_outline,
+                                    color: Colors.blue.shade600,
+                                    size: 24,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Please note that this application is in active development.',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.blue.shade800,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      // Open feedback form URL
+                                      // You'll need to add url_launcher package to pubspec.yaml
+                                      // and import 'package:url_launcher/url_launcher.dart';
+                                      final Uri feedbackUrl = Uri.parse(
+                                          'https://forms.gle/JwC1mRZ5jLGCK9PE8');
+                                      launchUrl(feedbackUrl,
+                                          mode: LaunchMode.externalApplication);
+                                    },
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue.shade600,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: const Text(
+                                        'Click here to provide feedback',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
