@@ -151,10 +151,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   NavigationCard(
                                     icon: Icons.favorite_outline,
-                                    title: 'Favorites',
+                                    title: 'Favourites',
                                     onTap: () {
                                       Navigator.of(context)
-                                          .pushNamed('/favorites');
+                                          .pushNamed('/Favourites');
                                     },
                                   ),
                                   NavigationCard(

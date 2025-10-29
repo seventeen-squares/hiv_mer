@@ -1,21 +1,21 @@
 [
   {
     "id": "art_baseline",
-    "name": "Art Baseline",
+    "name": "ART Baseline",
     "displayOrder": 1,
     "subGroups": [],
     "indicatorCount": 27
   },
   {
     "id": "art_monthly",
-    "name": "Art Monthly",
+    "name": "ART Monthly",
     "displayOrder": 2,
     "subGroups": [],
     "indicatorCount": 2
   },
   {
     "id": "art_outcome",
-    "name": "Art Outcome",
+    "name": "ART Outcome",
     "displayOrder": 3,
     "subGroups": [],
     "indicatorCount": 21
@@ -36,21 +36,21 @@
   },
   {
     "id": "dr-tb_quarterly",
-    "name": "Dr-Tb Quarterly",
+    "name": "DR-TB Quarterly",
     "displayOrder": 6,
     "subGroups": [],
     "indicatorCount": 9
   },
   {
     "id": "ds-tb_quarterly",
-    "name": "Ds-Tb Quarterly",
+    "name": "DS-TB Quarterly",
     "displayOrder": 7,
     "subGroups": [],
     "indicatorCount": 6
   },
   {
     "id": "ems",
-    "name": "Ems",
+    "name": "EMS",
     "displayOrder": 8,
     "subGroups": [],
     "indicatorCount": 2
@@ -64,7 +64,7 @@
   },
   {
     "id": "epi",
-    "name": "Epi",
+    "name": "EPI",
     "displayOrder": 10,
     "subGroups": [],
     "indicatorCount": 19
@@ -78,7 +78,7 @@
   },
   {
     "id": "hiv",
-    "name": "Hiv",
+    "name": "HIV",
     "displayOrder": 12,
     "subGroups": [],
     "indicatorCount": 19
@@ -92,7 +92,7 @@
   },
   {
     "id": "management_phc",
-    "name": "Management Phc",
+    "name": "Management PHC",
     "displayOrder": 14,
     "subGroups": [],
     "indicatorCount": 8
@@ -148,14 +148,14 @@
   },
   {
     "id": "sti",
-    "name": "Sti",
+    "name": "STI",
     "displayOrder": 22,
     "subGroups": [],
     "indicatorCount": 4
   },
   {
     "id": "tb_monthly",
-    "name": "Tb Monthly",
+    "name": "TB Monthly",
     "displayOrder": 23,
     "subGroups": [],
     "indicatorCount": 4
@@ -169,7 +169,7 @@
   },
   {
     "id": "wbphcot",
-    "name": "Wbphcot",
+    "name": "WBPHCOT",
     "displayOrder": 25,
     "subGroups": [],
     "indicatorCount": 3

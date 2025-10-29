@@ -5,7 +5,6 @@ import '../services/data_element_service.dart';
 import '../utils/constants.dart';
 import '../widgets/standard_cards.dart';
 
-
 /// Screen showing a list of data elements for a specific category
 class DataElementListScreen extends StatefulWidget {
   static const routeName = '/data-element-list';
@@ -56,8 +55,6 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
       }
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +166,8 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
                           itemCount: _dataElements.length,
                           itemBuilder: (context, index) {
                             final element = _dataElements[index];
-                            return StandardDataElementCard(dataElement: element);
+                            return StandardDataElementCard(
+                                dataElement: element);
                           },
                         ),
             ),
@@ -178,6 +176,4 @@ class _DataElementListScreenState extends State<DataElementListScreen> {
       ),
     );
   }
-
-
 }

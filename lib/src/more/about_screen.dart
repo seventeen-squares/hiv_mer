@@ -87,7 +87,7 @@ class AboutScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 24),
 
                   // App Info
@@ -113,7 +113,7 @@ class AboutScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: 32),
 
                   // About Content
@@ -155,7 +155,6 @@ class AboutScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        
                         Text(
                           'The National Indicator Data Set (NIDS) mobile application provides healthcare professionals and administrators with easy access to standardized health indicators and data elements used across South African health facilities.',
                           style: TextStyle(
@@ -165,7 +164,6 @@ class AboutScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        
                         const Text(
                           'Features',
                           style: TextStyle(
@@ -175,15 +173,18 @@ class AboutScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        _buildFeatureItem('Browse indicator groups and categories'),
-                        _buildFeatureItem('Search indicators and data elements'),
-                        _buildFeatureItem('Access detailed definitions and usage'),
+                        _buildFeatureItem(
+                            'Browse indicator groups and categories'),
+                        _buildFeatureItem(
+                            'Search indicators and data elements'),
+                        _buildFeatureItem(
+                            'Access detailed definitions and usage'),
                         _buildFeatureItem('Offline access to documentation'),
-                        _buildFeatureItem('Favorites for quick reference'),
+                        _buildFeatureItem('Favourites for quick reference'),
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: 24),
 
                   // Copyright

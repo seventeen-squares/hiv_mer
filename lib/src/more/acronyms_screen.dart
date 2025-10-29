@@ -11,18 +11,28 @@ class AcronymsScreen extends StatelessWidget {
     {'acronym': 'ANC', 'definition': 'Antenatal care'},
     {'acronym': 'ART', 'definition': 'Antiretroviral therapy'},
     {'acronym': 'BCG', 'definition': 'Bacille Calmette-Guérin'},
-    {'acronym': 'CCMDD', 'definition': 'Central Chronic Medicines Dispensing and Distribution'},
+    {
+      'acronym': 'CCMDD',
+      'definition': 'Central Chronic Medicines Dispensing and Distribution'
+    },
     {'acronym': 'CDC', 'definition': 'Community day centre'},
     {'acronym': 'CD4', 'definition': 'Cluster of differentiation 4'},
     {'acronym': 'CHC', 'definition': 'Community health centre'},
     {'acronym': 'CPT', 'definition': 'Co-trimoxazole prevention therapy'},
-    {'acronym': 'DTaP-IPV-Hib-HBV', 'definition': 'Diphtheria, tetanus, inactivated polio vaccine, haemophilus influenza B, hepatitis vaccine'},
+    {
+      'acronym': 'DTaP-IPV-Hib-HBV',
+      'definition':
+          'Diphtheria, tetanus, inactivated polio vaccine, haemophilus influenza B, hepatitis vaccine'
+    },
     {'acronym': 'EH', 'definition': 'Environmental health'},
     {'acronym': 'EMS', 'definition': 'Emergency medical services'},
     {'acronym': 'EXP', 'definition': 'Experienced'},
     {'acronym': 'HIV', 'definition': 'Human Immunodeficiency Virus'},
     {'acronym': 'IC', 'definition': 'Ideal Clinic'},
-    {'acronym': 'ICD', 'definition': 'International Classification of Diseases'},
+    {
+      'acronym': 'ICD',
+      'definition': 'International Classification of Diseases'
+    },
     {'acronym': 'ICU', 'definition': 'Intensive care unit'},
     {'acronym': 'IPT', 'definition': 'Isoniazid Preventive Therapy'},
     {'acronym': 'ISHP', 'definition': 'Integrated School Health Programme'},
@@ -40,7 +50,11 @@ class AcronymsScreen extends StatelessWidget {
     {'acronym': 'PCV', 'definition': 'Pneumococcal conjugated vaccine'},
     {'acronym': 'PDE', 'definition': 'Patient-day equivalent'},
     {'acronym': 'PHC', 'definition': 'Primary health care'},
-    {'acronym': 'PPTICRM', 'definition': 'Perfect Permanent Team for Ideal Clinic Realisation and Maintenance'},
+    {
+      'acronym': 'PPTICRM',
+      'definition':
+          'Perfect Permanent Team for Ideal Clinic Realisation and Maintenance'
+    },
     {'acronym': 'PrEP', 'definition': 'Pre-exposure prophylaxis'},
     {'acronym': 'PSI', 'definition': 'Patient safety incident'},
     {'acronym': 'RIC', 'definition': 'Remaining in care'},

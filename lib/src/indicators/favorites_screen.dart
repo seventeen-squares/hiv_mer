@@ -7,7 +7,7 @@ import '../utils/constants.dart';
 import 'indicator_detail_screen.dart';
 
 class FavoritesScreen extends StatefulWidget {
-  static const routeName = '/favorites';
+  static const routeName = '/Favourites';
 
   const FavoritesScreen({super.key});
 
@@ -72,7 +72,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${indicator.shortname} removed from favorites'),
+          content: Text('${indicator.shortname} removed from Favourites'),
           duration: const Duration(seconds: 2),
           action: SnackBarAction(
             label: 'UNDO',
@@ -91,7 +91,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Clear All Favorites'),
+        title: const Text('Clear All Favourites'),
         content: const Text(
           'Are you sure you want to remove all favorites? This action cannot be undone.',
         ),
@@ -118,7 +118,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('All favorites cleared'),
+            content: Text('All favourites cleared'),
             duration: Duration(seconds: 2),
           ),
         );
@@ -160,7 +160,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Favorites',
+                        'Favourites',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 13,
@@ -188,7 +188,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     ),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
-                    tooltip: 'Clear all favorites',
+                    tooltip: 'Clear all Favourites',
                   ),
               ],
             ),
@@ -224,7 +224,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Error loading favorites',
+                'Error loading Favourites',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -265,7 +265,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'No Favorites Yet',
+                'No Favourites Yet',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -342,7 +342,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       color: Colors.red,
                       size: 20,
                     ),
-                    tooltip: 'Remove from favorites',
+                    tooltip: 'Remove from Favourites',
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(
                       minHeight: 24,

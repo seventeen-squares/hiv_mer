@@ -5,7 +5,6 @@ import '../services/sa_indicator_service.dart';
 import '../widgets/standard_cards.dart';
 import '../utils/constants.dart';
 
-
 /// Screen showing indicators for a specific group
 class IndicatorListByGroupScreen extends StatefulWidget {
   final IndicatorGroup group;
@@ -483,7 +482,8 @@ class _IndicatorListByGroupScreenState
                                     child: Column(
                                       children: _filteredIndicators
                                           .map((indicator) =>
-                                              StandardIndicatorCard(indicator: indicator))
+                                              StandardIndicatorCard(
+                                                  indicator: indicator))
                                           .toList(),
                                     ),
                                   ),
@@ -498,8 +498,4 @@ class _IndicatorListByGroupScreenState
       ),
     );
   }
-
-
-
-
 }

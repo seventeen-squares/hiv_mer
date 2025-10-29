@@ -72,7 +72,7 @@ class HelpScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 32),
 
                   // Main Help Content
@@ -114,7 +114,6 @@ class HelpScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 32),
-                        
                         const Text(
                           'Copyright Information',
                           style: TextStyle(

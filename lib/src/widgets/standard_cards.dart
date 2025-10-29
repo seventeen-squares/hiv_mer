@@ -35,12 +35,13 @@ class StandardIndicatorCard extends StatelessWidget {
         ),
       ),
       child: InkWell(
-        onTap: onTap ?? () {
-          Navigator.of(context).pushNamed(
-            IndicatorDetailScreen.routeName,
-            arguments: indicator,
-          );
-        },
+        onTap: onTap ??
+            () {
+              Navigator.of(context).pushNamed(
+                IndicatorDetailScreen.routeName,
+                arguments: indicator,
+              );
+            },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -231,12 +232,13 @@ class StandardDataElementCard extends StatelessWidget {
         ),
       ),
       child: InkWell(
-        onTap: onTap ?? () {
-          Navigator.of(context).pushNamed(
-            DataElementDetailScreen.routeName,
-            arguments: dataElement,
-          );
-        },
+        onTap: onTap ??
+            () {
+              Navigator.of(context).pushNamed(
+                DataElementDetailScreen.routeName,
+                arguments: dataElement,
+              );
+            },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16.0),

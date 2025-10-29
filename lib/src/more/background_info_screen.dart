@@ -72,7 +72,7 @@ class BackgroundInfoScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 32),
 
                   // NIDS-App 2025 Header
@@ -131,7 +131,6 @@ class BackgroundInfoScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        
                         Text(
                           'The District Health Management Information System (DHMIS) Policy (2011) requires that the NIDS be reviewed every two years and be aligned to health system priorities. This version of the NIDS was reviewed in 2025 and will be effective from 1st April 2025 until 31st March 2030.',
                           style: TextStyle(
@@ -141,7 +140,6 @@ class BackgroundInfoScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        
                         Text(
                           'The Director-General of Health is the custodian and final authority of the NIDS and any changes to the NIDS have to be signed off by the Director-General. If any additions or subtractions have to be made to the NIDS in the two years it is implemented, it has to be approved by the Director-General and officially communicated to stakeholders.',
                           style: TextStyle(
@@ -151,7 +149,6 @@ class BackgroundInfoScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        
                         Text(
                           'The quality of the data collected is vital to ensure that planning and allocation of funds, equipment and personnel match the needs of the communities served by the facility or non-facility service.',
                           style: TextStyle(
@@ -163,7 +160,7 @@ class BackgroundInfoScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: 24),
 
                   // About Section
@@ -205,7 +202,6 @@ class BackgroundInfoScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        
                         Text(
                           'Each indicator group in the app is colour coded, with separate tabs for indicators and data elements, with links between an indicator and data elements to make its usage easier for health workers and data capturers. Once the App is successfully downloaded, there\'s no further data required to open and use the app or for updating.',
                           style: TextStyle(
@@ -215,7 +211,6 @@ class BackgroundInfoScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        
                         Text(
                           'The development of this app was coordinated by NDoH M&E Directorate and supported by John Snow South Africa.',
                           style: TextStyle(

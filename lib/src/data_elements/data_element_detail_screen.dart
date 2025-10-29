@@ -126,8 +126,8 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content:
-              Text(newStatus ? 'Added to favorites' : 'Removed from favorites'),
+          content: Text(
+              newStatus ? 'Added to Favourites' : 'Removed from Favourites'),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -253,8 +253,8 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
                     tooltip: _isFavorite
-                        ? 'Remove from favorites'
-                        : 'Add to favorites',
+                        ? 'Remove from Favourites'
+                        : 'Add to Favourites',
                   ),
               ],
             ),
