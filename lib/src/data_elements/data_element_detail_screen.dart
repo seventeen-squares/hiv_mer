@@ -3,6 +3,138 @@ import 'package:share_plus/share_plus.dart';
 import '../models/data_element.dart';
 import '../services/favorites_service.dart';
 
+class MarqueeText extends StatefulWidget {
+  final String text;
+  final TextStyle style;
+  final double scrollSpeed;
+
+  const MarqueeText({
+    super.key,
+    required this.text,
+    required this.style,
+    this.scrollSpeed = 50.0,
+  });
+
+  @override
+  State<MarqueeText> createState() => _MarqueeTextState();
+}
+
+class _MarqueeTextState extends State<MarqueeText>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+  double _textWidth = 0;
+  double _containerWidth = 0;
+  bool _needsScrolling = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 8), // Adjust for desired speed
+      vsync: this,
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _measureTextAndStartAnimation();
+    });
+  }
+
+  void _measureTextAndStartAnimation() {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: widget.text, style: widget.style),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    setState(() {
+      _textWidth = textPainter.size.width;
+      _needsScrolling = _textWidth > _containerWidth;
+    });
+
+    if (_needsScrolling && _containerWidth > 0) {
+      // Calculate duration based on text width and desired speed
+      final duration = Duration(
+        milliseconds: ((_textWidth + _containerWidth) / widget.scrollSpeed * 1000).round(),
+      );
+      
+      _animationController.duration = duration;
+      
+      // Create animation that goes from 0 to full text width + container width
+      _animation = Tween<double>(
+        begin: 0.0,
+        end: _textWidth + 100, // Add some padding for smooth transition
+      ).animate(CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.linear,
+      ));
+
+      // Start animation after a brief delay, then repeat
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        if (mounted) {
+          _animationController.repeat();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        _containerWidth = constraints.maxWidth;
+
+        if (!_needsScrolling || _containerWidth == 0) {
+          // If text fits, just show it normally
+          return Text(
+            widget.text,
+            style: widget.style,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          );
+        }
+
+        return ClipRect(
+          child: AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return Transform.translate(
+                offset: Offset(-_animation.value, 0),
+                child: Row(
+                  children: [
+                    // First instance of text
+                    Text(
+                      widget.text,
+                      style: widget.style,
+                      maxLines: 1,
+                    ),
+                    // Add spacing
+                    SizedBox(width: _containerWidth * 0.5),
+                    // Second instance for seamless loop
+                    Text(
+                      widget.text,
+                      style: widget.style,
+                      maxLines: 1,
+                    ),
+                    // Extra spacing to ensure smooth transition
+                    SizedBox(width: _containerWidth * 0.5),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
 class DataElementDetailScreen extends StatefulWidget {
   static const routeName = '/data-element-detail';
 
@@ -208,16 +340,14 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Text(
-                      element.shortname,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  child: MarqueeText(
+                    text: element.shortname,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
+                    scrollSpeed: 30.0, // Adjust speed as needed
                   ),
                 ),
                 const SizedBox(width: 8),
