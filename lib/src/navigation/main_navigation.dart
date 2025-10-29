@@ -148,6 +148,21 @@ class _MainNavigationState extends State<MainNavigation> {
                       Uri.parse('https://forms.gle/JwC1mRZ5jLGCK9PE8');
                   launchUrl(feedbackUrl, mode: LaunchMode.externalApplication);
                 },
+              ),
+              const Divider(height: 1),
+              _buildMenuItem(
+                context,
+                icon: Icons.share_outlined,
+                title: 'Share application',
+                onTap: () {
+                  Navigator.pop(context);
+                  // Open feedback form URL
+                  // You'll need to add url_launcher package to pubspec.yaml
+                  // and import 'package:url_launcher/url_launcher.dart';
+                  final Uri shareUrl = Uri.parse(
+                      'https://1drv.ms/f/c/4486554405894af5/EidajSEhjHtCq6EkGOHCkk8BX-wG7dYWmaK2WxrR7EdzAA?e=dehaKN');
+                  launchUrl(shareUrl, mode: LaunchMode.externalApplication);
+                },
               )
             ],
           ),
