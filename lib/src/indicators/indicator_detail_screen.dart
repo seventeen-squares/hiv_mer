@@ -56,11 +56,13 @@ class _MarqueeTextState extends State<MarqueeText>
     if (_needsScrolling && _containerWidth > 0) {
       // Calculate duration based on text width and desired speed
       final duration = Duration(
-        milliseconds: ((_textWidth + _containerWidth) / widget.scrollSpeed * 1000).round(),
+        milliseconds:
+            ((_textWidth + _containerWidth) / widget.scrollSpeed * 1000)
+                .round(),
       );
-      
+
       _animationController.duration = duration;
-      
+
       // Create animation that goes from 0 to full text width + container width
       _animation = Tween<double>(
         begin: 0.0,
