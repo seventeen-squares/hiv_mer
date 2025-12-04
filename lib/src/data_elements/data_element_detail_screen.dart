@@ -443,6 +443,127 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                         ),
                       ],
                     ),
+
+                  // Extended Definition Card
+                  if (element.definitionExtended.isNotEmpty &&
+                      element.definitionExtended != 'None')
+                    _buildInfoCard(
+                      context,
+                      title: 'Extended Definition',
+                      children: [
+                        Text(
+                          element.definitionExtended,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade700,
+                            height: 1.5,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                  // Use and Context Card
+                  if (element.useAndContext.isNotEmpty &&
+                      element.useAndContext != 'None')
+                    _buildInfoCard(
+                      context,
+                      title: 'Use and Context',
+                      children: [
+                        Text(
+                          element.useAndContext,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade700,
+                            height: 1.5,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                  // Inclusions/Exclusions Card
+                  if ((element.inclusions.isNotEmpty &&
+                          element.inclusions != 'None') ||
+                      (element.exclusions.isNotEmpty &&
+                          element.exclusions != 'None'))
+                    _buildInfoCard(
+                      context,
+                      title: 'Inclusions & Exclusions',
+                      children: [
+                        if (element.inclusions.isNotEmpty &&
+                            element.inclusions != 'None') ...[
+                          Text(
+                            'INCLUSIONS',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green.shade700,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            element.inclusions,
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey.shade700,
+                              height: 1.4,
+                            ),
+                          ),
+                          if (element.exclusions.isNotEmpty &&
+                              element.exclusions != 'None')
+                            const SizedBox(height: 12),
+                        ],
+                        if (element.exclusions.isNotEmpty &&
+                            element.exclusions != 'None') ...[
+                          Text(
+                            'EXCLUSIONS',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red.shade700,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            element.exclusions,
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey.shade700,
+                              height: 1.4,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+
+                  // Data Collection Information Card
+                  if (element.frequency.isNotEmpty ||
+                      element.collectedBy.isNotEmpty ||
+                      element.collectionPoints.isNotEmpty ||
+                      element.tools.isNotEmpty)
+                    _buildInfoCard(
+                      context,
+                      title: 'Data Collection Information',
+                      children: [
+                        if (element.frequency.isNotEmpty)
+                          _buildInfoRow('Frequency:', element.frequency),
+                        if (element.frequency.isNotEmpty &&
+                            element.collectedBy.isNotEmpty)
+                          const SizedBox(height: 8),
+                        if (element.collectedBy.isNotEmpty)
+                          _buildInfoRow('Collected By:', element.collectedBy),
+                        if (element.collectedBy.isNotEmpty &&
+                            element.collectionPoints.isNotEmpty)
+                          const SizedBox(height: 8),
+                        if (element.collectionPoints.isNotEmpty)
+                          _buildInfoRow(
+                              'Collection Points:', element.collectionPoints),
+                        if (element.collectionPoints.isNotEmpty &&
+                            element.tools.isNotEmpty)
+                          const SizedBox(height: 8),
+                        if (element.tools.isNotEmpty)
+                          _buildInfoRow('Tools:', element.tools),
+                      ],
+                    ),
                 ],
               ),
             ),

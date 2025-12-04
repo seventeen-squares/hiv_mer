@@ -9,6 +9,16 @@ class DataElement {
   final String aggregationType;
   final DataElementStatus status;
 
+  // New comprehensive fields from CSV
+  final String definitionExtended;
+  final String useAndContext;
+  final String inclusions;
+  final String exclusions;
+  final String frequency;
+  final String collectedBy;
+  final String collectionPoints;
+  final String tools;
+
   DataElement({
     required this.id,
     required this.name,
@@ -18,6 +28,14 @@ class DataElement {
     required this.dataType,
     required this.aggregationType,
     required this.status,
+    this.definitionExtended = '',
+    this.useAndContext = '',
+    this.inclusions = '',
+    this.exclusions = '',
+    this.frequency = '',
+    this.collectedBy = '',
+    this.collectionPoints = '',
+    this.tools = '',
   });
 
   factory DataElement.fromJson(Map<String, dynamic> json) {
@@ -30,6 +48,14 @@ class DataElement {
       dataType: json['dataType'] as String? ?? 'Number',
       aggregationType: json['aggregationType'] as String? ?? 'Sum',
       status: _parseStatus(json['status'] as String?),
+      definitionExtended: json['definitionExtended'] as String? ?? '',
+      useAndContext: json['useAndContext'] as String? ?? '',
+      inclusions: json['inclusions'] as String? ?? '',
+      exclusions: json['exclusions'] as String? ?? '',
+      frequency: json['frequency'] as String? ?? '',
+      collectedBy: json['collectedBy'] as String? ?? '',
+      collectionPoints: json['collectionPoints'] as String? ?? '',
+      tools: json['tools'] as String? ?? '',
     );
   }
 
@@ -43,6 +69,14 @@ class DataElement {
       'dataType': dataType,
       'aggregationType': aggregationType,
       'status': status.toString().split('.').last,
+      'definitionExtended': definitionExtended,
+      'useAndContext': useAndContext,
+      'inclusions': inclusions,
+      'exclusions': exclusions,
+      'frequency': frequency,
+      'collectedBy': collectedBy,
+      'collectionPoints': collectionPoints,
+      'tools': tools,
     };
   }
 
