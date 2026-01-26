@@ -15,6 +15,8 @@ class Document {
   final String fileSize;
   final Color color;
   final IconData icon;
+  final String publishedDate;
+  final String lastUpdated;
 
   const Document({
     required this.title,
@@ -24,6 +26,8 @@ class Document {
     required this.fileSize,
     required this.color,
     this.icon = Icons.picture_as_pdf,
+    required this.publishedDate,
+    required this.lastUpdated,
   });
 }
 
@@ -39,6 +43,26 @@ class ResourcesScreen extends StatefulWidget {
 
 class _ResourcesScreenState extends State<ResourcesScreen> {
   String? _downloadingFile;
+  final Map<String, bool> _downloadedStatus = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _checkDownloads();
+  }
+
+  Future<void> _checkDownloads() async {
+    final directory = await getApplicationDocumentsDirectory();
+    for (final doc in _documents) {
+      final file = File('${directory.path}/${doc.fileName}');
+      final exists = await file.exists();
+      if (mounted) {
+        setState(() {
+          _downloadedStatus[doc.fileName] = exists;
+        });
+      }
+    }
+  }
 
   // List of available documents
   static const List<Document> _documents = [
@@ -50,6 +74,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       fileName: 'NIDS_booklet_2017.pdf',
       fileSize: '2.8 MB',
       color: Colors.red,
+      publishedDate: '2017',
+      lastUpdated: '2017-04-01',
     ),
     Document(
       title: 'VMMC Guidelines 2025',
@@ -59,6 +85,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       fileName: 'VMMC_Guidelines_2025.pdf',
       fileSize: '11 MB',
       color: Color(0xFF2196F3), // Blue
+      publishedDate: '2025',
+      lastUpdated: '2025-01-15',
     ),
     Document(
       title: 'Maternal & Perinatal Care',
@@ -68,6 +96,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       fileName: 'Maternal_Perinatal_Care_Guideline.pdf',
       fileSize: '14 MB',
       color: Color(0xFFE91E63), // Pink
+      publishedDate: '2024',
+      lastUpdated: '2024-11-30',
     ),
     Document(
       title: 'DHMIS Policy 2011',
@@ -77,6 +107,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       fileName: 'DHMIS_Policy_2011.pdf',
       fileSize: '481 KB',
       color: Color(0xFF9C27B0), // Purple
+      publishedDate: '2011',
+      lastUpdated: '2011-08-22',
     ),
   ];
 
@@ -101,6 +133,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
       setState(() {
         _downloadingFile = null;
+        _downloadedStatus[document.fileName] = true;
       });
 
       if (mounted) {
@@ -287,6 +320,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
   Widget _buildDocumentCard(Document document) {
     final bool isDownloading = _downloadingFile == document.fileName;
+    final bool isDownloaded = _downloadedStatus[document.fileName] ?? false;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -336,13 +371,54 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        document.title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1F2937),
-                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              document.title,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF1F2937),
+                              ),
+                            ),
+                          ),
+                          if (isDownloaded)
+                            Container(
+                              margin: const EdgeInsets.only(left: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.green.shade100,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.green.shade300,
+                                  width: 0.5,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    size: 12,
+                                    color: Colors.green.shade700,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Offline',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.green.shade800,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -355,21 +431,41 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                     ],
                   ),
                 ),
+              ],
+            ),
+          ),
+
+          // Metadata Row
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+            child: Row(
+              children: [
+                _buildMetadataItem(
+                  Icons.calendar_today,
+                  'Published: ${document.publishedDate}',
+                ),
+                const SizedBox(width: 16),
+                _buildMetadataItem(
+                  Icons.update,
+                  'Updated: ${document.lastUpdated}',
+                ),
+                const Spacer(),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
+                    horizontal: 8,
+                    vertical: 2,
                   ),
                   decoration: BoxDecoration(
-                    color: document.color.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(color: Colors.grey.shade300),
                   ),
                   child: Text(
                     document.fileSize,
                     style: TextStyle(
-                      fontSize: 9,
-                      fontWeight: FontWeight.bold,
-                      color: document.color,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade700,
                     ),
                   ),
                 ),
@@ -425,8 +521,13 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                                   AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           )
-                        : const Icon(Icons.download, size: 18),
-                    label: Text(isDownloading ? 'Downloading...' : 'Download'),
+                        : Icon(
+                            isDownloaded ? Icons.refresh : Icons.download,
+                            size: 18,
+                          ),
+                    label: Text(isDownloading
+                        ? 'Downloading...'
+                        : (isDownloaded ? 'Update' : 'Download')),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: saGovernmentGreen,
                       foregroundColor: Colors.white,
@@ -443,6 +544,26 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildMetadataItem(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 12,
+          color: Colors.grey.shade500,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 11,
+            color: Colors.grey.shade600,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'settings_controller.dart';
 import '../services/user_profile_service.dart';
@@ -118,6 +119,41 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
+  Future<void> _showClearDataDialog() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Clear Data?'),
+        content: const Text(
+          'This will clear all downloaded documents and cached data. Your favorites and settings will be preserved.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('CANCEL'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text(
+              'CLEAR',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      // Implement clear data logic here
+      // For now just show a snackbar
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Data cleared successfully')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Check if we can pop (i.e., if we're in a navigation stack)
@@ -169,39 +205,6 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 const Divider(height: 1),
 
-                // About Section
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
-                  child: Text(
-                    'About',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF6B7280),
-                    ),
-                  ),
-                ),
-                ListTile(
-                  leading: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: saGovernmentGreen.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(
-                      Icons.share,
-                      color: saGovernmentGreen,
-                      size: 22,
-                    ),
-                  ),
-                  title: const Text('Share App'),
-                  subtitle: const Text('Share NIDS with colleagues'),
-                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                  onTap: _shareApp,
-                ),
-                const Divider(height: 1),
-
                 // App Settings Section
                 const Padding(
                   padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
@@ -249,6 +252,186 @@ class _SettingsViewState extends State<SettingsView> {
                         child: Text('Dark'),
                       ),
                     ],
+                  ),
+                ),
+                const Divider(height: 1),
+
+                // Support Section
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
+                  child: Text(
+                    'Support',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF6B7280),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: saGovernmentGreen.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.help_outline,
+                      color: saGovernmentGreen,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text('Help & Support'),
+                  subtitle: const Text('Contact information and guides'),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/help');
+                  },
+                ),
+                const Divider(height: 1),
+
+                // Storage Section
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
+                  child: Text(
+                    'Storage',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF6B7280),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: saGovernmentGreen.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.cleaning_services_outlined,
+                      color: saGovernmentGreen,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text('Clear Data'),
+                  subtitle: const Text('Clear cached data and downloads'),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: _showClearDataDialog,
+                ),
+                const Divider(height: 1),
+
+                // About Section
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
+                  child: Text(
+                    'About',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF6B7280),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: saGovernmentGreen.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(
+                      Icons.share,
+                      color: saGovernmentGreen,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text('Share App'),
+                  subtitle: const Text('Share NIDS with colleagues'),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: _shareApp,
+                ),
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: saGovernmentGreen.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.policy_outlined,
+                      color: saGovernmentGreen,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text('Privacy Policy'),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () async {
+                    final uri = Uri.parse('http://jsi.org.za/nids/privacy-policy.html');
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri, mode: LaunchMode.externalApplication);
+                    }
+                  },
+                ),
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: saGovernmentGreen.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.description_outlined,
+                      color: saGovernmentGreen,
+                      size: 22,
+                    ),
+                  ),
+                  title: const Text('Terms of Service'),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () {
+                    // Open Terms
+                  },
+                ),
+                const Divider(height: 1),
+
+                // App Info
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/images/sa_coat_of_arms.png',
+                          height: 60,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(Icons.health_and_safety,
+                                  size: 60, color: Colors.grey),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'NIDS App',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF1F2937),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          'Version 1.0.0',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

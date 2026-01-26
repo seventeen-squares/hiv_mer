@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../recent_updates_screen.dart';
 
 /// Recent updates section widget
 /// Displays latest updates with "See all" link
@@ -39,7 +40,10 @@ class RecentUpdatesSection extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  // TODO: Navigate to full updates list
+                  Navigator.of(context).pushNamed(
+                    RecentUpdatesScreen.routeName,
+                    arguments: updates,
+                  );
                 },
                 child: const Text(
                   'See all',

@@ -388,6 +388,50 @@ T061: Test on devices
 
 ---
 
+---
+
+## Phase 6: Feedback Implementation & Polish
+
+**Purpose**: Address QA feedback to improve consistency, usability, and fix critical issues.
+
+### Global Consistency & Styling
+
+- [ ] T029 [P] [Global] Typography & Hierarchy: Standardize text styles across the app. Define a strict type ramp (H1 24sp, H2 20sp, card-title 16sp, body 14-16sp, caption 12sp). Ensure consistent line-heights.
+- [ ] T030 [P] [Global] Capitalization & Terminology: Enforce Title Case for titles and sentence case for body text. Fix specific terms: "naïve" (standardize spelling), "lifelong", "death" (instead of RIP in titles), "Programme Manager", "colour", "personalised".
+- [ ] T031 [P] [Global] Chip/Badge Component: Create a standardized `NIDSChip` component with consistent radius, padding, font size, and letter spacing. Ensure WCAG AA contrast (darker green or darker text).
+- [ ] T032 [P] [Global] Iconography: Standardize on a single icon set (Material Filled/Outlined). Ensure all tap targets are min 48x48dp (increase hit-slop where needed).
+- [ ] T033 [P] [Global] Empty & Error States: Add clear empty/error states for Search, Resources, and Lists. Include actions like "Retry" or "Clear filters".
+
+### Critical Fixes (Blockers & Majors)
+
+- [ ] T034 [B] [Data] Encoding Fix: Ensure UTF-8 encoding for all data files to fix "naïve" rendering issues. Normalize strings in JSON files.
+- [ ] T035 [M] [Indicator Detail] Formula Readability: Refactor formula display. Use a structured list format instead of inline sigma formulas. Use monospaced font for formula parts.
+- [ ] T036 [M] [Indicator Detail] Metadata Visibility: Move technical fields (Group ID, Indicator ID, Sort Order) into a collapsed "Technical details" accordion. Add "Copy ID" action.
+- [ ] T037 [M] [Data Elements] Duplicate Group Names: Rename "ART Outcome" groups to "ART Outcomes — Summary" and "ART Outcomes — Detailed" to avoid ambiguity.
+- [ ] T038 [M] [Search] Result Cards: Improve search result cards to show Group, Unit, Periodicity, and Disaggregations. Truncate body text to 2 lines.
+
+### Screen-Specific Improvements
+
+- [ ] T039 [Home] Update Home Screen:
+    - Make "Total Indicators" and "Total Data Elements" cards actionable (deep link to filtered lists).
+    - Reduce banner prominence (allow dismiss).
+    - Separate App Version from Content Version in display.
+- [ ] T040 [Search] Add Filters: Add segmented control for Indicators vs Data Elements. Add sort options (A-Z, Updated).
+- [ ] T041 [Indicator Detail] Content Polish:
+    - Fix truncated header title.
+    - Hide "Denominator" section if "Not applicable".
+    - Add metadata row (Unit, Periodicity, Disaggregations).
+- [ ] T042 [Resources] Offline Status: Add "Downloaded ✓" badge, file size, and "Last updated" date to resource items.
+- [ ] T043 [Help] Support Actions: Add "Email support" button (mailto) and "Copy address" action.
+- [ ] T044 [Favourites] Improvements:
+    - Fix unit label clarity (Number/Percent).
+    - Add sort/filter bar.
+    - Add multi-select for deletion/sharing.
+    - Add empty state.
+- [ ] T045 [Settings] Expand Options: Add "About", "Support", "Storage & offline", "Legal" sections. Add Theme control (System/Light/Dark).
+- [ ] T046 [Recent Updates] Grouping: Group updates by version. Use chips for change type (New, Updated, Fixed). Fix date format (relative time).
+- [ ] T047 [Role Selection] UX Polish: Auto-save on selection with toast. Sort roles logically (Clinician roles first). Fix "Programme Manager" spelling.
+
 ## Notes
 
 - [P] tasks = different files, no dependencies within phase

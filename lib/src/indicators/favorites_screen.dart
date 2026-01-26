@@ -15,13 +15,26 @@ class FavoritesScreen extends StatefulWidget {
   State<FavoritesScreen> createState() => _FavoritesScreenState();
 }
 
+enum SortOption { nameAsc, nameDesc }
+enum FilterOption { all, newItems, amended, retained }
+
 class _FavoritesScreenState extends State<FavoritesScreen> {
   final _indicatorService = SAIndicatorService.instance;
   final _favoritesService = FavoritesService.instance;
 
   List<SAIndicator> _favoriteIndicators = [];
+  List<SAIndicator> _filteredIndicators = [];
+  
   bool _isLoading = true;
   String? _error;
+  
+  // Selection Mode
+  bool _isSelectionMode = false;
+  final Set<String> _selectedIds = {};
+  
+  // Sort & Filter
+  SortOption _sortOption = SortOption.nameAsc;
+  FilterOption _filterOption = FilterOption.all;
 
   @override
   void initState() {
@@ -55,6 +68,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
       setState(() {
         _favoriteIndicators = favorites;
+        _applySortAndFilter();
         _isLoading = false;
       });
     } catch (e) {
@@ -63,6 +77,39 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         _isLoading = false;
       });
     }
+  }
+
+  void _applySortAndFilter() {
+    var result = List<SAIndicator>.from(_favoriteIndicators);
+
+    // Filter
+    if (_filterOption != FilterOption.all) {
+      result = result.where((i) {
+        switch (_filterOption) {
+          case FilterOption.newItems:
+            return i.status == IndicatorStatus.newIndicator;
+          case FilterOption.amended:
+            return i.status == IndicatorStatus.amended;
+          case FilterOption.retained:
+            return i.status == IndicatorStatus.retainedWithNew || 
+                   i.status == IndicatorStatus.retainedWithoutNew;
+          default:
+            return true;
+        }
+      }).toList();
+    }
+
+    // Sort
+    result.sort((a, b) {
+      switch (_sortOption) {
+        case SortOption.nameAsc:
+          return a.name.compareTo(b.name);
+        case SortOption.nameDesc:
+          return b.name.compareTo(a.name);
+      }
+    });
+
+    _filteredIndicators = result;
   }
 
   Future<void> _removeFavorite(SAIndicator indicator) async {
@@ -86,14 +133,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     }
   }
 
-  Future<void> _clearAllFavorites() async {
-    // Show confirmation dialog
+  Future<void> _deleteSelected() async {
+    final count = _selectedIds.length;
+    if (count == 0) return;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Clear All Favourites'),
+        title: Text('Remove $count Indicators?'),
         content: const Text(
-          'Are you sure you want to remove all favorites? This action cannot be undone.',
+          'Are you sure you want to remove the selected indicators from your favourites?',
         ),
         actions: [
           TextButton(
@@ -103,7 +152,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
             child: const Text(
-              'CLEAR ALL',
+              'REMOVE',
               style: TextStyle(color: Colors.red),
             ),
           ),
@@ -112,18 +161,38 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
 
     if (confirmed == true) {
-      await _favoritesService.clearAllFavorites();
+      for (final id in _selectedIds) {
+        await _favoritesService.removeFavorite(id);
+      }
+
+      setState(() {
+        _isSelectionMode = false;
+        _selectedIds.clear();
+      });
+
       await _loadFavorites();
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('All favourites cleared'),
-            duration: Duration(seconds: 2),
+          SnackBar(
+            content: Text('$count indicators removed from Favourites'),
           ),
         );
       }
     }
+  }
+
+  void _toggleSelection(String id) {
+    setState(() {
+      if (_selectedIds.contains(id)) {
+        _selectedIds.remove(id);
+        if (_selectedIds.isEmpty) {
+          _isSelectionMode = false;
+        }
+      } else {
+        _selectedIds.add(id);
+      }
+    });
   }
 
   @override
@@ -140,36 +209,58 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               right: 16.0,
               bottom: 10.0,
             ),
-            decoration: const BoxDecoration(
-              color: saGovernmentGreen,
+            decoration: BoxDecoration(
+              color: _isSelectionMode ? Colors.white : saGovernmentGreen,
+              boxShadow: _isSelectionMode
+                  ? [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      )
+                    ]
+                  : null,
             ),
             child: Row(
               children: [
-                IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
+                if (_isSelectionMode)
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isSelectionMode = false;
+                        _selectedIds.clear();
+                      });
+                    },
+                    icon: const Icon(Icons.close, color: Colors.black87),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                  )
+                else
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
                   ),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Favourites',
+                      Text(
+                        _isSelectionMode
+                            ? '${_selectedIds.length} Selected'
+                            : 'Favourites',
                         style: TextStyle(
-                          color: Colors.white,
+                          color:
+                              _isSelectionMode ? Colors.black87 : Colors.white,
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      if (_favoriteIndicators.isNotEmpty)
+                      if (!_isSelectionMode && _favoriteIndicators.isNotEmpty)
                         Text(
-                          '${_favoriteIndicators.length} ${_favoriteIndicators.length == 1 ? 'indicator' : 'indicators'}',
+                          '${_filteredIndicators.length} indicators',
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.9),
                             fontSize: 10,
@@ -178,18 +269,62 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     ],
                   ),
                 ),
-                if (_favoriteIndicators.isNotEmpty)
+                if (_isSelectionMode)
                   IconButton(
-                    onPressed: _clearAllFavorites,
-                    icon: const Icon(
-                      Icons.delete_outline,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    tooltip: 'Clear all Favourites',
+                    onPressed: _deleteSelected,
+                    icon: const Icon(Icons.delete_outline, color: Colors.red),
+                    tooltip: 'Delete Selected',
+                  )
+                else if (_favoriteIndicators.isNotEmpty) ...[
+                  PopupMenuButton<FilterOption>(
+                    icon: const Icon(Icons.filter_list, color: Colors.white),
+                    tooltip: 'Filter',
+                    onSelected: (value) {
+                      setState(() {
+                        _filterOption = value;
+                        _applySortAndFilter();
+                      });
+                    },
+                    itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: FilterOption.all,
+                        child: Text('All Indicators'),
+                      ),
+                      const PopupMenuItem(
+                        value: FilterOption.newItems,
+                        child: Text('New Only'),
+                      ),
+                      const PopupMenuItem(
+                        value: FilterOption.amended,
+                        child: Text('Amended Only'),
+                      ),
+                      const PopupMenuItem(
+                        value: FilterOption.retained,
+                        child: Text('Retained Only'),
+                      ),
+                    ],
                   ),
+                  PopupMenuButton<SortOption>(
+                    icon: const Icon(Icons.sort, color: Colors.white),
+                    tooltip: 'Sort',
+                    onSelected: (value) {
+                      setState(() {
+                        _sortOption = value;
+                        _applySortAndFilter();
+                      });
+                    },
+                    itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: SortOption.nameAsc,
+                        child: Text('Name (A-Z)'),
+                      ),
+                      const PopupMenuItem(
+                        value: SortOption.nameDesc,
+                        child: Text('Name (Z-A)'),
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
@@ -287,13 +422,29 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       );
     }
 
+    if (_filteredIndicators.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.filter_list_off, size: 64, color: Colors.grey[300]),
+            const SizedBox(height: 16),
+            Text(
+              'No indicators match the current filter',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ],
+        ),
+      );
+    }
+
     return RefreshIndicator(
       onRefresh: _loadFavorites,
       child: ListView.builder(
         padding: const EdgeInsets.all(16.0),
-        itemCount: _favoriteIndicators.length,
+        itemCount: _filteredIndicators.length,
         itemBuilder: (context, index) {
-          final indicator = _favoriteIndicators[index];
+          final indicator = _filteredIndicators[index];
           return _buildIndicatorCard(indicator);
         },
       ),
@@ -301,28 +452,41 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   Widget _buildIndicatorCard(SAIndicator indicator) {
+    final isSelected = _selectedIds.contains(indicator.indicatorId);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isSelected ? saGovernmentGreen.withOpacity(0.1) : Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Colors.grey.shade200,
-          width: 1,
+          color: isSelected ? saGovernmentGreen : Colors.grey.shade200,
+          width: isSelected ? 2 : 1,
         ),
       ),
       child: InkWell(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(
-            IndicatorDetailScreen.routeName,
-            arguments: indicator,
-          )
-              .then((_) {
-            // Refresh favorites when returning from detail screen
-            // in case the user unfavorited it there
-            _loadFavorites();
-          });
+          if (_isSelectionMode) {
+            _toggleSelection(indicator.indicatorId);
+          } else {
+            Navigator.of(context)
+                .pushNamed(
+              IndicatorDetailScreen.routeName,
+              arguments: indicator,
+            )
+                .then((_) {
+              // Refresh favorites when returning from detail screen
+              _loadFavorites();
+            });
+          }
+        },
+        onLongPress: () {
+          if (!_isSelectionMode) {
+            setState(() {
+              _isSelectionMode = true;
+            });
+            _toggleSelection(indicator.indicatorId);
+          }
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
@@ -334,21 +498,26 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 children: [
                   _buildStatusBadge(indicator.status),
                   const Spacer(),
-                  // Remove button
-                  IconButton(
-                    onPressed: () => _removeFavorite(indicator),
-                    icon: const Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 20,
+                  if (_isSelectionMode)
+                    Icon(
+                      isSelected ? Icons.check_circle : Icons.circle_outlined,
+                      color: isSelected ? saGovernmentGreen : Colors.grey,
+                    )
+                  else
+                    IconButton(
+                      onPressed: () => _removeFavorite(indicator),
+                      icon: const Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                      tooltip: 'Remove from Favourites',
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(
+                        minHeight: 24,
+                        minWidth: 24,
+                      ),
                     ),
-                    tooltip: 'Remove from Favourites',
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(
-                      minHeight: 24,
-                      minWidth: 24,
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -376,7 +545,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   Icon(Icons.schedule, size: 14, color: Colors.grey.shade500),
                   const SizedBox(width: 4),
                   Text(
-                    indicator.frequency,
+                    'Freq: ${indicator.frequency}',
                     style: TextStyle(
                       color: Colors.grey.shade600,
                       fontSize: 10,
@@ -387,7 +556,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       size: 14, color: Colors.grey.shade500),
                   const SizedBox(width: 4),
                   Text(
-                    indicator.factorType,
+                    'Unit: ${indicator.factorType}',
                     style: TextStyle(
                       color: Colors.grey.shade600,
                       fontSize: 10,

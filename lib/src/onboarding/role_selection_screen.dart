@@ -49,6 +49,34 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
     super.dispose();
   }
 
+  List<UserRole> get _sortedRoles {
+    final roles = List<UserRole>.from(UserRole.values);
+    // Move 'Other' to the end
+    roles.remove(UserRole.other);
+    roles.sort((a, b) => _getRoleName(a).compareTo(_getRoleName(b)));
+    roles.add(UserRole.other);
+    return roles;
+  }
+
+  String _getRoleName(UserRole role) {
+    switch (role) {
+      case UserRole.nurse:
+        return 'Nurse';
+      case UserRole.doctor:
+        return 'Doctor';
+      case UserRole.dataClerk:
+        return 'Data Clerk';
+      case UserRole.programManager:
+        return 'Program Manager';
+      case UserRole.pharmacist:
+        return 'Pharmacist';
+      case UserRole.communityHealthWorker:
+        return 'Community Health Worker';
+      case UserRole.other:
+        return 'Other';
+    }
+  }
+
   bool get _isEditing => widget.currentRole != null;
 
   bool get _canConfirm {
@@ -167,7 +195,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               const SizedBox(height: 16),
 
               // Role options
-              ...UserRole.values
+              ..._sortedRoles
                   .map((role) => RoleOptionCard(
                         role: role,
                         customLabel:
@@ -182,6 +210,16 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                             _selectedRole = role;
                             _showCustomRoleField = role == UserRole.other;
                           });
+
+                          if (role != UserRole.other) {
+                            // Auto-save with delay to show selection
+                            Future.delayed(const Duration(milliseconds: 300),
+                                () {
+                              if (mounted && _selectedRole == role) {
+                                _handleConfirm();
+                              }
+                            });
+                          }
                         },
                       ))
                   .toList(),

@@ -31,6 +31,9 @@ class _SearchScreenState extends State<SearchScreen> {
   bool _hasSearched = false;
   bool _isSearching = false;
   Timer? _debounceTimer;
+  
+  String _selectedFilter = 'All'; // All, Indicators, Data Elements
+  String _selectedSort = 'Relevance'; // Relevance, A-Z, Updated
 
   @override
   void initState() {
@@ -187,6 +190,26 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     textInputAction: TextInputAction.search,
                     onSubmitted: (_) => _searchFocusNode.unfocus(),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Filters
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      _buildFilterChip('All'),
+                      const SizedBox(width: 8),
+                      _buildFilterChip('Indicators'),
+                      const SizedBox(width: 8),
+                      _buildFilterChip('Data Elements'),
+                      const SizedBox(width: 16),
+                      Container(width: 1, height: 24, color: Colors.white24),
+                      const SizedBox(width: 16),
+                      _buildSortChip(),
+                    ],
                   ),
                 ),
               ],
@@ -408,6 +431,22 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildSearchResults() {
+    var indicators = List<SAIndicator>.from(_indicatorResults);
+    var dataElements = List<DataElement>.from(_dataElementResults);
+
+    // Filter
+    if (_selectedFilter == 'Indicators') {
+      dataElements = [];
+    } else if (_selectedFilter == 'Data Elements') {
+      indicators = [];
+    }
+
+    // Sort
+    if (_selectedSort == 'A-Z') {
+      indicators.sort((a, b) => a.name.compareTo(b.name));
+      dataElements.sort((a, b) => a.name.compareTo(b.name));
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -425,7 +464,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 Icon(Icons.search, color: saGovernmentGreen, size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  'Found ${_indicatorResults.length} indicator${_indicatorResults.length != 1 ? 's' : ''} and ${_dataElementResults.length} data element${_dataElementResults.length != 1 ? 's' : ''}',
+                  'Found ${indicators.length} indicator${indicators.length != 1 ? 's' : ''} and ${dataElements.length} data element${dataElements.length != 1 ? 's' : ''}',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -437,10 +476,10 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
 
           // Indicators Section
-          if (_indicatorResults.isNotEmpty) ...[
+          if (indicators.isNotEmpty) ...[
             const SizedBox(height: 24),
             Text(
-              'Indicators (${_indicatorResults.length})',
+              'Indicators (${indicators.length})',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -448,17 +487,17 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             const SizedBox(height: 12),
-            ...List.generate(_indicatorResults.length, (index) {
-              final indicator = _indicatorResults[index];
+            ...List.generate(indicators.length, (index) {
+              final indicator = indicators[index];
               return StandardIndicatorCard(indicator: indicator);
             }),
           ],
 
           // Data Elements Section
-          if (_dataElementResults.isNotEmpty) ...[
+          if (dataElements.isNotEmpty) ...[
             const SizedBox(height: 24),
             Text(
-              'Data Elements (${_dataElementResults.length})',
+              'Data Elements (${dataElements.length})',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -466,13 +505,74 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             const SizedBox(height: 12),
-            ...List.generate(_dataElementResults.length, (index) {
-              final dataElement = _dataElementResults[index];
+            ...List.generate(dataElements.length, (index) {
+              final dataElement = dataElements[index];
               return StandardDataElementCard(dataElement: dataElement);
             }),
           ],
         ],
       ),
+    );
+  }
+
+  Widget _buildFilterChip(String label) {
+    final isSelected = _selectedFilter == label;
+    return FilterChip(
+      label: Text(label),
+      selected: isSelected,
+      onSelected: (selected) {
+        setState(() {
+          _selectedFilter = label;
+        });
+      },
+      backgroundColor: Colors.white.withOpacity(0.1),
+      selectedColor: Colors.white,
+      labelStyle: TextStyle(
+        color: isSelected ? saGovernmentGreen : Colors.white,
+        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        fontSize: 12,
+      ),
+      checkmarkColor: saGovernmentGreen,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(
+          color: isSelected ? Colors.white : Colors.white.withOpacity(0.3),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSortChip() {
+    return PopupMenuButton<String>(
+      initialValue: _selectedSort,
+      onSelected: (value) {
+        setState(() {
+          _selectedSort = value;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.white.withOpacity(0.3)),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.sort, color: Colors.white, size: 16),
+            const SizedBox(width: 4),
+            Text(
+              _selectedSort,
+              style: const TextStyle(color: Colors.white, fontSize: 12),
+            ),
+          ],
+        ),
+      ),
+      itemBuilder: (context) => [
+        const PopupMenuItem(value: 'Relevance', child: Text('Relevance')),
+        const PopupMenuItem(value: 'A-Z', child: Text('A-Z')),
+        const PopupMenuItem(value: 'Updated', child: Text('Updated')),
+      ],
     );
   }
 }

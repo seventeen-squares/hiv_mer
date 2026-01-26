@@ -2,7 +2,7 @@
   {
     "id": "j5PnvVqvhaC",
     "name": "ART adult death",
-    "shortname": "ART adult RIP",
+    "shortname": "ART adult death",
     "definition": "Adults who died (RIP) within interval after ART started",
     "category": "ART Outcome",
     "dataType": "Number",
@@ -20,7 +20,7 @@
   {
     "id": "JF1q7o8ewhA",
     "name": "ART child cumulative death",
-    "shortname": "ART child cum RIP",
+    "shortname": "ART child cumulative death",
     "definition": "System generated cumulative number of ART children under 15 years who have died (RIPc) at specified duration",
     "category": "ART Outcome",
     "dataType": "Number",
@@ -560,7 +560,7 @@
   {
     "id": "XpZk2mHZ8J5",
     "name": "ART adult cumulative death",
-    "shortname": "ART adult cum RIP",
+    "shortname": "ART adult cumulative death",
     "definition": "System generated cumulative number of ART adults who have died (RIPc) at specified duration",
     "category": "ART outcome",
     "dataType": "Number",
@@ -866,7 +866,7 @@
   {
     "id": "Z8YPsTwZejL",
     "name": "ART child death",
-    "shortname": "ART child RIP",
+    "shortname": "ART child death",
     "definition": "Children under 15 years who died (RIP) within interval after ART started",
     "category": "ART outcome",
     "dataType": "Number",
@@ -1064,7 +1064,7 @@
   {
     "id": "YNF7qnXxf4B",
     "name": "ART pregnant cumulative death",
-    "shortname": "ART pregnant cum RIP",
+    "shortname": "ART pregnant cumulative death",
     "definition": "System generated cumulative number of ART pregnant women who have died (RIPc) at specified duration",
     "category": "ART outcome",
     "dataType": "Number",
@@ -1154,7 +1154,7 @@
   {
     "id": "RWpnwcF32cp",
     "name": "ART pregnant death",
-    "shortname": "ART pregnant RIP",
+    "shortname": "ART pregnant death",
     "definition": "Pregnant women who died (RIP) within interval after ART started",
     "category": "ART outcome",
     "dataType": "Number",

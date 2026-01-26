@@ -49,14 +49,25 @@ class SummaryCard extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            Text(
-              count.toString(),
-              style: const TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                height: 1,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  count.toString(),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                if (onTap != null)
+                  const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white70,
+                    size: 16,
+                  ),
+              ],
             ),
           ],
         ),

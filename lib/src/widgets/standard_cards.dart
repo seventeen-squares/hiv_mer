@@ -102,53 +102,37 @@ class StandardIndicatorCard extends StatelessWidget {
                   _buildStatusBadge(indicator.status),
                 ],
               ),
-              const SizedBox(height: 8),
-              // Programme Group
-              Row(
-                children: [
-                  Icon(Icons.category_outlined,
-                      size: 14, color: Colors.grey.shade600),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      groupName,
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
+              
               const SizedBox(height: 12),
+              
               Text(
                 indicator.name,
                 style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                   color: Color(0xFF1F2937),
                 ),
               ),
-              if (indicator.shortname.isNotEmpty) ...[
-                const SizedBox(height: 4),
-                Text(
-                  indicator.shortname,
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 11,
-                  ),
-                ),
-              ],
+              
+              const SizedBox(height: 8),
+              
+              Wrap(
+                spacing: 12,
+                runSpacing: 4,
+                children: [
+                  _buildMetaTag(Icons.category_outlined, groupName),
+                  _buildMetaTag(Icons.pie_chart, indicator.factorType),
+                  _buildMetaTag(Icons.calendar_today_outlined, indicator.frequency),
+                ],
+              ),
+
               if (indicator.definition.isNotEmpty) ...[
                 const SizedBox(height: 8),
                 Text(
                   indicator.definition,
                   style: TextStyle(
-                    color: Colors.grey.shade700,
-                    fontSize: 11,
+                    color: Colors.grey.shade600,
+                    fontSize: 12,
                     height: 1.4,
                   ),
                   maxLines: 2,
@@ -159,6 +143,24 @@ class StandardIndicatorCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildMetaTag(IconData icon, String text) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 12, color: Colors.grey.shade500),
+        const SizedBox(width: 4),
+        Text(
+          text,
+          style: TextStyle(
+            color: Colors.grey.shade600,
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 

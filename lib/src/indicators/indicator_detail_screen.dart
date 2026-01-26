@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import '../models/sa_indicator.dart';
 import '../services/favorites_service.dart';
@@ -472,32 +473,25 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                   Text(
                     indicator.name,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: AppColors.getPrimaryTextColor(context),
+                      height: 1.3,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 12),
 
-                  // IDs Card
-                  _buildInfoCard(
-                    context,
+                  // Metadata Row
+                  Row(
                     children: [
-                      _buildInfoRow('Reno/ID', indicator.renoId),
-                      const SizedBox(height: 8),
-                      _buildInfoRow('Group ID', indicator.groupId),
-                      const SizedBox(height: 8),
-                      _buildInfoRow('Indicator ID', indicator.indicatorId),
-                      const SizedBox(height: 8),
-                      _buildInfoRow(
-                          'Sort Order', indicator.sortOrder.toString()),
+                      _buildMetadataChip(context, 'Type', indicator.factorType, Icons.pie_chart),
+                      const SizedBox(width: 8),
+                      _buildMetadataChip(context, 'Freq', indicator.frequency, Icons.calendar_today_outlined),
                     ],
                   ),
 
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
 
                   // Definition Section
                   _buildSection(
@@ -523,7 +517,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                   const SizedBox(height: 16),
 
                   // Denominator Card (if present)
-                  if (indicator.denominator != null)
+                  if (indicator.denominator != null && indicator.denominator != 'Not applicable')
                     _buildDetailCard(
                       context,
                       title: 'DENOMINATOR',
@@ -531,14 +525,6 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                       formula: indicator.denominatorFormula,
                       color: const Color(0xFF3B82F6),
                       icon: Icons.calculate_outlined,
-                    )
-                  else
-                    _buildSection(
-                      context,
-                      title: 'DENOMINATOR',
-                      content: 'Not applicable',
-                      icon: Icons.remove_circle_outline,
-                      iconColor: groupColor,
                     ),
 
                   const SizedBox(height: 16),
@@ -554,16 +540,43 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
 
                   const SizedBox(height: 16),
 
-                  // Metadata Card
+                  // Status Card
                   _buildInfoCard(
                     context,
                     children: [
-                      _buildInfoRow('Factor/Type', indicator.factorType),
-                      const SizedBox(height: 8),
-                      _buildInfoRow('Frequency', indicator.frequency),
-                      const SizedBox(height: 8),
                       _buildInfoRow('Status', _getStatusText(indicator.status)),
                     ],
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Technical Details Accordion
+                  Theme(
+                    data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                    child: ExpansionTile(
+                      title: Text(
+                        'Technical Details',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      children: [
+                        _buildInfoCard(
+                          context,
+                          children: [
+                            _buildCopyableInfoRow(context, 'Reno/ID', indicator.renoId),
+                            const SizedBox(height: 8),
+                            _buildCopyableInfoRow(context, 'Group ID', indicator.groupId),
+                            const SizedBox(height: 8),
+                            _buildCopyableInfoRow(context, 'Indicator ID', indicator.indicatorId),
+                            const SizedBox(height: 8),
+                            _buildInfoRow('Sort Order', indicator.sortOrder.toString()),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
 
                   const SizedBox(height: 32),
@@ -681,23 +694,39 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
           if (formula != null) ...[
             const SizedBox(height: 12),
             Container(
+              width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey.shade300),
               ),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.functions, size: 16, color: Colors.grey.shade600),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      formula,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.grey.shade700,
-                        fontFamily: 'Courier',
+                  Row(
+                    children: [
+                      Icon(Icons.functions, size: 16, color: Colors.grey.shade600),
+                      const SizedBox(width: 8),
+                      Text(
+                        'FORMULA',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade600,
+                          letterSpacing: 0.5,
+                        ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    formula,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey.shade800,
+                      fontFamily: 'Courier New', // Monospaced
+                      height: 1.4,
                     ),
                   ),
                 ],
@@ -768,5 +797,78 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
       case IndicatorStatus.retainedWithoutNew:
         return 'RETAINED WITHOUT NEW';
     }
+  }
+
+  Widget _buildMetadataChip(BuildContext context, String label, String value, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: Colors.grey.shade700),
+          const SizedBox(width: 6),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey.shade800,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCopyableInfoRow(BuildContext context, String label, String value) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade700,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF1F2937),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: value));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('$label copied to clipboard')),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Icon(Icons.copy, size: 14, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

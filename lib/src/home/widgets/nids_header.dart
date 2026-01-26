@@ -119,13 +119,41 @@ class NIDSHeader extends StatelessWidget {
           const SizedBox(height: 8),
 
           // Version number
-          const Text(
-            appVersion,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF6B7280),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Text(
+                  'App v2025.10',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF6B7280),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: saGovernmentGreen.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  'Content pack 2025.10',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: saGovernmentGreen,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

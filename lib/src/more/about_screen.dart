@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../utils/constants.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -186,6 +187,31 @@ class AboutScreen extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 24),
+
+                  // Privacy Policy Link
+                  Center(
+                    child: TextButton(
+                      onPressed: () async {
+                        final uri = Uri.parse('http://jsi.org.za/nids/privacy-policy.html');
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri, mode: LaunchMode.externalApplication);
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      ),
+                      child: const Text(
+                        'Privacy Policy',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: saGovernmentGreen,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
 
                   // Copyright
                   Center(

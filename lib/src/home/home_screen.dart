@@ -22,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _indicatorService = SAIndicatorService.instance;
   bool _isLoading = true;
+  bool _showBanner = true;
   Map<String, int>? _statistics;
 
   @override
@@ -211,67 +212,86 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
 
                             // Development Notice
-                            Container(
-                              margin:
-                                  const EdgeInsets.only(top: 24, bottom: 16),
-                              padding: const EdgeInsets.all(24),
-                              decoration: BoxDecoration(
-                                color: Colors.blue.shade50,
-                                border: Border.all(color: Colors.blue.shade200),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.blue.shade600,
-                                    size: 24,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Please note that this application is in active development.',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.blue.shade800,
-                                      fontWeight: FontWeight.w500,
+                            if (_showBanner)
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(top: 24, bottom: 16),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.shade50,
+                                  border: Border.all(color: Colors.blue.shade200),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.info_outline,
+                                          color: Colors.blue.shade600,
+                                          size: 20,
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Text(
+                                            'Please note that this application is in active development.',
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.blue.shade800,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              _showBanner = false;
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.blue.shade400,
+                                            size: 18,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 12),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      // Open feedback form URL
-                                      // You'll need to add url_launcher package to pubspec.yaml
-                                      // and import 'package:url_launcher/url_launcher.dart';
-                                      final Uri feedbackUrl = Uri.parse(
-                                          'https://forms.gle/JwC1mRZ5jLGCK9PE8');
-                                      launchUrl(feedbackUrl,
-                                          mode: LaunchMode.externalApplication);
-                                    },
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue.shade600,
+                                    const SizedBox(height: 12),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: InkWell(
+                                        onTap: () {
+                                          // Open feedback form URL
+                                          final Uri feedbackUrl = Uri.parse(
+                                              'https://forms.gle/JwC1mRZ5jLGCK9PE8');
+                                          launchUrl(feedbackUrl,
+                                              mode: LaunchMode.externalApplication);
+                                        },
                                         borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: const Text(
-                                        'Click here to provide feedback',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 6,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue.shade600,
+                                            borderRadius: BorderRadius.circular(6),
+                                          ),
+                                          child: const Text(
+                                            'Give Feedback',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
 
                             const SizedBox(
                                 height:

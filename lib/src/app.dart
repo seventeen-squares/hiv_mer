@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'home/home_screen.dart';
+import 'home/recent_updates_screen.dart';
 import 'key_facts/key_facts_screen.dart';
 import 'search/search_screen.dart';
 import 'indicators/indicator_detail_screen.dart';
@@ -334,6 +335,9 @@ class MyApp extends StatelessWidget {
                     return const SampleItemDetailsView();
                   case HomeScreen.routeName:
                     return const HomeScreen();
+                  case RecentUpdatesScreen.routeName:
+                    final args = routeSettings.arguments as List<Map<String, String>>?;
+                    return RecentUpdatesScreen(updates: args ?? []);
                   case SampleItemListView.routeName:
                   default:
                     return hasCompletedOnboarding
