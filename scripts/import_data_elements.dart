@@ -83,10 +83,17 @@ List<Map<String, dynamic>> parseCSV(String csvContent) {
     if (line.isEmpty) continue;
 
     final values = parseCSVLine(line);
+    
+    // Pad values if they are shorter than header
     if (values.length < header.length) {
-      print(
-          '⚠️  Warning: Line ${i + 1} has ${values.length} values but expected ${header.length}');
-      continue;
+      final missing = header.length - values.length;
+      if (values.length < 10) { // arbitrary threshold to avoid totally broken lines
+         print('⚠️  Warning: Line ${i + 1} has ${values.length} values but expected ${header.length}');
+         // Don't skip, just warn if very short, but we will pad anyway
+      }
+      for (int k = 0; k < missing; k++) {
+        values.add('');
+      }
     }
 
     // Skip rows where DEGroup is empty or just a comma
@@ -272,10 +279,14 @@ String formatCategoryName(String categoryId) {
       return 'Environmental Health';
     case 'epi':
       return 'Epidemiology and Immunization';
+    case 'epi campaign':
+      return 'EPI Campaign';
     case 'eye':
       return 'Eye Care Services';
     case 'hiv':
       return 'HIV Prevention and Care';
+    case 'hpv campaign':
+      return 'HPV Campaign';
     case 'malaria':
       return 'Malaria Prevention and Treatment';
     case 'inpatient':

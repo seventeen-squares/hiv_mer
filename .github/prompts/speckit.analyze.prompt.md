@@ -32,7 +32,7 @@ Run `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --inclu
 
 Abort with an error message if any required file is missing (instruct the user to run missing prerequisite command).
 
-### 2. Load Artifacts (Progressive Disclosure)
+### 2. Load ARTifacts (Progressive Disclosure)
 
 Load only the minimal necessary context from each artifact:
 

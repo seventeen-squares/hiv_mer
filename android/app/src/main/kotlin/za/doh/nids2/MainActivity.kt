@@ -1,4 +1,4 @@
-package com.example.hiv_mer
+package za.doh.nids2
 
 import io.flutter.embedding.android.FlutterActivity
 

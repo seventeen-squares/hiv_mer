@@ -16,7 +16,7 @@ NC='\033[0m' # No Color
 if [ $# -eq 0 ]; then
     echo -e "${RED}❌ Error: Please provide the CSV file path${NC}"
     echo -e "${BLUE}Usage: ./scripts/import_csv.sh <csv_file_path>${NC}"
-    echo -e "${BLUE}Example: ./scripts/import_csv.sh ~/Downloads/data_elements.csv${NC}"
+    echo -e "${BLUE}Example: ./scripts/import_csv.sh ~/Downloads/dataelements.csv${NC}"
     exit 1
 fi
 

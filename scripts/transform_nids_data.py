@@ -169,7 +169,7 @@ def create_groups_json(groups_summary, output_path):
     print(f"✅ Groups written to: {output_path}")
 
 if __name__ == '__main__':
-    csv_path = '/Users/msuleman/Downloads/MASTER NIDS 2025 SPreadsheet_Version_25Feb2025_Updated_12Mar25(Indicators).csv'
+    csv_path = '/Users/msuleman/Downloads/second.csv'
     indicators_output = '/Users/msuleman/Developer/personal/hiv_mer/assets/data/sa_indicators.json'
     groups_output = '/Users/msuleman/Developer/personal/hiv_mer/assets/data/indicator_groups.json'
     

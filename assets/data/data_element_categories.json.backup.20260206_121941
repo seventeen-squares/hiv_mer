@@ -1,0 +1,146 @@
+[
+  {
+    "id": "ART Outcome",
+    "name": "ART Outcomes — Summary",
+    "elementCount": 4,
+    "displayOrder": 1
+  },
+  {
+    "id": "ART baseline",
+    "name": "ART Baseline",
+    "elementCount": 27,
+    "displayOrder": 2
+  },
+  {
+    "id": "ART outcome",
+    "name": "ART Outcomes — Detailed",
+    "elementCount": 43,
+    "displayOrder": 3
+  },
+  {
+    "id": "CCMDD",
+    "name": "Central Chronic Medicines Dispensing and Distribution (CCMDD)",
+    "elementCount": 2,
+    "displayOrder": 4
+  },
+  {
+    "id": "Child and nutrition",
+    "name": "Child and Nutrition",
+    "elementCount": 10,
+    "displayOrder": 5
+  },
+  {
+    "id": "Communicable Diseases",
+    "name": "Communicable Diseases",
+    "elementCount": 3,
+    "displayOrder": 6
+  },
+  {
+    "id": "DR-TB Quarterly",
+    "name": "DR-TB Quarterly",
+    "elementCount": 2,
+    "displayOrder": 7
+  },
+  {
+    "id": "EMS",
+    "name": "EMS",
+    "elementCount": 4,
+    "displayOrder": 8
+  },
+  {
+    "id": "EPI",
+    "name": "Epidemiology and Immunization",
+    "elementCount": 16,
+    "displayOrder": 9
+  },
+  {
+    "id": "Environmental & Port Health",
+    "name": "Environmental & Port Health",
+    "elementCount": 22,
+    "displayOrder": 10
+  },
+  {
+    "id": "Eye care",
+    "name": "Eye Care",
+    "elementCount": 5,
+    "displayOrder": 11
+  },
+  {
+    "id": "HIV",
+    "name": "HIV Prevention and Care",
+    "elementCount": 5,
+    "displayOrder": 12
+  },
+  {
+    "id": "Inpatient management",
+    "name": "Inpatient Management",
+    "elementCount": 19,
+    "displayOrder": 13
+  },
+  {
+    "id": "Management PHC",
+    "name": "Management Phc",
+    "elementCount": 3,
+    "displayOrder": 14
+  },
+  {
+    "id": "Mental Health",
+    "name": "Mental Health",
+    "elementCount": 3,
+    "displayOrder": 15
+  },
+  {
+    "id": "Non-communicable disease",
+    "name": "Non-communicable Disease",
+    "elementCount": 4,
+    "displayOrder": 16
+  },
+  {
+    "id": "Oral Health",
+    "name": "Oral Health",
+    "elementCount": 5,
+    "displayOrder": 17
+  },
+  {
+    "id": "Oral health",
+    "name": "Oral Health",
+    "elementCount": 2,
+    "displayOrder": 18
+  },
+  {
+    "id": "Quality",
+    "name": "Quality",
+    "elementCount": 10,
+    "displayOrder": 19
+  },
+  {
+    "id": "Rehabilitation",
+    "name": "Rehabilitation",
+    "elementCount": 7,
+    "displayOrder": 20
+  },
+  {
+    "id": "School Health",
+    "name": "School Health",
+    "elementCount": 10,
+    "displayOrder": 21
+  },
+  {
+    "id": "Viral Hepatitis",
+    "name": "Viral Hepatitis",
+    "elementCount": 3,
+    "displayOrder": 22
+  },
+  {
+    "id": "WBPHCOT",
+    "name": "WBPHCOT",
+    "elementCount": 21,
+    "displayOrder": 23
+  },
+  {
+    "id": "Women's Health",
+    "name": "Women's Health",
+    "elementCount": 11,
+    "displayOrder": 24
+  }
+]

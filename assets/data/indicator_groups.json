@@ -116,68 +116,75 @@
     "name": "Non-Communicable Disease",
     "displayOrder": 17,
     "subGroups": [],
-    "indicatorCount": 4
+    "indicatorCount": 1
+  },
+  {
+    "id": "non-communicable_disease",
+    "name": "Non-Communicable Disease",
+    "displayOrder": 18,
+    "subGroups": [],
+    "indicatorCount": 3
   },
   {
     "id": "oral_health",
     "name": "Oral Health",
-    "displayOrder": 18,
+    "displayOrder": 19,
     "subGroups": [],
     "indicatorCount": 2
   },
   {
     "id": "quality",
     "name": "Quality",
-    "displayOrder": 19,
+    "displayOrder": 20,
     "subGroups": [],
     "indicatorCount": 7
   },
   {
     "id": "rehabilitation",
     "name": "Rehabilitation",
-    "displayOrder": 20,
+    "displayOrder": 21,
     "subGroups": [],
     "indicatorCount": 4
   },
   {
     "id": "school_health",
     "name": "School Health",
-    "displayOrder": 21,
+    "displayOrder": 22,
     "subGroups": [],
     "indicatorCount": 9
   },
   {
     "id": "sti",
     "name": "STI",
-    "displayOrder": 22,
+    "displayOrder": 23,
     "subGroups": [],
     "indicatorCount": 4
   },
   {
     "id": "tb_monthly",
     "name": "TB Monthly",
-    "displayOrder": 23,
+    "displayOrder": 24,
     "subGroups": [],
     "indicatorCount": 4
   },
   {
     "id": "viral_hepatitis",
     "name": "Viral Hepatitis",
-    "displayOrder": 24,
+    "displayOrder": 25,
     "subGroups": [],
     "indicatorCount": 3
   },
   {
     "id": "wbphcot",
     "name": "WBPHCOT",
-    "displayOrder": 25,
+    "displayOrder": 26,
     "subGroups": [],
     "indicatorCount": 3
   },
   {
     "id": "women's_health",
     "name": "Women'S Health",
-    "displayOrder": 26,
+    "displayOrder": 27,
     "subGroups": [],
     "indicatorCount": 4
   }

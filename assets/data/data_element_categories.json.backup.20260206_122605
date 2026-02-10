@@ -1,0 +1,110 @@
+[
+  {
+    "id": "CCMDD",
+    "name": "Central Chronic Medicines Dispensing and Distribution (CCMDD)",
+    "elementCount": 2,
+    "displayOrder": 1
+  },
+  {
+    "id": "Child and nutrition",
+    "name": "Child and Nutrition",
+    "elementCount": 6,
+    "displayOrder": 2
+  },
+  {
+    "id": "Communicable Diseases",
+    "name": "Communicable Diseases",
+    "elementCount": 2,
+    "displayOrder": 3
+  },
+  {
+    "id": "EMS",
+    "name": "EMS",
+    "elementCount": 4,
+    "displayOrder": 4
+  },
+  {
+    "id": "EPI",
+    "name": "Epidemiology and Immunization",
+    "elementCount": 10,
+    "displayOrder": 5
+  },
+  {
+    "id": "EPI Campaign",
+    "name": "EPI Campaign",
+    "elementCount": 1,
+    "displayOrder": 6
+  },
+  {
+    "id": "Environmental & Port Health",
+    "name": "Environmental & Port Health",
+    "elementCount": 22,
+    "displayOrder": 7
+  },
+  {
+    "id": "Eye care",
+    "name": "Eye Care",
+    "elementCount": 1,
+    "displayOrder": 8
+  },
+  {
+    "id": "HIV",
+    "name": "HIV Prevention and Care",
+    "elementCount": 2,
+    "displayOrder": 9
+  },
+  {
+    "id": "Inpatient management",
+    "name": "Inpatient Management",
+    "elementCount": 18,
+    "displayOrder": 10
+  },
+  {
+    "id": "Management PHC",
+    "name": "Management Phc",
+    "elementCount": 3,
+    "displayOrder": 11
+  },
+  {
+    "id": "Oral Health",
+    "name": "Oral Health",
+    "elementCount": 5,
+    "displayOrder": 12
+  },
+  {
+    "id": "Oral health",
+    "name": "Oral Health",
+    "elementCount": 2,
+    "displayOrder": 13
+  },
+  {
+    "id": "Quality",
+    "name": "Quality",
+    "elementCount": 9,
+    "displayOrder": 14
+  },
+  {
+    "id": "School Health",
+    "name": "School Health",
+    "elementCount": 10,
+    "displayOrder": 15
+  },
+  {
+    "id": "Viral Hepatitis",
+    "name": "Viral Hepatitis",
+    "elementCount": 1,
+    "displayOrder": 16
+  },
+  {
+    "id": "WBPHCOT",
+    "name": "Wbphcot",
+    "elementCount": 20,
+    "displayOrder": 17
+  },
+  {
+    "id": "Women's Health",
+    "name": "Women's Health",
+    "elementCount": 7,
+    "displayOrder": 18
+  }
+]
