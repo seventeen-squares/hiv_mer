@@ -4,188 +4,269 @@
     "name": "ART Baseline",
     "displayOrder": 1,
     "subGroups": [],
+    "description": "Baseline indicators for clients starting antiretroviral therapy (ART), including demographics, CD4 results, TB screening and prophylaxis at initiation.",
+    "icon": "health_and_safety_outlined",
+    "color": "#6A1B9A",
     "indicatorCount": 27
   },
   {
     "id": "art_monthly",
     "name": "ART Monthly",
-    "displayOrder": 2,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Monthly ART service indicators covering initiation, follow-up care, routine monitoring and service uptake.",
+    "icon": "health_and_safety_outlined",
+    "color": "#6A1B9A",
     "indicatorCount": 2
   },
   {
     "id": "art_outcome",
     "name": "ART Outcome",
-    "displayOrder": 3,
+    "displayOrder": 1,
     "subGroups": [],
-    "indicatorCount": 21
+    "description": "ART outcome indicators covering retention, transfers, mortality and other treatment outcomes.",
+    "icon": "health_and_safety_outlined",
+    "color": "#6A1B9A",
+    "indicatorCount": 25
   },
   {
     "id": "child_and_nutrition",
-    "name": "Child And Nutrition",
-    "displayOrder": 4,
+    "name": "Child and Nutrition",
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Child health and nutrition indicators covering priority conditions, growth and nutrition screening, and related outcomes.",
+    "icon": "child_care_outlined",
+    "color": "#1E88E5",
     "indicatorCount": 19
   },
   {
-    "id": "communicable_diseases",
-    "name": "Communicable Diseases",
-    "displayOrder": 5,
-    "subGroups": [],
-    "indicatorCount": 2
-  },
-  {
-    "id": "dr-tb_quarterly",
+    "id": "dr_tb_quarterly",
     "name": "DR-TB Quarterly",
-    "displayOrder": 6,
+    "displayOrder": 1,
     "subGroups": [],
-    "indicatorCount": 9
+    "description": "Quarterly indicators for drug-resistant TB case management, monitoring and outcomes.",
+    "icon": "health_and_safety_outlined",
+    "color": "#6A1B9A",
+    "indicatorCount": 12
   },
   {
-    "id": "ds-tb_quarterly",
+    "id": "ds_tb_quarterly",
     "name": "DS-TB Quarterly",
-    "displayOrder": 7,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Quarterly indicators for drug-sensitive TB treatment monitoring and outcomes.",
+    "icon": "health_and_safety_outlined",
+    "color": "#6A1B9A",
     "indicatorCount": 6
   },
   {
     "id": "ems",
     "name": "EMS",
-    "displayOrder": 8,
+    "displayOrder": 1,
     "subGroups": [],
-    "indicatorCount": 2
-  },
-  {
-    "id": "environmental_&_port_health",
-    "name": "Environmental & Port Health",
-    "displayOrder": 9,
-    "subGroups": [],
-    "indicatorCount": 12
+    "description": "Emergency Medical Services indicators covering dispatch, response and patient transport activity.",
+    "icon": "emergency_outlined",
+    "color": "#E53935",
+    "indicatorCount": 3
   },
   {
     "id": "epi",
     "name": "EPI",
-    "displayOrder": 10,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Routine immunisation indicators covering doses given and vaccination coverage.",
+    "icon": "eco_outlined",
+    "color": "#2E7D32",
     "indicatorCount": 19
+  },
+  {
+    "id": "epi_campaign",
+    "name": "EPI Campaign",
+    "displayOrder": 1,
+    "subGroups": [],
+    "description": "Campaign immunisation indicators for targeted vaccination drives and catch-up activities.",
+    "icon": "vaccines_outlined",
+    "color": "#FB8C00",
+    "indicatorCount": 2
+  },
+  {
+    "id": "environmental_and_port_health",
+    "name": "Environmental & Port Health",
+    "displayOrder": 1,
+    "subGroups": [],
+    "description": "Environmental and port health indicators covering inspections, compliance monitoring and public health controls.",
+    "icon": "vaccines_outlined",
+    "color": "#FB8C00",
+    "indicatorCount": 12
   },
   {
     "id": "eye_care",
     "name": "Eye Care",
-    "displayOrder": 11,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Eye care service indicators including screening, consultations and procedures.",
+    "icon": "visibility_outlined",
+    "color": "#00838F",
     "indicatorCount": 3
   },
   {
     "id": "hiv",
     "name": "HIV",
-    "displayOrder": 12,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "HIV programme indicators covering testing, positivity and key prevention/service measures.",
+    "icon": "health_and_safety_outlined",
+    "color": "#6A1B9A",
     "indicatorCount": 19
   },
   {
     "id": "inpatient_management",
     "name": "Inpatient Management",
-    "displayOrder": 13,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Inpatient service indicators including separations, bed utilisation and key outcomes.",
+    "icon": "hotel_outlined",
+    "color": "#455A64",
     "indicatorCount": 15
   },
   {
     "id": "management_phc",
     "name": "Management PHC",
-    "displayOrder": 14,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "PHC management indicators covering catchment/referral flows and facility operations.",
+    "icon": "dashboard_outlined",
+    "color": "#546E7A",
     "indicatorCount": 8
   },
   {
     "id": "maternal_and_neonatal",
-    "name": "Maternal And Neonatal",
-    "displayOrder": 15,
+    "name": "Maternal and Neonatal",
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Maternal and newborn health indicators including ANC, deliveries and neonatal outcomes.",
+    "icon": "pregnant_woman_outlined",
+    "color": "#C2185B",
     "indicatorCount": 25
   },
   {
-    "id": "mental_health",
-    "name": "Mental Health",
-    "displayOrder": 16,
+    "id": "non_communicable_disease",
+    "name": "Non-Communicable Disease",
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "NCD indicators covering screening, diagnosis, treatment monitoring and outcomes.",
+    "icon": "monitor_heart_outlined",
+    "color": "#00897B",
     "indicatorCount": 4
-  },
-  {
-    "id": "non-communicable_disease",
-    "name": "Non-Communicable Disease",
-    "displayOrder": 17,
-    "subGroups": [],
-    "indicatorCount": 1
-  },
-  {
-    "id": "non-communicable_disease",
-    "name": "Non-Communicable Disease",
-    "displayOrder": 18,
-    "subGroups": [],
-    "indicatorCount": 3
   },
   {
     "id": "oral_health",
     "name": "Oral Health",
-    "displayOrder": 19,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Oral health indicators covering dental service delivery and prevention activities.",
+    "icon": "emoji_emotions_outlined",
+    "color": "#8D6E63",
     "indicatorCount": 2
   },
   {
     "id": "quality",
     "name": "Quality",
-    "displayOrder": 20,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Quality-of-care indicators supporting audit, performance monitoring and service improvement.",
+    "icon": "check_circle_outline",
+    "color": "#43A047",
     "indicatorCount": 7
   },
   {
     "id": "rehabilitation",
     "name": "Rehabilitation",
-    "displayOrder": 21,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Rehabilitation indicators covering therapy service delivery and patient support activities.",
+    "icon": "accessible_forward_outlined",
+    "color": "#5E35B1",
     "indicatorCount": 4
-  },
-  {
-    "id": "school_health",
-    "name": "School Health",
-    "displayOrder": 22,
-    "subGroups": [],
-    "indicatorCount": 9
   },
   {
     "id": "sti",
     "name": "STI",
-    "displayOrder": 23,
+    "displayOrder": 1,
     "subGroups": [],
-    "indicatorCount": 4
+    "description": "Sexually transmitted infection indicators covering screening, diagnosis and treatment services.",
+    "icon": "school_outlined",
+    "color": "#00ACC1",
+    "indicatorCount": 5
   },
   {
     "id": "tb_monthly",
     "name": "TB Monthly",
-    "displayOrder": 24,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Monthly TB indicators supporting routine monitoring of services, treatment and outcomes.",
+    "icon": "masks_outlined",
+    "color": "#5D4037",
     "indicatorCount": 4
   },
   {
     "id": "viral_hepatitis",
     "name": "Viral Hepatitis",
-    "displayOrder": 25,
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Viral hepatitis indicators covering screening, diagnosis and treatment monitoring.",
+    "icon": "biotech_outlined",
+    "color": "#00838F",
     "indicatorCount": 3
   },
   {
     "id": "wbphcot",
     "name": "WBPHCOT",
-    "displayOrder": 26,
+    "displayOrder": 1,
     "subGroups": [],
-    "indicatorCount": 3
+    "description": "WBPHCOT indicators covering household/community services, screening and referral activities.",
+    "icon": "groups_outlined",
+    "color": "#00796B",
+    "indicatorCount": 4
   },
   {
-    "id": "women's_health",
-    "name": "Women'S Health",
-    "displayOrder": 27,
+    "id": "women_s_health",
+    "name": "Women's Health",
+    "displayOrder": 1,
     "subGroups": [],
+    "description": "Women’s health indicators covering priority services across reproductive and related health programmes.",
+    "icon": "pregnant_woman_outlined",
+    "color": "#C2185B",
     "indicatorCount": 4
+  },
+  {
+    "id": "communicable_diseases",
+    "name": "Communicable Diseases",
+    "displayOrder": 2,
+    "subGroups": [],
+    "description": "Indicators for priority communicable diseases, including service delivery and key outcomes.",
+    "icon": "biotech_outlined",
+    "color": "#00838F",
+    "indicatorCount": 2
+  },
+  {
+    "id": "mental_health",
+    "name": "Mental Health",
+    "displayOrder": 2,
+    "subGroups": [],
+    "description": "Mental health service indicators including consultations, admissions and follow-up care.",
+    "icon": "psychology_outlined",
+    "color": "#3949AB",
+    "indicatorCount": 4
+  },
+  {
+    "id": "school_health",
+    "name": "School Health",
+    "displayOrder": 6,
+    "subGroups": [],
+    "description": "School health indicators covering screening and health services delivered in schools.",
+    "icon": "healing_outlined",
+    "color": "#D81B60",
+    "indicatorCount": 9
   }
 ]

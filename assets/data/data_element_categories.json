@@ -1,200 +1,234 @@
 [
   {
-    "id": "ART Monthly",
-    "name": "ART Monthly",
-    "elementCount": 4,
-    "displayOrder": 1
-  },
-  {
-    "id": "ART Outcome",
-    "name": "ART Outcome",
-    "elementCount": 4,
-    "displayOrder": 2
-  },
-  {
-    "id": "ART baseline",
+    "id": "art_baseline",
     "name": "ART Baseline",
-    "elementCount": 35,
-    "displayOrder": 3
+    "description": "Baseline data elements for clients starting antiretroviral therapy (ART), including demographics, CD4 results, TB screening and prophylaxis at initiation.",
+    "icon": "health_and_safety_outlined",
+    "displayOrder": 1,
+    "elementCount": 35
   },
   {
-    "id": "ART outcome",
+    "id": "art_monthly",
+    "name": "ART Monthly",
+    "description": "Monthly ART service data elements covering initiation, follow-up care, routine monitoring and service uptake.",
+    "icon": "health_and_safety_outlined",
+    "displayOrder": 1,
+    "elementCount": 4
+  },
+  {
+    "id": "art_outcome",
     "name": "ART Outcome",
-    "elementCount": 44,
-    "displayOrder": 4
+    "description": "ART outcome data elements covering retention, transfers, mortality and other treatment outcomes.",
+    "icon": "health_and_safety_outlined",
+    "displayOrder": 1,
+    "elementCount": 54
   },
   {
-    "id": "CCMDD",
-    "name": "Central Chronic Medicines Dispensing and Distribution (CCMDD)",
-    "elementCount": 3,
-    "displayOrder": 5
+    "id": "ccmdd",
+    "name": "CCMDD",
+    "description": "Data elements supporting CCMDD enrolment, pickups and related monitoring.",
+    "icon": "medication_outlined",
+    "displayOrder": 1,
+    "elementCount": 3
   },
   {
-    "id": "Child and nutrition",
+    "id": "child_and_nutrition",
     "name": "Child and Nutrition",
-    "elementCount": 25,
-    "displayOrder": 6
+    "description": "Child health and nutrition data elements covering priority conditions, growth and nutrition screening, and related outcomes.",
+    "icon": "child_care_outlined",
+    "displayOrder": 1,
+    "elementCount": 26
   },
   {
-    "id": "Communicable Diseases",
+    "id": "communicable_diseases",
     "name": "Communicable Diseases",
-    "elementCount": 3,
-    "displayOrder": 7
+    "description": "Data elements for priority communicable diseases, including service delivery and key outcomes.",
+    "icon": "biotech_outlined",
+    "displayOrder": 1,
+    "elementCount": 3
   },
   {
-    "id": "DR-TB Quarterly",
+    "id": "dr_tb_quarterly",
     "name": "DR-TB Quarterly",
-    "elementCount": 4,
-    "displayOrder": 8
+    "description": "Quarterly data elements for drug-resistant TB case management, monitoring and outcomes.",
+    "icon": "health_and_safety_outlined",
+    "displayOrder": 1,
+    "elementCount": 13
   },
   {
-    "id": "EMS",
+    "id": "ds_tb_quarterly",
+    "name": "DS-TB Quarterly",
+    "description": "Quarterly data elements for drug-sensitive TB treatment monitoring and outcomes.",
+    "icon": "health_and_safety_outlined",
+    "displayOrder": 1,
+    "elementCount": 10
+  },
+  {
+    "id": "ems",
     "name": "EMS",
-    "elementCount": 4,
-    "displayOrder": 9
+    "description": "Emergency Medical Services data elements covering dispatch, response and patient transport activity.",
+    "icon": "emergency_outlined",
+    "displayOrder": 1,
+    "elementCount": 6
   },
   {
-    "id": "EPI",
-    "name": "Epidemiology and Immunization",
-    "elementCount": 17,
-    "displayOrder": 10
+    "id": "epi",
+    "name": "EPI",
+    "description": "Routine immunisation data elements covering doses given and vaccination coverage.",
+    "icon": "eco_outlined",
+    "displayOrder": 1,
+    "elementCount": 20
   },
   {
-    "id": "EPI Campaign",
+    "id": "epi_campaign",
     "name": "EPI Campaign",
-    "elementCount": 2,
-    "displayOrder": 11
+    "description": "Campaign immunisation data elements for targeted vaccination drives and catch-up activities.",
+    "icon": "vaccines_outlined",
+    "displayOrder": 1,
+    "elementCount": 4
   },
   {
-    "id": "Environmental & Port Health",
+    "id": "environmental_and_port_health",
     "name": "Environmental & Port Health",
-    "elementCount": 22,
-    "displayOrder": 12
+    "description": "Environmental and port health data elements covering inspections, compliance monitoring and public health controls.",
+    "icon": "vaccines_outlined",
+    "displayOrder": 1,
+    "elementCount": 22
   },
   {
-    "id": "Eye care",
+    "id": "eye_care",
     "name": "Eye Care",
-    "elementCount": 5,
-    "displayOrder": 13
+    "description": "Eye care service data elements including screening, consultations and procedures.",
+    "icon": "visibility_outlined",
+    "displayOrder": 1,
+    "elementCount": 5
   },
   {
-    "id": "HIV",
-    "name": "HIV Prevention and Care",
-    "elementCount": 22,
-    "displayOrder": 14
+    "id": "hiv",
+    "name": "HIV",
+    "description": "HIV programme data elements covering testing, positivity and key prevention/service measures.",
+    "icon": "health_and_safety_outlined",
+    "displayOrder": 1,
+    "elementCount": 35
   },
   {
-    "id": "Inpatient management",
-    "name": "Inpatient Management",
-    "elementCount": 85,
-    "displayOrder": 15
-  },
-  {
-    "id": "Management PHC",
-    "name": "Management PHC",
-    "elementCount": 10,
-    "displayOrder": 16
-  },
-  {
-    "id": "Mental Health",
-    "name": "Mental Health",
-    "elementCount": 5,
-    "displayOrder": 17
-  },
-  {
-    "id": "Non-communicable disease",
-    "name": "Non-communicable Disease",
-    "elementCount": 4,
-    "displayOrder": 18
-  },
-  {
-    "id": "Oral Health",
-    "name": "Oral Health",
-    "elementCount": 6,
-    "displayOrder": 19
-  },
-  {
-    "id": "Oral health",
-    "name": "Oral Health",
-    "elementCount": 2,
-    "displayOrder": 20
-  },
-  {
-    "id": "Quality",
-    "name": "Quality",
-    "elementCount": 11,
-    "displayOrder": 21
-  },
-  {
-    "id": "RIP",
-    "name": "RIP",
-    "elementCount": 1,
-    "displayOrder": 22
-  },
-  {
-    "id": "Rehabilitation",
-    "name": "Rehabilitation",
-    "elementCount": 8,
-    "displayOrder": 23
-  },
-  {
-    "id": "STI",
-    "name": "STI",
-    "elementCount": 2,
-    "displayOrder": 24
-  },
-  {
-    "id": "School Health",
-    "name": "School Health",
-    "elementCount": 15,
-    "displayOrder": 25
-  },
-  {
-    "id": "TB Monthly",
-    "name": "TB Monthly",
-    "elementCount": 1,
-    "displayOrder": 26
-  },
-  {
-    "id": "TB monthly",
-    "name": "TB Monthly",
-    "elementCount": 5,
-    "displayOrder": 27
-  },
-  {
-    "id": "Viral Hepatitis",
-    "name": "Viral Hepatitis",
-    "elementCount": 3,
-    "displayOrder": 28
-  },
-  {
-    "id": "WBPHCOT",
-    "name": "WBPHCOT",
-    "elementCount": 23,
-    "displayOrder": 29
-  },
-  {
-    "id": "Women's Health",
-    "name": "Women's Health",
-    "elementCount": 14,
-    "displayOrder": 30
-  },
-  {
-    "id": "Day Patients",
-    "name": "Day Patients",
-    "elementCount": 1,
-    "displayOrder": 31
-  },
-  {
-    "id": "trauma and stressor related disorders",
-    "name": "Trauma And Stressor Related Disorders",
-    "elementCount": 1,
-    "displayOrder": 32
-  },
-  {
-    "id": "HPV Campaign",
+    "id": "hpv_campaign",
     "name": "HPV Campaign",
-    "elementCount": 8,
-    "displayOrder": 33
+    "description": "Data elements supporting HPV campaign delivery and monitoring.",
+    "icon": "vaccines_outlined",
+    "displayOrder": 1,
+    "elementCount": 9
+  },
+  {
+    "id": "inpatient_management",
+    "name": "Inpatient management",
+    "description": "Data elements supporting inpatient service utilisation and outcomes.",
+    "icon": "hotel_outlined",
+    "displayOrder": 1,
+    "elementCount": 97
+  },
+  {
+    "id": "management_phc",
+    "name": "Management PHC",
+    "description": "PHC management data elements covering catchment/referral flows and facility operations.",
+    "icon": "dashboard_outlined",
+    "displayOrder": 1,
+    "elementCount": 14
+  },
+  {
+    "id": "maternal_and_neonatal",
+    "name": "Maternal and Neonatal",
+    "description": "Maternal and newborn health data elements including ANC, deliveries and neonatal outcomes.",
+    "icon": "pregnant_woman_outlined",
+    "displayOrder": 1,
+    "elementCount": 30
+  },
+  {
+    "id": "mental_health",
+    "name": "Mental Health",
+    "description": "Mental health service data elements including consultations, admissions and follow-up care.",
+    "icon": "psychology_outlined",
+    "displayOrder": 1,
+    "elementCount": 8
+  },
+  {
+    "id": "non_communicable_disease",
+    "name": "Non-Communicable Disease",
+    "description": "NCD data elements covering screening, diagnosis, treatment monitoring and outcomes.",
+    "icon": "monitor_heart_outlined",
+    "displayOrder": 1,
+    "elementCount": 12
+  },
+  {
+    "id": "oral_health",
+    "name": "Oral Health",
+    "description": "Oral health data elements covering dental service delivery and prevention activities.",
+    "icon": "emoji_emotions_outlined",
+    "displayOrder": 1,
+    "elementCount": 10
+  },
+  {
+    "id": "quality",
+    "name": "Quality",
+    "description": "Quality-of-care data elements supporting audit, performance monitoring and service improvement.",
+    "icon": "check_circle_outline",
+    "displayOrder": 1,
+    "elementCount": 11
+  },
+  {
+    "id": "rehabilitation",
+    "name": "Rehabilitation",
+    "description": "Data elements supporting rehabilitation service delivery and monitoring.",
+    "icon": "accessible_forward_outlined",
+    "displayOrder": 1,
+    "elementCount": 8
+  },
+  {
+    "id": "sti",
+    "name": "STI",
+    "description": "Sexually transmitted infection data elements covering screening, diagnosis and treatment services.",
+    "icon": "school_outlined",
+    "displayOrder": 1,
+    "elementCount": 8
+  },
+  {
+    "id": "school_health",
+    "name": "School Health",
+    "description": "School health data elements covering screening and health services delivered in schools.",
+    "icon": "healing_outlined",
+    "displayOrder": 1,
+    "elementCount": 18
+  },
+  {
+    "id": "tb_monthly",
+    "name": "TB Monthly",
+    "description": "Data elements supporting routine TB monitoring and reporting.",
+    "icon": "masks_outlined",
+    "displayOrder": 1,
+    "elementCount": 20
+  },
+  {
+    "id": "viral_hepatitis",
+    "name": "Viral Hepatitis",
+    "description": "Data elements supporting viral hepatitis screening and treatment monitoring.",
+    "icon": "biotech_outlined",
+    "displayOrder": 1,
+    "elementCount": 3
+  },
+  {
+    "id": "wbphcot",
+    "name": "WBPHCOT",
+    "description": "WBPHCOT data elements covering household/community services, screening and referral activities.",
+    "icon": "groups_outlined",
+    "displayOrder": 1,
+    "elementCount": 24
+  },
+  {
+    "id": "women_s_health",
+    "name": "Women's Health",
+    "description": "Women’s health data elements covering priority services across reproductive and related health programmes.",
+    "icon": "pregnant_woman_outlined",
+    "displayOrder": 1,
+    "elementCount": 14
   }
 ]
