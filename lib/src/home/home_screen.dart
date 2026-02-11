@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/sa_indicator_service.dart';
+import '../services/data_element_service.dart';
 import '../navigation/main_navigation.dart';
 import '../notifications/notifications_screen.dart';
 import 'widgets/nids_header.dart';
@@ -21,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _indicatorService = SAIndicatorService.instance;
+  final _dataElementService = DataElementService.instance;
   bool _isLoading = true;
   Map<String, int>? _statistics;
 
@@ -37,8 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
         await _indicatorService.loadIndicators();
       }
 
+      // Load data element data if not already loaded
+      if (!_dataElementService.isLoaded) {
+        await _dataElementService.loadDataElements();
+      }
+
       // Get statistics
-      final stats = _indicatorService.getStatistics();
+      final indicatorStats = _indicatorService.getStatistics();
+      final dataElementCount = _dataElementService.getAllDataElements().length;
+
+      final stats = {
+        'indicators': indicatorStats['indicators'] ?? 0,
+        'dataElements': dataElementCount,
+      };
 
       setState(() {
         _statistics = stats;
