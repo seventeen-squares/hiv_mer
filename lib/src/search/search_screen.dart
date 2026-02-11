@@ -201,13 +201,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Row(
                     children: [
                       _buildFilterChip('All'),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 7),
                       _buildFilterChip('Indicators'),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 7),
                       _buildFilterChip('Data Elements'),
-                      const SizedBox(width: 16),
+                      const SizedBox(width: 10),
                       Container(width: 1, height: 24, color: Colors.white24),
-                      const SizedBox(width: 16),
+                      const SizedBox(width: 10),
                       _buildSortChip(),
                     ],
                   ),
@@ -305,8 +305,8 @@ class _SearchScreenState extends State<SearchScreen> {
           const SizedBox(height: 12),
 
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: 5,
+            runSpacing: 5,
             children: popularSearches
                 .map((search) => _buildSearchChip(search))
                 .toList(),
@@ -318,12 +318,12 @@ class _SearchScreenState extends State<SearchScreen> {
           const Text(
             'Browse by Indicator Group',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: Color(0xFF1F2937),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
 
           ...groups.map((group) => _buildGroupTile(group)).toList(),
         ],
@@ -368,7 +368,7 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Icon(
             Icons.folder_outlined,
             color: saGovernmentGreen,
-            size: 24,
+            size: 16,
           ),
         ),
         title: Text(
@@ -528,7 +528,7 @@ class _SearchScreenState extends State<SearchScreen> {
       backgroundColor: Colors.white.withOpacity(0.1),
       selectedColor: Colors.white,
       labelStyle: TextStyle(
-        color: isSelected ? saGovernmentGreen : Colors.white,
+        color: isSelected ? saGovernmentGreen : Colors.black,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         fontSize: 12,
       ),
