@@ -1,10 +1,10 @@
-name: NIDS
-description: "A new Flutter project."
+name: nids
+description: "A mobile application for the National Indicator and datasets in South Africa."
 
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'
 
-version: 4.0.6
+version: 4.0.7
 
 environment:
   sdk: ^3.5.3

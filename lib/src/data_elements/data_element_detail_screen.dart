@@ -436,7 +436,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                         Text(
                           element.definition,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 10,
                             color: Colors.grey.shade700,
                             height: 1.5,
                           ),
@@ -454,7 +454,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                         Text(
                           element.definitionExtended,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 10,
                             color: Colors.grey.shade700,
                             height: 1.5,
                           ),
@@ -472,7 +472,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                         Text(
                           element.useAndContext,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 10,
                             color: Colors.grey.shade700,
                             height: 1.5,
                           ),
@@ -503,7 +503,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                           Text(
                             element.inclusions,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 10,
                               color: Colors.grey.shade700,
                               height: 1.4,
                             ),
@@ -526,7 +526,7 @@ class _DataElementDetailScreenState extends State<DataElementDetailScreen> {
                           Text(
                             element.exclusions,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 10,
                               color: Colors.grey.shade700,
                               height: 1.4,
                             ),

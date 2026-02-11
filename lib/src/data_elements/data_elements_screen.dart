@@ -197,24 +197,24 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    // TODO: Add help/info dialog
-                  },
-                  icon: Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.help_outline,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-                ),
+                // IconButton(
+                //   onPressed: () {
+                //     // TODO: Add help/info dialog
+                //   },
+                //   icon: Container(
+                //     width: 32,
+                //     height: 32,
+                //     decoration: BoxDecoration(
+                //       color: Colors.white.withOpacity(0.2),
+                //       shape: BoxShape.circle,
+                //     ),
+                //     child: const Icon(
+                //       Icons.help_outline,
+                //       color: Colors.white,
+                //       size: 20,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -264,7 +264,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                           crossAxisCount: 2,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
-                          childAspectRatio: 0.95,
+                          childAspectRatio: 1.1,
                         ),
                         itemCount: _categories.length,
                         itemBuilder: (context, index) {
@@ -307,61 +307,42 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Category Icon - fixed alignment
+              // Category Icon
               Container(
-                width: 48,
-                height: 48,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
                   color: categoryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   categoryIcon,
                   color: categoryColor,
-                  size: 24,
+                  size: 22,
                 ),
               ),
               const SizedBox(height: 12),
-              // Category Name - fixed height for alignment
-              SizedBox(
-                height: 36, // Fixed height to accommodate 2 lines
-                child: Center(
-                  child: Text(
-                    category.name,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1F2937),
-                      height: 1.3,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+              // Category Name
+              Text(
+                category.name,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1F2937),
+                  height: 1.3,
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 8),
-              // Element Count Badge - fixed alignment at bottom
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: categoryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    '${category.elementCount} elements',
-                    style: TextStyle(
-                      color: categoryColor,
-                      fontSize: 9,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+              const SizedBox(height: 4),
+              // Element Count
+              Text(
+                '${category.elementCount} elements',
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontSize: 10,
                 ),
               ),
             ],

@@ -340,24 +340,24 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    // TODO: Add help/info dialog
-                  },
-                  icon: Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.help_outline,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-                ),
+                // IconButton(
+                //   onPressed: () {
+                //     // TODO: Add help/info dialog
+                //   },
+                //   icon: Container(
+                //     width: 32,
+                //     height: 32,
+                //     decoration: BoxDecoration(
+                //       color: Colors.white.withOpacity(0.2),
+                //       shape: BoxShape.circle,
+                //     ),
+                //     child: const Icon(
+                //       Icons.help_outline,
+                //       color: Colors.white,
+                //       size: 20,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
