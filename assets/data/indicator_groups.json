@@ -40,6 +40,16 @@
     "indicatorCount": 19
   },
   {
+    "id": "communicable_diseases",
+    "name": "Communicable Diseases",
+    "displayOrder": 1,
+    "subGroups": [],
+    "description": "Indicators for priority communicable diseases, including service delivery and key outcomes.",
+    "icon": "biotech_outlined",
+    "color": "#00838F",
+    "indicatorCount": 2
+  },
+  {
     "id": "dr_tb_quarterly",
     "name": "DR-TB Quarterly",
     "displayOrder": 1,
@@ -150,6 +160,16 @@
     "indicatorCount": 25
   },
   {
+    "id": "mental_health",
+    "name": "Mental Health",
+    "displayOrder": 1,
+    "subGroups": [],
+    "description": "Mental health service indicators including consultations, admissions and follow-up care.",
+    "icon": "psychology_outlined",
+    "color": "#3949AB",
+    "indicatorCount": 4
+  },
+  {
     "id": "non_communicable_disease",
     "name": "Non-Communicable Disease",
     "displayOrder": 1,
@@ -189,6 +209,17 @@
     "color": "#5E35B1",
     "indicatorCount": 4
   },
+  {
+    "id": "school_health",
+    "name": "School Health",
+    "displayOrder": 1,
+    "subGroups": [],
+    "description": "School health indicators covering screening and health services delivered in schools.",
+    "icon": "healing_outlined",
+    "color": "#D81B60",
+    "indicatorCount": 9
+  }
+  ,
   {
     "id": "sti",
     "name": "STI",
@@ -238,35 +269,5 @@
     "icon": "pregnant_woman_outlined",
     "color": "#C2185B",
     "indicatorCount": 4
-  },
-  {
-    "id": "communicable_diseases",
-    "name": "Communicable Diseases",
-    "displayOrder": 2,
-    "subGroups": [],
-    "description": "Indicators for priority communicable diseases, including service delivery and key outcomes.",
-    "icon": "biotech_outlined",
-    "color": "#00838F",
-    "indicatorCount": 2
-  },
-  {
-    "id": "mental_health",
-    "name": "Mental Health",
-    "displayOrder": 2,
-    "subGroups": [],
-    "description": "Mental health service indicators including consultations, admissions and follow-up care.",
-    "icon": "psychology_outlined",
-    "color": "#3949AB",
-    "indicatorCount": 4
-  },
-  {
-    "id": "school_health",
-    "name": "School Health",
-    "displayOrder": 6,
-    "subGroups": [],
-    "description": "School health indicators covering screening and health services delivered in schools.",
-    "icon": "healing_outlined",
-    "color": "#D81B60",
-    "indicatorCount": 9
   }
 ]
