@@ -347,7 +347,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildGroupTile(IndicatorGroup group) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -368,12 +368,13 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Icon(
             Icons.folder_outlined,
             color: saGovernmentGreen,
-            size: 16,
+            size: 20,
           ),
         ),
         title: Text(
           group.name,
           style: const TextStyle(
+            fontSize: 12,
             fontWeight: FontWeight.w600,
             color: Color(0xFF1F2937),
           ),
@@ -381,7 +382,7 @@ class _SearchScreenState extends State<SearchScreen> {
         subtitle: Text(
           '${group.indicatorCount} indicators',
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 10,
             color: Colors.grey.shade600,
           ),
         ),
