@@ -121,7 +121,7 @@
   },
   {
     "id": "inpatient_management",
-    "name": "Inpatient management",
+    "name": "Inpatient Management",
     "description": "Data elements supporting inpatient service utilisation and outcomes.",
     "icon": "hotel_outlined",
     "displayOrder": 1,
@@ -187,7 +187,7 @@
     "id": "sti",
     "name": "STI",
     "description": "Sexually transmitted infection data elements covering screening, diagnosis and treatment services.",
-    "icon": "school_outlined",
+    "icon": "dirty_lens_outlined",
     "displayOrder": 1,
     "elementCount": 8
   },
@@ -195,7 +195,7 @@
     "id": "school_health",
     "name": "School Health",
     "description": "School health data elements covering screening and health services delivered in schools.",
-    "icon": "healing_outlined",
+    "icon": "school_outlined",
     "displayOrder": 1,
     "elementCount": 18
   },

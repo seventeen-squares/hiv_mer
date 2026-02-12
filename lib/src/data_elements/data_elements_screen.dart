@@ -48,7 +48,38 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
     }
   }
 
-  IconData _getCategoryIcon(String categoryId) {
+  IconData _getCategoryIcon(DataElementCategory category) {
+    // Try to get icon from JSON mapping first
+    if (category.icon != null) {
+      final iconName = category.icon!;
+      
+      // Direct mapping for icons in the JSON
+      switch (iconName) {
+        case 'health_and_safety_outlined': return Icons.health_and_safety_outlined;
+        case 'medication_outlined': return Icons.medication_outlined;
+        case 'child_care_outlined': return Icons.child_care; // No outlined variant
+        case 'biotech_outlined': return Icons.biotech; // No outlined variant
+        case 'emergency_outlined': return Icons.emergency_outlined;
+        case 'eco_outlined': return Icons.eco_outlined;
+        case 'vaccines_outlined': return Icons.vaccines; // No outlined variant
+        case 'visibility_outlined': return Icons.visibility_outlined;
+        case 'hotel_outlined': return Icons.hotel_outlined;
+        case 'dashboard_outlined': return Icons.dashboard_outlined;
+        case 'pregnant_woman_outlined': return Icons.pregnant_woman; // No outlined variant
+        case 'psychology_outlined': return Icons.psychology_outlined;
+        case 'monitor_heart_outlined': return Icons.monitor_heart_outlined;
+        case 'emoji_emotions_outlined': return Icons.emoji_emotions_outlined;
+        case 'check_circle_outline': return Icons.check_circle_outline;
+        case 'accessible_forward_outlined': return Icons.accessible_forward_outlined;
+        case 'dirty_lens_outlined': return Icons.dirty_lens; // No outlined variant
+        case 'school_outlined': return Icons.school_outlined;
+        case 'masks_outlined': return Icons.masks_outlined;
+        case 'groups_outlined': return Icons.groups_outlined;
+      }
+    }
+
+    // Fallback to ID-based logic
+    final categoryId = category.id;
     if (categoryId.contains('ART') || categoryId.contains('art')) {
       return Icons.medication;
     } else if (categoryId.contains('TB') || categoryId.contains('tb')) {
@@ -280,7 +311,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
 
   Widget _buildCategoryCard(DataElementCategory category) {
     final categoryColor = _getCategoryColor(category.id);
-    final categoryIcon = _getCategoryIcon(category.id);
+    final categoryIcon = _getCategoryIcon(category);
 
     return Material(
       color: Colors.white,
@@ -333,6 +364,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                   color: Color(0xFF1F2937),
                   height: 1.3,
                 ),
+                textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

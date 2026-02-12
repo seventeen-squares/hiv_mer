@@ -106,12 +106,16 @@ enum DataElementStatus {
 class DataElementCategory {
   final String id;
   final String name;
+  final String description;
+  final String? icon;
   final int elementCount;
   final int displayOrder;
 
   DataElementCategory({
     required this.id,
     required this.name,
+    this.description = '',
+    this.icon,
     required this.elementCount,
     required this.displayOrder,
   });
@@ -120,6 +124,8 @@ class DataElementCategory {
     return DataElementCategory(
       id: json['id'] as String,
       name: json['name'] as String,
+      description: json['description'] as String? ?? '',
+      icon: json['icon'] as String?,
       elementCount: json['elementCount'] as int? ?? 0,
       displayOrder: json['displayOrder'] as int? ?? 999,
     );
@@ -129,6 +135,8 @@ class DataElementCategory {
     return {
       'id': id,
       'name': name,
+      'description': description,
+      'icon': icon,
       'elementCount': elementCount,
       'displayOrder': displayOrder,
     };
