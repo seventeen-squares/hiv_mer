@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../utils/constants.dart';
 import '../services/sa_indicator_service.dart';
+import '../services/user_profile_service.dart';
 import '../navigation/main_navigation.dart';
+import '../onboarding/role_selection_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splash';
@@ -52,14 +54,34 @@ class _SplashScreenState extends State<SplashScreen>
       // Wait minimum time for splash screen
       await Future.delayed(const Duration(seconds: 3));
 
+      // Check onboarding status
+      final hasCompletedOnboarding = 
+          await UserProfileService.instance.hasCompletedOnboarding();
+
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed(MainNavigation.routeName);
+        if (hasCompletedOnboarding) {
+          // Clear stack ensuring MainNavigation is the only route
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            MainNavigation.routeName, 
+            (route) => false
+          );
+        } else {
+          // Clear stack ensuring RoleSelectionScreen is the only route
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            RoleSelectionScreen.routeName, 
+            (route) => false
+          );
+        }
       }
     } catch (e) {
       // Handle error - still navigate but maybe show error later
       await Future.delayed(const Duration(seconds: 3));
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed(MainNavigation.routeName);
+        // Default to role selection on error just in case
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            RoleSelectionScreen.routeName, 
+            (route) => false
+          );
       }
     }
   }
