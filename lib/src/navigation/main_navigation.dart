@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../home/home_screen.dart';
 import '../indicators/indicator_groups_screen.dart';
@@ -151,12 +152,11 @@ class _MainNavigationState extends State<MainNavigation> {
                 title: 'Share application',
                 onTap: () {
                   Navigator.pop(context);
-                  // Open feedback form URL
-                  // You'll need to add url_launcher package to pubspec.yaml
-                  // and import 'package:url_launcher/url_launcher.dart';
-                  final Uri shareUrl = Uri.parse(
-                      'https://1drv.ms/f/c/4486554405894af5/EidajSEhjHtCq6EkGOHCkk8BX-wG7dYWmaK2WxrR7EdzAA?e=dehaKN');
-                  launchUrl(shareUrl, mode: LaunchMode.externalApplication);
+                  Share.share(
+                    'Hi! Please download the South African National Department of Health’s National Indicator Data Set (NIDS) Guide for quick access to indicator definitions and reporting notes — a reference tool.\n\n'
+                    'Google Play: https://play.google.com/store/apps/details?id=za.doh.nids2\n\n'
+                    'Huawei AppGallery: https://appgallery.huawei.com/app/C106148811',
+                  );
                 },
               )
             ],
