@@ -4,6 +4,7 @@ import '../models/sa_indicator.dart';
 import '../services/sa_indicator_service.dart';
 import '../widgets/standard_cards.dart';
 import '../utils/constants.dart';
+import 'indicator_detail_screen.dart';
 
 /// Screen showing indicators for a specific group
 class IndicatorListByGroupScreen extends StatefulWidget {
@@ -31,6 +32,10 @@ class _IndicatorListByGroupScreenState
   String? _error;
   bool _isAboutExpanded = false;
 
+  // Filters
+  final Set<String> _selectedFilters = {};
+  String _currentSort = 'Default';
+
   @override
   void initState() {
     super.initState();
@@ -46,19 +51,102 @@ class _IndicatorListByGroupScreenState
   }
 
   void _onSearchChanged() {
+    _applyFiltersAndSort();
+  }
+
+  void _applyFiltersAndSort() {
     final query = _searchController.text.toLowerCase();
-    setState(() {
-      if (query.isEmpty) {
-        _filteredIndicators = _indicators;
-      } else {
-        _filteredIndicators = _indicators.where((indicator) {
-          return indicator.name.toLowerCase().contains(query) ||
-              indicator.shortname.toLowerCase().contains(query) ||
-              indicator.indicatorId.toLowerCase().contains(query);
-        }).toList();
+    
+    // 1. Filter
+    var filtered = _indicators.where((indicator) {
+      // Text search
+      final matchesQuery = query.isEmpty || 
+          indicator.name.toLowerCase().contains(query) ||
+          indicator.shortname.toLowerCase().contains(query) ||
+          indicator.indicatorId.toLowerCase().contains(query);
+
+      if (!matchesQuery) return false;
+
+      // Chip filters
+      if (_selectedFilters.isEmpty) return true;
+
+      // Check each selected filter
+      // If multiple filters are selected, usually it's OR within category, AND across categories?
+      // For simplicity, let's say indicator must match ANY of the selected filters (OR logic) 
+      // OR better: specific handling per category. 
+      // Let's assume the user selects "Monthly" and "Outcome" -> (Monthly AND Outcome).
+      // But if "Monthly" and "Quarterly" -> (Monthly OR Quarterly).
+      // Hard to implement complex logic with simple chips. Simple intersection is easiest:
+      // Indicator matches IF it has property X where X is in filters.
+      // Actually standard pattern is: if any filter in a Category is selected, the item must match one of them.
+      
+      final levels = <String>{};
+      final freqs = <String>{};
+      final units = <String>{};
+      final statuses = <String>{};
+      
+      for (final f in _selectedFilters) {
+        if (['Input', 'Process', 'Output', 'Outcome', 'Impact'].contains(f)) levels.add(f);
+        if (['Monthly', 'Quarterly', 'Annually'].contains(f)) freqs.add(f);
+        if (['Count', '%'].contains(f)) units.add(f);
+        if (['New', 'Amended', 'Retained', 'Retained+'].contains(f)) statuses.add(f);
       }
+      
+      bool matchesLevel = levels.isEmpty || levels.contains(_getIndicatorLevel(indicator));
+      bool matchesFreq = freqs.isEmpty || freqs.contains(indicator.frequency);
+      bool matchesUnit = units.isEmpty || units.contains(indicator.factorType.isEmpty ? 'Count' : indicator.factorType);
+      
+      String statusStr = 'Unknown';
+      if (indicator.status == IndicatorStatus.newIndicator) statusStr = 'New';
+      if (indicator.status == IndicatorStatus.amended) statusStr = 'Amended';
+      if (indicator.status == IndicatorStatus.retainedWithoutNew) statusStr = 'Retained';
+      if (indicator.status == IndicatorStatus.retainedWithNew) statusStr = 'Retained+';
+      bool matchesStatus = statuses.isEmpty || statuses.contains(statusStr);
+      
+      return matchesLevel && matchesFreq && matchesUnit && matchesStatus;
+    }).toList();
+
+    // 2. Sort
+    switch (_currentSort) {
+      case 'A-Z':
+        filtered.sort((a, b) => a.name.compareTo(b.name));
+        break;
+      case 'Level':
+        final order = {'Input': 0, 'Process': 1, 'Output': 2, 'Outcome': 3, 'Impact': 4};
+        filtered.sort((a, b) {
+          final levelA = _getIndicatorLevel(a);
+          final levelB = _getIndicatorLevel(b);
+          return (order[levelA] ?? 99).compareTo(order[levelB] ?? 99);
+        });
+        break;
+      case 'Freq':
+         final order = {'Monthly': 0, 'Quarterly': 1, 'Annually': 2};
+         filtered.sort((a, b) {
+           return (order[a.frequency] ?? 99).compareTo(order[b.frequency] ?? 99);
+         });
+        break;
+      case 'Default':
+      default:
+        filtered.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+        break;
+    }
+
+    setState(() {
+      _filteredIndicators = filtered;
     });
   }
+
+  String _getIndicatorLevel(SAIndicator i) {
+    final lower = i.name.toLowerCase() + i.definition.toLowerCase();
+    if (lower.contains('outcome') || lower.contains('retention') || lower.contains('suppress') || lower.contains('cure')) {
+      return 'Outcome';
+    } else if (lower.contains('start') || lower.contains('initiat') || lower.contains('screen') || lower.contains('test')) {
+      return 'Process';
+    } else {
+      return 'Output';
+    }
+  }
+
 
   Color _getGroupColor() {
     final groupLower = widget.group.id.toLowerCase();
@@ -374,16 +462,34 @@ class _IndicatorListByGroupScreenState
                                       Icons.search,
                                       color: saGovernmentGreen,
                                     ),
-                                    suffixIcon: _searchController
-                                            .text.isNotEmpty
-                                        ? IconButton(
+                                    suffixIcon: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        if (_searchController.text.isNotEmpty)
+                                          IconButton(
                                             icon: Icon(Icons.clear,
                                                 color: Colors.grey.shade400),
                                             onPressed: () {
                                               _searchController.clear();
                                             },
-                                          )
-                                        : null,
+                                          ),
+                                        PopupMenuButton<String>(
+                                          icon: Icon(Icons.sort, color: Colors.grey.shade600),
+                                          onSelected: (value) {
+                                            setState(() {
+                                              _currentSort = value;
+                                            });
+                                            _applyFiltersAndSort();
+                                          },
+                                          itemBuilder: (context) => [
+                                            const PopupMenuItem(value: 'Default', child: Text('Default Order')),
+                                            const PopupMenuItem(value: 'A-Z', child: Text('Name (A-Z)')),
+                                            const PopupMenuItem(value: 'Level', child: Text('Level (Process→Outcome)')),
+                                            const PopupMenuItem(value: 'Freq', child: Text('Frequency')),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                     border: InputBorder.none,
                                     contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 16,
@@ -392,6 +498,36 @@ class _IndicatorListByGroupScreenState
                                   ),
                                   style: const TextStyle(fontSize: 14),
                                 ),
+                              ),
+                            ),
+                            
+                            // Filters
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                              child: Row(
+                                children: [
+                                  _buildFilterChip('Process'),
+                                  _buildFilterChip('Output'),
+                                  _buildFilterChip('Outcome'),
+                                  const SizedBox(width: 8),
+                                  Container(width: 1, height: 20, color: Colors.grey.shade300),
+                                  const SizedBox(width: 8),
+                                  _buildFilterChip('Monthly'),
+                                  _buildFilterChip('Quarterly'),
+                                  _buildFilterChip('Annually'),
+                                  const SizedBox(width: 8),
+                                   Container(width: 1, height: 20, color: Colors.grey.shade300),
+                                  const SizedBox(width: 8),
+                                  _buildFilterChip('Count'),
+                                  _buildFilterChip('%'),
+                                  const SizedBox(width: 8),
+                                  Container(width: 1, height: 20, color: Colors.grey.shade300),
+                                  const SizedBox(width: 8),
+                                  _buildFilterChip('New'),
+                                  _buildFilterChip('Amended'),
+                                  _buildFilterChip('Retained'),
+                                ],
                               ),
                             ),
 
@@ -440,8 +576,15 @@ class _IndicatorListByGroupScreenState
                                     child: Column(
                                       children: _filteredIndicators
                                           .map((indicator) =>
-                                              StandardIndicatorCard(
-                                                  indicator: indicator))
+                                              CompactIndicatorCard(
+                                                indicator: indicator,
+                                                onTap: () {
+                                                  Navigator.of(context).pushNamed(
+                                                    IndicatorDetailScreen.routeName,
+                                                    arguments: indicator,
+                                                  );
+                                                },
+                                              ))
                                           .toList(),
                                     ),
                                   ),
@@ -453,6 +596,44 @@ class _IndicatorListByGroupScreenState
                       ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildFilterChip(String label) {
+    final isSelected = _selectedFilters.contains(label);
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: FilterChip(
+        label: Text(label),
+        selected: isSelected,
+        onSelected: (selected) {
+          setState(() {
+            if (selected) {
+              _selectedFilters.add(label);
+            } else {
+              _selectedFilters.remove(label);
+            }
+          });
+          _applyFiltersAndSort();
+        },
+        backgroundColor: Colors.white,
+        selectedColor: saGovernmentGreen.withOpacity(0.1),
+        labelStyle: TextStyle(
+          fontSize: 11,
+          color: isSelected ? saGovernmentGreen : Colors.grey.shade700,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        visualDensity: VisualDensity.compact,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: isSelected ? saGovernmentGreen : Colors.grey.shade300,
+            width: 1,
+          ),
+        ),
+        showCheckmark: false,
       ),
     );
   }
