@@ -148,6 +148,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                   ),
                                   NavigationCard(
+                                    icon: Icons.favorite_outline,
+                                    title: 'Favourites',
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed('/Favourites');
+                                    },
+                                  ),
+                                  NavigationCard(
                                     icon: Icons.menu_book_outlined,
                                     title: 'Resources',
                                     onTap: () {
@@ -161,14 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       Navigator.of(context).pushNamed(
                                           NotificationsScreen.routeName);
-                                    },
-                                  ),
-                                  NavigationCard(
-                                    icon: Icons.favorite_outline,
-                                    title: 'Favourites',
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .pushNamed('/Favourites');
                                     },
                                   ),
                                   NavigationCard(
