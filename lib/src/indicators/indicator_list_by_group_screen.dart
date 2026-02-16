@@ -29,6 +29,7 @@ class _IndicatorListByGroupScreenState
   List<SAIndicator> _filteredIndicators = [];
   bool _isLoading = true;
   String? _error;
+  bool _isAboutExpanded = false;
 
   @override
   void initState() {
@@ -291,7 +292,7 @@ class _IndicatorListByGroupScreenState
                       const SizedBox(height: 2),
                       Text(
                         _searchController.text.isEmpty
-                            ? '${_indicators.length} indicator${_indicators.length != 1 ? 's' : ''}'
+                            ? '${_indicators.length} indicators • ${_getGroupSummary()}'
                             : '${_filteredIndicators.length} of ${_indicators.length}',
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.85),
@@ -346,51 +347,8 @@ class _IndicatorListByGroupScreenState
                     : SingleChildScrollView(
                         child: Column(
                           children: [
-                            // Description Section
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: Colors.grey.shade200,
-                                  width: 1,
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: saGovernmentGreen,
-                                        size: 20,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        'About this indicator group',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: saGovernmentGreen,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    _getGroupDescription(),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade700,
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Dynamic About Card
+                            _buildAboutCard(context),
 
                             // Search Bar
                             Padding(
@@ -497,5 +455,385 @@ class _IndicatorListByGroupScreenState
         ],
       ),
     );
+  }
+
+  Widget _buildAboutCard(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header used for toggling
+          InkWell(
+            onTap: () {
+              setState(() {
+                _isAboutExpanded = !_isAboutExpanded;
+              });
+            },
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Icon(Icons.info_outline, color: saGovernmentGreen, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'About this indicator group',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: saGovernmentGreen,
+                    ),
+                  ),
+                  const Spacer(),
+                  // Summary in header line? No, user asked for header then summary below in collapsed view
+                  Icon(
+                    _isAboutExpanded ? Icons.expand_less : Icons.expand_more,
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          if (!_isAboutExpanded)
+            // Collapsed View
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                   Text(
+                    _getGroupDescription(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 13, color: Colors.grey.shade700),
+                  ),
+                  const SizedBox(height: 12),
+                  const Divider(height: 1),
+                  const SizedBox(height: 12),
+                  _buildAtAGlanceRow(),
+                ],
+              ),
+            )
+          else
+            // Expanded View
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionTitle('Overview'),
+                  Text(
+                    _getGroupDescription(), // Long description
+                    style: TextStyle(fontSize: 13, color: Colors.grey.shade700, height: 1.5),
+                  ),
+                  const SizedBox(height: 16),
+                  
+                  _buildSectionTitle('Reporting focus'),
+                  ..._getReportingFocus().map((e) => Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('• ', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Expanded(child: Text(e, style: TextStyle(fontSize: 13, color: Colors.grey.shade700))),
+                      ],
+                    ),
+                  )).toList(),
+                  const SizedBox(height: 16),
+                  
+                  _buildSectionTitle('At a glance'),
+                  _buildDetailRow('Indicator count', '${_indicators.length}'),
+                  _buildDetailRow('Frequency mix', _getFrequencyMix()),
+                  _buildDetailRow('Unit/Type mix', _getTypeMix()),
+                  _buildDetailRow('Level mix', _getLevelMix()),
+                  _buildDetailRow('Annualised', _getAnnualisedCount() > 0 ? 'Yes (${_getAnnualisedCount()})' : 'No'),
+                  const SizedBox(height: 16),
+                  
+                  _buildSectionTitle('Data sources'),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: _getDataSources().map((s) => _buildChip(s, Colors.blue.shade50)).toList(),
+                  ),
+                  const SizedBox(height: 16),
+
+                  _buildSectionTitle('Typical users'),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: _getTypicalUsers().map((s) => _buildChip(s, Colors.orange.shade50)).toList(),
+                  ),
+                  const SizedBox(height: 16),
+
+                  _buildSectionTitle('Notes / interpretation'),
+                  Text(
+                    _getNotes(),
+                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600, fontStyle: FontStyle.italic),
+                  ),
+                  const SizedBox(height: 16),
+                  
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Last updated: ${_getLastUpdated()}', 
+                        style: TextStyle(fontSize: 11, color: Colors.grey.shade400),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+  
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(
+        title.toUpperCase(),
+        style: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: Color(0xFF1F2937),
+          letterSpacing: 0.5,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAtAGlanceRow() {
+    return Text.rich(
+      TextSpan(
+        style: TextStyle(fontSize: 12, color: Colors.grey.shade800),
+        children: [
+          const TextSpan(text: 'Indicators: ', style: TextStyle(fontWeight: FontWeight.w600)),
+          TextSpan(text: '${_indicators.length}'),
+          TextSpan(text: ' • ', style: TextStyle(color: Colors.grey.shade400)),
+          const TextSpan(text: 'Freq: ', style: TextStyle(fontWeight: FontWeight.w600)),
+          TextSpan(text: _getFrequencySummary()),
+          TextSpan(text: ' • ', style: TextStyle(color: Colors.grey.shade400)),
+          const TextSpan(text: 'Mostly: ', style: TextStyle(fontWeight: FontWeight.w600)),
+          TextSpan(text: _getTypeSummary()),
+          TextSpan(text: ' • ', style: TextStyle(color: Colors.grey.shade400)),
+          const TextSpan(text: 'Levels: ', style: TextStyle(fontWeight: FontWeight.w600)),
+          TextSpan(text: _getLevelSummary()),
+        ],
+      ),
+    );
+  }
+  
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 100,
+            child: Text(
+              label,
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.grey.shade900),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildChip(String label, Color color) {
+     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(fontSize: 11, color: Colors.grey.shade800, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+
+  // --- Helper Data Methods ---
+
+  String _getFrequencySummary() {
+    final counts = <String, int>{};
+    for (var i in _indicators) {
+      counts[i.frequency] = (counts[i.frequency] ?? 0) + 1;
+    }
+    if (counts.isEmpty) return 'N/A';
+    final sorted = counts.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+    return sorted.first.key;
+  }
+  
+  String _getTypeSummary() {
+    final counts = <String, int>{};
+    for (var i in _indicators) {
+      final type = i.factorType.isEmpty ? 'Count' : i.factorType;
+       counts[type] = (counts[type] ?? 0) + 1;
+    }
+    if (counts.isEmpty) return 'Count';
+    final sorted = counts.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+    return sorted.first.key;
+  }
+  
+  String _getLevelSummary() {
+    int outcome = 0;
+    int process = 0;
+    int output = 0;
+    
+    for (var i in _indicators) {
+      final lower = i.name.toLowerCase() + i.definition.toLowerCase();
+      if (lower.contains('outcome') || lower.contains('retention') || lower.contains('suppress') || lower.contains('cure')) {
+        outcome++;
+      } else if (lower.contains('start') || lower.contains('initiat') || lower.contains('screen') || lower.contains('test')) {
+        process++;
+      } else {
+        output++;
+      }
+    }
+    
+    final parts = <String>[];
+    if (process > 0) parts.add('Process');
+    if (output > 0) parts.add('Output');
+    if (outcome > 0) parts.add('Outcome');
+    if (parts.isEmpty) return 'Output';
+    return parts.join('/');
+  }
+
+  String _getGroupSummary() {
+    int monthly = 0;
+    int quarterly = 0;
+    int outcome = 0;
+    
+    for (var i in _indicators) {
+      if (i.frequency == 'Monthly') monthly++;
+      if (i.frequency == 'Quarterly') quarterly++;
+      
+      final lower = i.name.toLowerCase() + i.definition.toLowerCase();
+      if (lower.contains('outcome') || lower.contains('retention') || lower.contains('suppress') || lower.contains('cure')) {
+        outcome++;
+      }
+    }
+    
+    final parts = <String>[];
+    if (monthly > 0) parts.add('Monthly $monthly');
+    if (quarterly > 0) parts.add('Quarterly $quarterly');
+    if (outcome > 0) parts.add('Outcomes $outcome');
+    
+    if (parts.isEmpty && _indicators.isNotEmpty) return '${_indicators.length} Items';
+    if (parts.isEmpty) return 'No indicators';
+    
+    return parts.join(' | ');
+  }
+  
+  List<String> _getReportingFocus() {
+    // Generate derived insights
+    final focus = <String>[];
+    if (_indicators.any((i) => i.name.toLowerCase().contains('start') || i.name.toLowerCase().contains('initiat'))) {
+      focus.add('Monitoring new treatment initiations');
+    }
+    if (_indicators.any((i) => i.name.toLowerCase().contains('retention') || i.name.toLowerCase().contains('remain'))) {
+      focus.add('Tracking patient retention and continuity of care');
+    }
+     if (_indicators.any((i) => i.name.toLowerCase().contains('suppressed') || i.name.toLowerCase().contains('cured'))) {
+      focus.add('Evaluating treatment success and health outcomes');
+    }
+    if (focus.isEmpty) {
+      focus.add('General monitoring of ${widget.group.name} services');
+      focus.add('Tracking service delivery volume and coverage');
+    }
+    return focus;
+  }
+
+  String _getFrequencyMix() {
+    final counts = <String, int>{};
+    for (var i in _indicators) {
+      counts[i.frequency] = (counts[i.frequency] ?? 0) + 1;
+    }
+    if (counts.isEmpty) return 'None';
+    return counts.entries.map((e) => '${e.key} (${e.value})').join(' | ');
+  }
+
+  String _getTypeMix() {
+    final counts = <String, int>{};
+    for (var i in _indicators) {
+      final type = i.factorType.isEmpty ? 'Count' : i.factorType;
+       counts[type] = (counts[type] ?? 0) + 1;
+    }
+    return counts.entries.map((e) => '${e.key}').join(' / ');
+  }
+  
+  String _getLevelMix() {
+    // Rudimentary classification
+    int output = 0;
+    int outcome = 0;
+    int process = 0;
+    
+    for (var i in _indicators) {
+      final lower = i.name.toLowerCase() + i.definition.toLowerCase();
+      if (lower.contains('outcome') || lower.contains('retention') || lower.contains('suppress') || lower.contains('cure')) {
+        outcome++;
+      } else if (lower.contains('start') || lower.contains('initiat') || lower.contains('screen') || lower.contains('test')) {
+        process++;
+      } else {
+        output++;
+      }
+    }
+    
+    final parts = <String>[];
+    if (process > 0) parts.add('Process');
+    if (output > 0) parts.add('Output');
+    if (outcome > 0) parts.add('Outcome');
+    return parts.join('/');
+  }
+  
+  int _getAnnualisedCount() {
+    return _indicators.where((i) => i.frequency.toLowerCase() == 'annually').length;
+  }
+  
+  List<String> _getDataSources() {
+    // Inferred based on group
+    final group = widget.group.id.toLowerCase();
+    if (group.contains('hiv') || group.contains('art')) return ['TIER.Net', 'DHIS2'];
+    if (group.contains('tb')) return ['TIER.Net', 'EDRWeb', 'DHIS2'];
+    if (group.contains('hospital')) return ['Inpatient Registers', 'DHIS2'];
+    return ['Facility Registers', 'DHIS2'];
+  }
+  
+  List<String> _getTypicalUsers() {
+     // Inferred based on group
+    return ['Facility Manager', 'Information Officer', 'Programme Coordinator'];
+  }
+  
+  String _getNotes() {
+    return 'Verify all data against source registers before reporting. Trends should be interpreted with context of service disruptions.';
+  }
+  
+  String _getLastUpdated() {
+    return '16 Feb 2026 (v4.0.8)';
   }
 }
