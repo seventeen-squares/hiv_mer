@@ -332,7 +332,7 @@ class _IndicatorGroupsScreenState extends State<IndicatorGroupsScreen> {
                 if (canPop) const SizedBox(width: 8),
                 const Expanded(
                   child: Text(
-                    'Indicator Groups',
+                    'Indicators',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13,
