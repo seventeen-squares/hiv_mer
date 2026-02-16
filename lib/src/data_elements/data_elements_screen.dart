@@ -17,13 +17,64 @@ class DataElementsScreen extends StatefulWidget {
 class _DataElementsScreenState extends State<DataElementsScreen> {
   final _dataElementService = DataElementService.instance;
   List<DataElementCategory> _categories = [];
+  List<DataElementCategory> _filteredCategories = [];
   bool _isLoading = true;
   String? _error;
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+  String _searchQuery = '';
+  String? _selectedFilter;
 
   @override
   void initState() {
     super.initState();
     _loadData();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      _searchQuery = _searchController.text;
+      _filterCategories();
+    });
+  }
+
+  void _filterCategories() {
+    if (_categories.isEmpty) return;
+
+    setState(() {
+      _filteredCategories = _categories.where((category) {
+        final matchesSearch = category.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+            category.id.toLowerCase().contains(_searchQuery.toLowerCase());
+            
+        if (!matchesSearch) return false;
+
+        if (_selectedFilter != null) {
+          // Filter logic based on chips (e.g., frequency, tool)
+          // Since category object doesn't have these, we'd need to check elements inside
+           final elements = _dataElementService.getDataElementsByCategory(category.id);
+           
+           if (_selectedFilter == 'Monthly') {
+             return elements.any((e) => e.frequency.toLowerCase().contains('month'));
+           } else if (_selectedFilter == 'Quarterly') {
+             return elements.any((e) => e.frequency.toLowerCase().contains('quarter'));
+           } else if (_selectedFilter!.startsWith('Tool:')) {
+             final tool = _selectedFilter!.substring(5).trim().toLowerCase();
+             return elements.any((e) => e.tools.toLowerCase().contains(tool));
+           }
+        }
+        
+        return true;
+      }).toList();
+    });
   }
 
   Future<void> _loadData() async {
@@ -38,6 +89,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
 
       setState(() {
         _categories = categories;
+        _filteredCategories = categories;
         _isLoading = false;
       });
     } catch (e) {
@@ -46,6 +98,54 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
         _isLoading = false;
       });
     }
+  }
+
+  // Helper to get aggregated metrics for a category
+  Map<String, String> _getCategoryMetrics(String categoryId) {
+    final elements = _dataElementService.getDataElementsByCategory(categoryId);
+    
+    if (elements.isEmpty) {
+      return {'tool': 'Unknown', 'collectionPoint': 'Unknown'};
+    }
+
+    // Calculate most common tool
+    final tools = <String, int>{};
+    final collectionPoints = <String, int>{};
+
+    for (var element in elements) {
+      // Tools
+      if (element.tools.isNotEmpty && element.tools != 'None') {
+        final toolList = element.tools.split(RegExp(r'[,;]')).map((e) => e.trim()).where((e) => e.isNotEmpty);
+        for (var tool in toolList) {
+          tools[tool] = (tools[tool] ?? 0) + 1;
+        }
+      }
+
+      // Collection Points
+      if (element.collectionPoints.isNotEmpty && element.collectionPoints != 'None') {
+         final cpList = element.collectionPoints.split(RegExp(r'[,;]')).map((e) => e.trim()).where((e) => e.isNotEmpty);
+        for (var cp in cpList) {
+          collectionPoints[cp] = (collectionPoints[cp] ?? 0) + 1;
+        }
+      }
+    }
+
+    String topTool = '';
+    if (tools.isNotEmpty) {
+      final sortedTools = tools.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+      topTool = sortedTools.first.key;
+    }
+
+    String topCP = '';
+    if (collectionPoints.isNotEmpty) {
+       final sortedCP = collectionPoints.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+       topCP = sortedCP.first.key;
+    }
+
+    return {
+      'tool': topTool.isEmpty ? 'Multiple tools' : topTool, 
+      'collectionPoint': topCP.isEmpty ? 'Facility' : topCP
+    };
   }
 
   IconData _getCategoryIcon(DataElementCategory category) {
@@ -199,7 +299,7 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top + 8,
               left: 16.0,
-              right: 16.0,
+              right: 8.0,
               bottom: 10.0,
             ),
             decoration: const BoxDecoration(
@@ -223,29 +323,83 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                     'Data Elements',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 13,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
-                // IconButton(
-                //   onPressed: () {
-                //     // TODO: Add help/info dialog
-                //   },
-                //   icon: Container(
-                //     width: 32,
-                //     height: 32,
-                //     decoration: BoxDecoration(
-                //       color: Colors.white.withOpacity(0.2),
-                //       shape: BoxShape.circle,
-                //     ),
-                //     child: const Icon(
-                //       Icons.help_outline,
-                //       color: Colors.white,
-                //       size: 20,
-                //     ),
-                //   ),
-                // ),
+                 IconButton(
+                  onPressed: () => _showHelpDialog(context),
+                  icon: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.question_mark,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                  tooltip: 'What are data elements?',
+                ),
+              ],
+            ),
+          ),
+          
+          // Search Bar
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: TextField(
+              controller: _searchController,
+              focusNode: _searchFocusNode,
+              decoration: InputDecoration(
+                hintText: 'Search data elements...',
+                prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          _searchFocusNode.unfocus();
+                        },
+                      )
+                    : null,
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: saGovernmentGreen, width: 2),
+                ),
+              ),
+            ),
+          ),
+          
+          // Filter Chips
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              children: [
+                _buildFilterChip('All'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Monthly'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Quarterly'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Tool: TIER.Net'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Tool: Register'),
               ],
             ),
           ),
@@ -288,21 +442,114 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
                           ),
                         ),
                       )
-                    : GridView.builder(
+                    : _filteredCategories.isEmpty
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.search_off, size: 48, color: Colors.grey.shade300),
+                                const SizedBox(height: 16),
+                                Text(
+                                  'No categories found matching filters',
+                                  style: TextStyle(color: Colors.grey.shade500),
+                                ),
+                              ],
+                            ),
+                          )
+                        : GridView.builder(
                         padding: const EdgeInsets.all(16.0),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
-                          childAspectRatio: 1.1,
+                          childAspectRatio: 1.0, // Square-ish cards
                         ),
-                        itemCount: _categories.length,
+                        itemCount: _filteredCategories.length,
                         itemBuilder: (context, index) {
-                          final category = _categories[index];
+                          final category = _filteredCategories[index];
                           return _buildCategoryCard(category);
                         },
                       ),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  Widget _buildFilterChip(String label) {
+    final isSelected = _selectedFilter == label || (label == 'All' && _selectedFilter == null);
+    return FilterChip(
+      label: Text(label),
+      selected: isSelected,
+      onSelected: (selected) {
+        setState(() {
+          if (label == 'All') {
+            _selectedFilter = null;
+          } else {
+            _selectedFilter = selected ? label : null;
+          }
+          _filterCategories();
+        });
+      },
+      backgroundColor: Colors.white,
+      selectedColor: saGovernmentGreen.withOpacity(0.1),
+      labelStyle: TextStyle(
+        color: isSelected ? saGovernmentGreen : Colors.grey.shade700,
+        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        fontSize: 12,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(
+          color: isSelected ? saGovernmentGreen : Colors.grey.shade300,
+        ),
+      ),
+      showCheckmark: false,
+    );
+  }
+
+  void _showHelpDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: saGovernmentGreen.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.data_usage, color: saGovernmentGreen),
+            ),
+            const SizedBox(width: 12),
+            const Text('What are Data Elements?'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              'Data elements are the raw counts used to build indicators.',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 12),
+            Text(
+              'For example, "Number of new ART patients" is a data element that feeds into broader indicators like "ART Retention".',
+            ),
+            SizedBox(height: 12),
+            Text(
+              'Tap a group to see elements, definitions, where collected, and tools used.',
+              style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Got it', style: TextStyle(color: saGovernmentGreen)),
           ),
         ],
       ),
@@ -312,10 +559,13 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
   Widget _buildCategoryCard(DataElementCategory category) {
     final categoryColor = _getCategoryColor(category.id);
     final categoryIcon = _getCategoryIcon(category);
+    final metrics = _getCategoryMetrics(category.id);
 
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(16),
+      elevation: 1,
+      shadowColor: Colors.black.withOpacity(0.05),
       child: InkWell(
         onTap: () {
           Navigator.of(context).pushNamed(
@@ -329,7 +579,6 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
         },
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.grey.shade200,
@@ -338,43 +587,97 @@ class _DataElementsScreenState extends State<DataElementsScreen> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Category Icon
+              // Top Color Panel (Reduced height)
               Container(
-                width: 44,
-                height: 44,
+                height: 48, // Reduced height
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: categoryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                 ),
-                child: Icon(
-                  categoryIcon,
-                  color: categoryColor,
-                  size: 22,
+                child: Center(
+                  child: Icon(
+                    categoryIcon,
+                    color: categoryColor,
+                    size: 24,
+                  ),
                 ),
               ),
-              const SizedBox(height: 12),
-              // Category Name
-              Text(
-                category.name,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF1F2937),
-                  height: 1.3,
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 4),
-              // Element Count
-              Text(
-                '${category.elementCount} elements',
-                style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontSize: 10,
+              
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Category Name
+                    SizedBox(
+                      height: 36, // Fixed height for 2 lines
+                      child: Text(
+                        category.name,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF1F2937),
+                          height: 1.2,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 12),
+                    
+                    // Metrics Row (Combined)
+                    Row(
+                      children: [
+                        // Count Pill
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: Colors.grey.shade300),
+                          ),
+                          child: Text(
+                            '${category.elementCount}',
+                            style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        // Dot separator
+                        Container(
+                          width: 3,
+                          height: 3,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade400,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        // Tool info
+                        Expanded(
+                          child: Text(
+                            (metrics['tool'] != null && metrics['tool'] != 'Multiple tools') 
+                                ? metrics['tool']!.replaceAll('MULTIPLE TOOLS', 'Multiple')
+                                : metrics['collectionPoint'] ?? 'Facility',
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
