@@ -384,6 +384,10 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
     final indicator = ModalRoute.of(context)!.settings.arguments as SAIndicator;
     final groupColor = _getGroupColor(indicator.groupId);
 
+
+    final level = _getIndicatorLevel(indicator);
+    final isAnnualised = indicator.frequency.toLowerCase() == 'annually';
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: Column(
@@ -393,7 +397,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top + 8,
               left: 16.0,
-              right: 16.0,
+              right: 8.0,
               bottom: 10.0,
             ),
             decoration: BoxDecoration(
@@ -409,8 +413,9 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                   ),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
+                  tooltip: 'Back',
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 Expanded(
                   child: MarqueeText(
                     text: indicator.shortname,
@@ -419,10 +424,9 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
-                    scrollSpeed: 30.0, // Adjust speed as needed
+                    scrollSpeed: 30.0,
                   ),
                 ),
-                const SizedBox(width: 8),
                 IconButton(
                   onPressed: () => _shareIndicator(context, indicator),
                   icon: const Icon(
@@ -432,9 +436,9 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                   ),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
-                  tooltip: 'Share indicator',
+                  tooltip: 'Share',
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 if (_isLoadingFavorite)
                   const SizedBox(
                     width: 20,
@@ -482,12 +486,17 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
 
                   const SizedBox(height: 12),
 
-                  // Metadata Row
-                  Row(
+                  // Metadata Chips
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
                     children: [
-                      _buildMetadataChip(context, 'Type', indicator.factorType, Icons.pie_chart),
-                      const SizedBox(width: 8),
-                      _buildMetadataChip(context, 'Freq', indicator.frequency, Icons.calendar_today_outlined),
+                      _buildChip(indicator.groupId, Colors.blueGrey.shade50, Colors.blueGrey.shade800),
+                      _buildChip(level, _getLevelColor(level).withOpacity(0.1), _getLevelColor(level)),
+                      _buildChip(indicator.factorType.isEmpty ? 'Count' : indicator.factorType, Colors.orange.shade50, Colors.orange.shade800),
+                      _buildChip(indicator.frequency, Colors.blue.shade50, Colors.blue.shade800),
+                      if (isAnnualised)
+                        _buildChip('Annualised', Colors.teal.shade50, Colors.teal.shade800),
                     ],
                   ),
 
@@ -504,6 +513,18 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
 
                   const SizedBox(height: 16),
 
+                  // Use and Context Section (Moved up)
+                  if (indicator.useContext.isNotEmpty && indicator.useContext != 'None') ...[
+                    _buildSection(
+                      context,
+                      title: 'USE AND CONTEXT',
+                      content: indicator.useContext,
+                      icon: Icons.lightbulb_outline,
+                      iconColor: Colors.amber.shade700,
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+
                   // Numerator Card
                   _buildDetailCard(
                     context,
@@ -517,7 +538,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                   const SizedBox(height: 16),
 
                   // Denominator Card (if present)
-                  if (indicator.denominator != null && indicator.denominator != 'Not applicable')
+                  if (indicator.denominator != null && indicator.denominator != 'None' && indicator.denominator != 'Not applicable') ...[
                     _buildDetailCard(
                       context,
                       title: 'DENOMINATOR',
@@ -526,17 +547,11 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                       color: const Color(0xFF3B82F6),
                       icon: Icons.calculate_outlined,
                     ),
-
-                  const SizedBox(height: 16),
-
-                  // Use and Context Section
-                  _buildSection(
-                    context,
-                    title: 'USE AND CONTEXT',
-                    content: indicator.useContext,
-                    icon: Icons.lightbulb_outline,
-                    iconColor: groupColor,
-                  ),
+                    const SizedBox(height: 16),
+                  ],
+                  
+                  // Level Description Card
+                  _buildLevelCard(context, level, groupColor),
 
                   const SizedBox(height: 16),
 
@@ -547,6 +562,7 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
                       _buildInfoRow('Status', _getStatusText(indicator.status)),
                     ],
                   ),
+
 
                   const SizedBox(height: 16),
 
@@ -823,6 +839,166 @@ class _IndicatorDetailScreenState extends State<IndicatorDetailScreen> {
         ],
       ),
     );
+  }
+
+
+  Widget _buildLevelCard(BuildContext context, String level, Color groupColor) {
+    String definition = '';
+    
+    switch (level.toLowerCase()) {
+      case 'input':
+        definition = 'Resources (funds, staff, supplies) needed to implement the program.';
+        break;
+      case 'process':
+        definition = 'Activities carried out to achieve the program objectives.';
+        break;
+      case 'output':
+        definition = 'Direct products or deliverables of the program activities.';
+        break;
+      case 'outcome':
+        definition = 'Short-term and medium-term effects of the program outputs.';
+        break;
+      case 'impact':
+        definition = 'Long-term effects on the population\'s health status.';
+        break;
+      default:
+        definition = 'Level of the indicator within the logical framework.';
+    }
+
+    Color color = _getLevelColor(level);
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade100,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(Icons.layers, size: 20, color: color),
+              ),
+              const SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'INDICATOR LEVEL',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade500,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    level,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: color,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: color.withOpacity(0.1)),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.info_outline, size: 16, color: color.withOpacity(0.7)),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    definition,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.grey.shade700,
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildChip(String label, Color backgroundColor, Color textColor) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: textColor.withOpacity(0.2),
+          width: 0.5,
+        ),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+          color: textColor,
+        ),
+      ),
+    );
+  }
+
+  String _getIndicatorLevel(SAIndicator indicator) {
+    final text = (indicator.name + ' ' + indicator.definition).toLowerCase();
+    
+    if (text.contains('impact') || text.contains('mortality') || text.contains('incidence')) {
+      return 'Impact';
+    } else if (text.contains('outcome') || text.contains('suppression') || text.contains('retention') || text.contains('alive')) {
+      return 'Outcome';
+    } else if (text.contains('output') || text.contains('number of') || text.contains('received') || text.contains('initiated')) {
+      return 'Output';
+    } else if (text.contains('process') || text.contains('tested') || text.contains('screened')) {
+      return 'Process';
+    } else {
+      return 'Input'; 
+    }
+  }
+  
+  Color _getLevelColor(String level) {
+    switch (level.toLowerCase()) {
+      case 'impact': return Colors.purple;
+      case 'outcome': return Colors.indigo;
+      case 'output': return Colors.blue;
+      case 'process': return Colors.teal;
+      case 'input': return Colors.orange;
+      default: return Colors.blueGrey;
+    }
   }
 
   Widget _buildCopyableInfoRow(BuildContext context, String label, String value) {
